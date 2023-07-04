@@ -45,7 +45,7 @@ const CPUSchedulingScreen = () => {
   const waitingTimeLine = [...state.FCFSwaitingTimeLine, [-1]];
 
   const [loaded] = useFonts({
-    Popins: require("../../assets/fonts/Poppins-Light.ttf"),
+    Popins: require("../../public/assets/fonts/Poppins-Light.ttf"),
   });
 
   if (!loaded) {

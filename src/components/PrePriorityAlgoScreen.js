@@ -17,11 +17,11 @@ import { Feather, Ionicons } from "@expo/vector-icons";
 import Bar from "./Bar";
 import { useFonts } from "expo-font";
 import { main, primary, text, background } from "./Colors";
-import Button from "../components/Button";
+import Button from "./Button";
 import { processColor } from "./Colors";
 import ProgressiveBar from "./ProgressiveBar";
 
-const PriorityAlgoScreen = () => {
+const PrePriorityAlgoScreen = () => {
   const [arrTime, setArrTime] = useState(0);
   const [Bursttime, setBursttime] = useState(0);
   const [curTime, setCurTime] = useState(0);
@@ -30,11 +30,11 @@ const PriorityAlgoScreen = () => {
   const [refresh, setRefresh] = useState(false);
   const { addProcessWithPR, state, clear, schedule } = useContext(AlgoContext);
 
-  const timeLine = [...state.PRtimeLine, -1];
-  const waitingTimeLine = [...state.PRwaitingTimeLine, [-1]];
+  const timeLine = [...state.PrePRtimeLine, -1];
+  const waitingTimeLine = [...state.PrePRwaitingTimeLine, [-1]];
 
   const [loaded] = useFonts({
-    Popins: require("../../assets/fonts/Poppins-Light.ttf"),
+    Popins: require("../../public/assets/fonts/Poppins-Light.ttf"),
   });
 
   if (!loaded) {
@@ -153,10 +153,7 @@ const PriorityAlgoScreen = () => {
                       setBursttime(Bursttime - 1);
                       Vibration.vibrate(80);
                     } else {
-                      alert(
-                        "Sorry! Can't decrease Burst Time anymore!",
-                        ToastAndroscaleid.SHORT
-                      );
+                      alert("Sorry! Can't decrease Burst Time anymore!");
                     }
                   }}
                 >
@@ -261,7 +258,7 @@ const PriorityAlgoScreen = () => {
           <Button
             title="Clear"
             onPress={() => {
-              clear("PR");
+              clear("PrePR");
               setArrTime(0);
               setBursttime(0);
               setPriority(0);
@@ -273,8 +270,8 @@ const PriorityAlgoScreen = () => {
           <Button
             title="Schedule"
             onPress={() => {
-              if (state.PRprocess.length > 0) {
-                schedule("PR");
+              if (state.PrePRprocess.length > 0) {
+                schedule("PrePR");
                 setRefresh(!refresh);
                 setCurTime(0);
               } else {
@@ -282,6 +279,7 @@ const PriorityAlgoScreen = () => {
               }
             }}
           />
+
           <Button
             title="Add"
             onPress={() => {
@@ -289,11 +287,11 @@ const PriorityAlgoScreen = () => {
                 if (
                   arrTime >= 0 &&
                   Bursttime > 0 &&
-                  state.PRprocess.length < 4
+                  state.PrePRprocess.length < 4
                 ) {
                   setArrTime(arrTime);
                   setBursttime(Bursttime);
-                  addProcessWithPR(arrTime, Bursttime, priority, "PR");
+                  addProcessWithPR(arrTime, Bursttime, priority, "PrePR");
                   setArrTime(0);
                   setBursttime(0);
                   setPriority(0);
@@ -309,7 +307,7 @@ const PriorityAlgoScreen = () => {
         </View>
       </View>
 
-      {state.PRshowProcess ? (
+      {state.PrePRshowProcess ? (
         <>
           <Text
             style={{
@@ -345,7 +343,7 @@ const PriorityAlgoScreen = () => {
           </View>
           <FlatList
             style={{ alignSelf: "center", flex: 1 }}
-            data={state.PRprocess}
+            data={state.PrePRprocess}
             renderItem={({ item }) => {
               return (
                 <View
@@ -392,7 +390,7 @@ const PriorityAlgoScreen = () => {
         </>
       ) : null}
 
-      {state.PRshowScheduled ? (
+      {state.PrePRshowScheduled ? (
         <View>
           <Text
             style={{
@@ -407,12 +405,12 @@ const PriorityAlgoScreen = () => {
           <View
             style={{ marginBottom: verticalScale(5), marginLeft: scale(10) }}
           >
-            <Bar isScheduled={state.PRisScheduled} type={"PR"} />
+            <Bar isScheduled={state.PrePRisScheduled} type={"PrePR"} />
           </View>
         </View>
       ) : null}
 
-      {state.PRshowScheduled ? (
+      {state.PrePRshowScheduled ? (
         <View style={{ marginBottom: verticalScale(20) }}>
           <Text
             style={{
@@ -454,9 +452,9 @@ const PriorityAlgoScreen = () => {
               <Text style={styles.text}>WT</Text>
             </View>
           </View>
-          {state.PRisScheduled ? (
+          {state.PrePRisScheduled ? (
             <FlatList
-              data={state.PRscheduledProcess}
+              data={state.PrePRscheduledProcess}
               style={{ alignSelf: "center", flex: 1 }}
               renderItem={({ item }) => {
                 return (
@@ -495,7 +493,7 @@ const PriorityAlgoScreen = () => {
         </View>
       ) : null}
 
-      {state.PRshowScheduled ? (
+      {state.PrePRshowScheduled ? (
         <>
           <Text
             style={{
@@ -535,7 +533,7 @@ const PriorityAlgoScreen = () => {
                   color={main}
                 />
               </TouchableOpacity>
-              {state.PRisScheduled ? (
+              {state.PrePRisScheduled ? (
                 <View
                   style={{
                     alignItems: "center",
@@ -556,7 +554,7 @@ const PriorityAlgoScreen = () => {
                     <Text
                       style={{
                         ...styles.text,
-                        marginBottom: verticalScale(5),
+                        marginBottom: 5,
                         alignSelf: "center",
                       }}
                     >
@@ -707,10 +705,10 @@ const PriorityAlgoScreen = () => {
 
               <TouchableOpacity
                 onPress={() => {
-                  if (curTime < state.PRwaitingTimeLine.length - 1) {
+                  if (curTime < state.PrePRwaitingTimeLine.length - 1) {
                     setCurTime(curTime + 1);
                     console.log(curTime);
-                  } else if (curTime == state.PRtimeLine.length - 1) {
+                  } else if (curTime == state.PrePRtimeLine.length - 1) {
                     setCurTime(curTime + 1);
                     // setEnded(true);
                   }
@@ -724,11 +722,11 @@ const PriorityAlgoScreen = () => {
                 />
               </TouchableOpacity>
             </View>
-            {state.PRshowScheduled && state.PRisScheduled ? (
+            {state.PrePRshowScheduled && state.PrePRisScheduled ? (
               <ProgressiveBar
-                isScheduled={state.PRisScheduled}
+                isScheduled={state.PrePRisScheduled}
                 curTime={curTime}
-                type={"PR"}
+                type={"PrePR"}
               />
             ) : null}
           </View>
@@ -738,7 +736,7 @@ const PriorityAlgoScreen = () => {
   );
 };
 
-export default PriorityAlgoScreen;
+export default PrePriorityAlgoScreen;
 
 const styles = StyleSheet.create({
   line: {

@@ -15,7 +15,7 @@ Text.defaultProps = {
 };
 const CommandTutorial = ({ command, content, argument, executable }) => {
   const [loaded] = useFonts({
-    Popins: require("../../assets/fonts/Poppins-Light.ttf"),
+    Popins: require("../../public/assets/fonts/Poppins-Light.ttf"),
   });
   if (!loaded) {
     return null;

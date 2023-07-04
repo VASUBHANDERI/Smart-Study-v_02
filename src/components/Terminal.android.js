@@ -25,7 +25,7 @@ const Terminal = () => {
   const [command, setCommand] = useState("");
 
   const [loaded] = useFonts({
-    Linux: require("../../assets/fonts/VT323-Regular.ttf"),
+    Linux: require("../../public/assets/fonts/VT323-Regular.ttf"),
   });
 
   if (!loaded) {

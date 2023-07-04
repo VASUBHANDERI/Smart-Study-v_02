@@ -12,7 +12,7 @@ import { useEffect, useState } from "react";
 
 const HomeScreen = () => {
   const [loaded] = useFonts({
-    Popins: require("../../assets/fonts/Poppins-Light.ttf"),
+    Popins: require("../../public/assets/fonts/Poppins-Light.ttf"),
   });
   if (!loaded) {
     return null;
@@ -49,7 +49,7 @@ const HomeScreen = () => {
         </View>
         <View style={{ alignItems: "center", marginBottom: verticalScale(20) }}>
           <Image
-            source={require("../../assets/IIITN.png")}
+            source={require("../../public/assets/IIITN.png")}
             style={{ height: verticalScale(75), width: scale(75) }}
           />
           <Text style={styles.head2}>

@@ -10,7 +10,7 @@ import {
 } from "react-native-size-matters";
 const Button = ({ title, onPress }) => {
   const [loaded] = useFonts({
-    Popins: require("../../assets/fonts/Poppins-Light.ttf"),
+    Popins: require("../../public/assets/fonts/Poppins-Light.ttf"),
   });
 
   if (!loaded) {

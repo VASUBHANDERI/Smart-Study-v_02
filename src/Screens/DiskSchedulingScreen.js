@@ -37,7 +37,7 @@ const DiskManagementScreen = () => {
   const [currentPosition, setCurrentPosition] = useState("");
   const [curStep, setCurStep] = useState(null);
   const [loaded] = useFonts({
-    Popins: require("../../assets/fonts/Poppins-Light.ttf"),
+    Popins: require("../../public/assets/fonts/Poppins-Light.ttf"),
   });
 
   if (!loaded) {

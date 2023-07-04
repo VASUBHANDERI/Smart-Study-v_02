@@ -9,18 +9,19 @@ import {
   Vibration,
   ToastAndroid,
 } from "react-native";
-import { scale, verticalScale } from "react-native-size-matters";
+import { scale, verticalScale, moderateScale } from "react-native-size-matters";
+
 import React, { useState, useContext } from "react";
 import { Context as AlgoContext } from "../context/schedulingAlgoContext";
 import { Feather, Ionicons } from "@expo/vector-icons";
 import Bar from "./Bar";
 import { useFonts } from "expo-font";
 import { main, primary, text, background } from "./Colors";
-import Button from "../components/Button";
+import Button from "./Button";
 import { processColor } from "./Colors";
 import ProgressiveBar from "./ProgressiveBar";
 
-const SRTFAlgoScreen = () => {
+const SJFAlgoScreen = () => {
   const [arrTime, setArrTime] = useState(0);
   const [Bursttime, setBursttime] = useState(0);
   const [curTime, setCurTime] = useState(0);
@@ -28,11 +29,11 @@ const SRTFAlgoScreen = () => {
   const [refresh, setRefresh] = useState(false);
   const { addProcess, state, clear, schedule } = useContext(AlgoContext);
 
-  const timeLine = [...state.SRTFtimeLine, -1];
-  const waitingTimeLine = [...state.SRTFwaitingTimeLine, [-1]];
+  const timeLine = [...state.SJFtimeLine, -1];
+  const waitingTimeLine = [...state.SJFwaitingTimeLine, [-1]];
 
   const [loaded] = useFonts({
-    Popins: require("../../assets/fonts/Poppins-Light.ttf"),
+    Popins: require("../../public/assets/fonts/Poppins-Light.ttf"),
   });
 
   if (!loaded) {
@@ -188,7 +189,7 @@ const SRTFAlgoScreen = () => {
           <Button
             title="Clear"
             onPress={() => {
-              clear("SRTF");
+              clear("SJF");
               setArrTime(0);
               setBursttime(0);
               setRefresh(!refresh);
@@ -199,8 +200,8 @@ const SRTFAlgoScreen = () => {
           <Button
             title="Schedule"
             onPress={() => {
-              if (state.SRTFprocess.length > 0) {
-                schedule("SRTF");
+              if (state.SJFprocess.length > 0) {
+                schedule("SJF");
                 setRefresh(!refresh);
                 setCurTime(0);
               } else {
@@ -215,11 +216,11 @@ const SRTFAlgoScreen = () => {
                 if (
                   arrTime >= 0 &&
                   Bursttime > 0 &&
-                  state.SRTFprocess.length < 4
+                  state.SJFprocess.length < 4
                 ) {
                   setArrTime(arrTime);
                   setBursttime(Bursttime);
-                  addProcess(arrTime, Bursttime, "SRTF");
+                  addProcess(arrTime, Bursttime, "SJF");
                   setArrTime(0);
                   setBursttime(0);
                   setRefresh(!refresh);
@@ -234,7 +235,7 @@ const SRTFAlgoScreen = () => {
         </View>
       </View>
 
-      {state.SRTFshowProcess ? (
+      {state.SJFshowProcess ? (
         <>
           <Text
             style={{
@@ -267,7 +268,7 @@ const SRTFAlgoScreen = () => {
           </View>
           <FlatList
             style={{ alignSelf: "center", flex: 1 }}
-            data={state.SRTFprocess}
+            data={state.SJFprocess}
             renderItem={({ item }) => {
               return (
                 <View
@@ -311,7 +312,7 @@ const SRTFAlgoScreen = () => {
         </>
       ) : null}
 
-      {state.SRTFshowScheduled ? (
+      {state.SJFshowScheduled ? (
         <View>
           <Text
             style={{
@@ -326,12 +327,12 @@ const SRTFAlgoScreen = () => {
           <View
             style={{ marginBottom: verticalScale(5), marginLeft: scale(10) }}
           >
-            <Bar isScheduled={state.SRTFisScheduled} type={"SRTF"} />
+            <Bar isScheduled={state.SJFisScheduled} type={"SJF"} />
           </View>
         </View>
       ) : null}
 
-      {state.SRTFshowScheduled ? (
+      {state.SJFshowScheduled ? (
         <View style={{ marginBottom: verticalScale(20) }}>
           <Text
             style={{
@@ -370,9 +371,9 @@ const SRTFAlgoScreen = () => {
               <Text style={styles.text}>WT</Text>
             </View>
           </View>
-          {state.SRTFisScheduled ? (
+          {state.SJFisScheduled ? (
             <FlatList
-              data={state.SRTFscheduledProcess}
+              data={state.SJFscheduledProcess}
               style={{ alignSelf: "center", flex: 1 }}
               renderItem={({ item }) => {
                 return (
@@ -408,7 +409,7 @@ const SRTFAlgoScreen = () => {
         </View>
       ) : null}
 
-      {state.SRTFshowScheduled ? (
+      {state.SJFshowScheduled ? (
         <>
           <Text
             style={{
@@ -421,7 +422,7 @@ const SRTFAlgoScreen = () => {
           >
             Steps Visualizer
           </Text>
-          <View style={{ borderWidth: 1, borderColor: primary }}>
+          <View style={{ borderWidth: scale(1), borderColor: primary }}>
             <View
               style={{
                 flexDirection: "row",
@@ -448,20 +449,20 @@ const SRTFAlgoScreen = () => {
                   color={main}
                 />
               </TouchableOpacity>
-              {state.SRTFisScheduled ? (
+              {state.SJFisScheduled ? (
                 <View
                   style={{
                     alignItems: "center",
                     flex: 1,
                     // justifyContent:'center'
-                    borderWidth: 1,
+                    borderWidth: scale(1),
                     borderColor: background,
                   }}
                 >
                   <View
                     style={{
                       borderColor: background,
-                      borderWidth: 1,
+                      borderWidth: scale(1),
                       flex: 1,
                       justifyContent: "center",
                     }}
@@ -545,7 +546,7 @@ const SRTFAlgoScreen = () => {
                                   height: Dimensions.get("screen").width * 0.08,
                                   backgroundColor: "#CAE9FF",
                                   justifyContent: "center",
-                                  marginRight: 1,
+                                  marginRight: scale(1),
 
                                   // borderWidth: 1,
                                   // borderColor: "#000",
@@ -620,10 +621,10 @@ const SRTFAlgoScreen = () => {
 
               <TouchableOpacity
                 onPress={() => {
-                  if (curTime < state.SRTFwaitingTimeLine.length - 1) {
+                  if (curTime < state.SJFwaitingTimeLine.length - 1) {
                     setCurTime(curTime + 1);
                     console.log(curTime);
-                  } else if (curTime == state.SRTFtimeLine.length - 1) {
+                  } else if (curTime == state.SJFtimeLine.length - 1) {
                     setCurTime(curTime + 1);
                     // setEnded(true);
                   }
@@ -637,11 +638,11 @@ const SRTFAlgoScreen = () => {
                 />
               </TouchableOpacity>
             </View>
-            {state.SRTFshowScheduled && state.SRTFisScheduled ? (
+            {state.SJFshowScheduled && state.SJFisScheduled ? (
               <ProgressiveBar
-                isScheduled={state.SRTFisScheduled}
+                isScheduled={state.SJFisScheduled}
                 curTime={curTime}
-                type={"SRTF"}
+                type={"SJF"}
               />
             ) : null}
           </View>
@@ -651,7 +652,7 @@ const SRTFAlgoScreen = () => {
   );
 };
 
-export default SRTFAlgoScreen;
+export default SJFAlgoScreen;
 
 const styles = StyleSheet.create({
   line: {
@@ -660,10 +661,10 @@ const styles = StyleSheet.create({
   },
   tableBox: {
     flex: 1,
-    borderWidth: 1,
+    borderWidth: scale(1),
     borderColor: primary,
     alignContent: "center",
-    paddingLeft: 1,
+    paddingLeft: scale(1),
     backgroundColor: background,
     alignItems: "center",
   },

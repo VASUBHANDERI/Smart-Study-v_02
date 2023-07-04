@@ -21,7 +21,7 @@ import Button from "../components/Button";
 
 const HomeScreen = () => {
   const [loaded] = useFonts({
-    Popins: require("../../assets/fonts/Poppins-Light.ttf"),
+    Popins: require("../../public/assets/fonts/Poppins-Light.ttf"),
   });
   if (!loaded) {
     return null;
@@ -98,7 +98,7 @@ const HomeScreen = () => {
             }}
           >
             <Image
-              source={require("../../assets/IIITN.png")}
+              source={require("../../public/assets/IIITN.png")}
               style={{ height: verticalScale(65), width: scale(65) }}
             />
             <Text style={styles.head2}>

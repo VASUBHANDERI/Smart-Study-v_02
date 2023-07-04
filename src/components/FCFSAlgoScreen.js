@@ -7,21 +7,19 @@ import {
   Dimensions,
   ScrollView,
   Vibration,
-  ToastAndroid,
 } from "react-native";
 import { scale, verticalScale, moderateScale } from "react-native-size-matters";
-
 import React, { useState, useContext } from "react";
 import { Context as AlgoContext } from "../context/schedulingAlgoContext";
 import { Feather, Ionicons } from "@expo/vector-icons";
 import Bar from "./Bar";
 import { useFonts } from "expo-font";
 import { main, primary, text, background } from "./Colors";
-import Button from "../components/Button";
+import Button from "./Button";
 import { processColor } from "./Colors";
 import ProgressiveBar from "./ProgressiveBar";
 
-const SJFAlgoScreen = () => {
+const FCFSAlgoScreen = () => {
   const [arrTime, setArrTime] = useState(0);
   const [Bursttime, setBursttime] = useState(0);
   const [curTime, setCurTime] = useState(0);
@@ -29,11 +27,11 @@ const SJFAlgoScreen = () => {
   const [refresh, setRefresh] = useState(false);
   const { addProcess, state, clear, schedule } = useContext(AlgoContext);
 
-  const timeLine = [...state.SJFtimeLine, -1];
-  const waitingTimeLine = [...state.SJFwaitingTimeLine, [-1]];
+  const timeLine = [...state.FCFStimeLine, -1];
+  const waitingTimeLine = [...state.FCFSwaitingTimeLine, [-1]];
 
   const [loaded] = useFonts({
-    Popins: require("../../assets/fonts/Poppins-Light.ttf"),
+    Popins: require("../../public/assets/fonts/Poppins-Light.ttf"),
   });
 
   if (!loaded) {
@@ -51,7 +49,7 @@ const SJFAlgoScreen = () => {
           style={{
             justifyContent: "space-evenly",
             // borderColor: "red",
-            // borderWidth: 1,
+            // borderWidth: scale(1),
             flex: 1,
             padding: scale(10),
             paddingRight: scale(15),
@@ -177,6 +175,7 @@ const SJFAlgoScreen = () => {
             </View>
           </View>
         </View>
+
         <View
           style={{
             flexDirection: "row",
@@ -189,7 +188,7 @@ const SJFAlgoScreen = () => {
           <Button
             title="Clear"
             onPress={() => {
-              clear("SJF");
+              clear("FCFS");
               setArrTime(0);
               setBursttime(0);
               setRefresh(!refresh);
@@ -200,8 +199,8 @@ const SJFAlgoScreen = () => {
           <Button
             title="Schedule"
             onPress={() => {
-              if (state.SJFprocess.length > 0) {
-                schedule("SJF");
+              if (state.FCFSprocess.length > 0) {
+                schedule("FCFS");
                 setRefresh(!refresh);
                 setCurTime(0);
               } else {
@@ -216,18 +215,18 @@ const SJFAlgoScreen = () => {
                 if (
                   arrTime >= 0 &&
                   Bursttime > 0 &&
-                  state.SJFprocess.length < 4
+                  state.FCFSprocess.length < 4
                 ) {
                   setArrTime(arrTime);
                   setBursttime(Bursttime);
-                  addProcess(arrTime, Bursttime, "SJF");
+                  addProcess(arrTime, Bursttime, "FCFS");
                   setArrTime(0);
                   setBursttime(0);
                   setRefresh(!refresh);
                 } else if (Bursttime <= 0) {
                   alert("Invalid Burst Time!");
                 } else {
-                  alert("You Can't add more processes. ");
+                  alert("You Can't add more processes.");
                 }
               }
             }}
@@ -235,7 +234,7 @@ const SJFAlgoScreen = () => {
         </View>
       </View>
 
-      {state.SJFshowProcess ? (
+      {state.FCFSshowProcess ? (
         <>
           <Text
             style={{
@@ -268,7 +267,7 @@ const SJFAlgoScreen = () => {
           </View>
           <FlatList
             style={{ alignSelf: "center", flex: 1 }}
-            data={state.SJFprocess}
+            data={state.FCFSprocess}
             renderItem={({ item }) => {
               return (
                 <View
@@ -312,7 +311,7 @@ const SJFAlgoScreen = () => {
         </>
       ) : null}
 
-      {state.SJFshowScheduled ? (
+      {state.FCFSshowScheduled ? (
         <View>
           <Text
             style={{
@@ -327,12 +326,12 @@ const SJFAlgoScreen = () => {
           <View
             style={{ marginBottom: verticalScale(5), marginLeft: scale(10) }}
           >
-            <Bar isScheduled={state.SJFisScheduled} type={"SJF"} />
+            <Bar isScheduled={state.FCFSisScheduled} type={"FCFS"} />
           </View>
         </View>
       ) : null}
 
-      {state.SJFshowScheduled ? (
+      {state.FCFSshowScheduled ? (
         <View style={{ marginBottom: verticalScale(20) }}>
           <Text
             style={{
@@ -371,9 +370,9 @@ const SJFAlgoScreen = () => {
               <Text style={styles.text}>WT</Text>
             </View>
           </View>
-          {state.SJFisScheduled ? (
+          {state.FCFSisScheduled ? (
             <FlatList
-              data={state.SJFscheduledProcess}
+              data={state.FCFSscheduledProcess}
               style={{ alignSelf: "center", flex: 1 }}
               renderItem={({ item }) => {
                 return (
@@ -409,7 +408,7 @@ const SJFAlgoScreen = () => {
         </View>
       ) : null}
 
-      {state.SJFshowScheduled ? (
+      {state.FCFSshowScheduled ? (
         <>
           <Text
             style={{
@@ -430,7 +429,7 @@ const SJFAlgoScreen = () => {
                 alignItems: "center",
                 justifyContent: "center",
                 paddingVertical: verticalScale(10),
-                // borderWidth: 1,
+                // borderWidth: scale(1),
                 // borderColor: primary,
               }}
             >
@@ -449,7 +448,7 @@ const SJFAlgoScreen = () => {
                   color={main}
                 />
               </TouchableOpacity>
-              {state.SJFisScheduled ? (
+              {state.FCFSisScheduled ? (
                 <View
                   style={{
                     alignItems: "center",
@@ -548,7 +547,7 @@ const SJFAlgoScreen = () => {
                                   justifyContent: "center",
                                   marginRight: scale(1),
 
-                                  // borderWidth: 1,
+                                  // borderWidth: scale(1),
                                   // borderColor: "#000",
                                 }}
                               >
@@ -621,10 +620,10 @@ const SJFAlgoScreen = () => {
 
               <TouchableOpacity
                 onPress={() => {
-                  if (curTime < state.SJFwaitingTimeLine.length - 1) {
+                  if (curTime < state.FCFSwaitingTimeLine.length - 1) {
                     setCurTime(curTime + 1);
                     console.log(curTime);
-                  } else if (curTime == state.SJFtimeLine.length - 1) {
+                  } else if (curTime == state.FCFStimeLine.length - 1) {
                     setCurTime(curTime + 1);
                     // setEnded(true);
                   }
@@ -638,11 +637,11 @@ const SJFAlgoScreen = () => {
                 />
               </TouchableOpacity>
             </View>
-            {state.SJFshowScheduled && state.SJFisScheduled ? (
+            {state.FCFSshowScheduled && state.FCFSisScheduled ? (
               <ProgressiveBar
-                isScheduled={state.SJFisScheduled}
+                isScheduled={state.FCFSisScheduled}
                 curTime={curTime}
-                type={"SJF"}
+                type={"FCFS"}
               />
             ) : null}
           </View>
@@ -652,7 +651,7 @@ const SJFAlgoScreen = () => {
   );
 };
 
-export default SJFAlgoScreen;
+export default FCFSAlgoScreen;
 
 const styles = StyleSheet.create({
   line: {

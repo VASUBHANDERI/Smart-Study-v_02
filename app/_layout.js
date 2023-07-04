@@ -23,7 +23,7 @@ const isWeb = Platform.OS === "web";
 export default function Layout() {
   const [ready, setReady] = useState(false);
   const [loaded] = useFonts({
-    Popins: require("../assets/fonts/Poppins-Light.ttf"),
+    Popins: require("../public/assets/fonts/Poppins-Light.ttf"),
   });
   if (!loaded) {
     return null;

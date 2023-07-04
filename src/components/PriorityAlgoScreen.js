@@ -7,31 +7,34 @@ import {
   Dimensions,
   ScrollView,
   Vibration,
+  ToastAndroid,
 } from "react-native";
 import { scale, verticalScale, moderateScale } from "react-native-size-matters";
+
 import React, { useState, useContext } from "react";
 import { Context as AlgoContext } from "../context/schedulingAlgoContext";
 import { Feather, Ionicons } from "@expo/vector-icons";
 import Bar from "./Bar";
 import { useFonts } from "expo-font";
 import { main, primary, text, background } from "./Colors";
-import Button from "../components/Button";
+import Button from "./Button";
 import { processColor } from "./Colors";
 import ProgressiveBar from "./ProgressiveBar";
 
-const FCFSAlgoScreen = () => {
+const PriorityAlgoScreen = () => {
   const [arrTime, setArrTime] = useState(0);
   const [Bursttime, setBursttime] = useState(0);
   const [curTime, setCurTime] = useState(0);
+  const [priority, setPriority] = useState(0);
   const { width, height } = Dimensions.get("window");
   const [refresh, setRefresh] = useState(false);
-  const { addProcess, state, clear, schedule } = useContext(AlgoContext);
+  const { addProcessWithPR, state, clear, schedule } = useContext(AlgoContext);
 
-  const timeLine = [...state.FCFStimeLine, -1];
-  const waitingTimeLine = [...state.FCFSwaitingTimeLine, [-1]];
+  const timeLine = [...state.PRtimeLine, -1];
+  const waitingTimeLine = [...state.PRwaitingTimeLine, [-1]];
 
   const [loaded] = useFonts({
-    Popins: require("../../assets/fonts/Poppins-Light.ttf"),
+    Popins: require("../../public/assets/fonts/Poppins-Light.ttf"),
   });
 
   if (!loaded) {
@@ -56,6 +59,136 @@ const FCFSAlgoScreen = () => {
             paddingLeft: scale(20),
           }}
         >
+          <View
+            style={{
+              flexDirection: "row",
+              alignItems: "stretch",
+              alignContent: "flex-start",
+              justifyContent: "space-around",
+            }}
+          >
+            <View>
+              <Text
+                style={{
+                  alignSelf: "center",
+                  color: text,
+                  fontSize: scale(16),
+                  fontFamily: "Popins",
+                }}
+              >
+                Arrival Time
+              </Text>
+              <View
+                style={{
+                  flexDirection: "row",
+                  alignSelf: "center",
+                  margin: scale(5),
+                  padding: scale(5),
+                  justifyContent: "center",
+                  alignContent: "center",
+                }}
+              >
+                <TouchableOpacity
+                  onPress={() => {
+                    if (arrTime > 0) {
+                      setArrTime(arrTime - 1);
+                      Vibration.vibrate(80);
+                    } else {
+                      alert("Sorry! Can't decrease Arrival Time anymore!");
+                    }
+                  }}
+                >
+                  <Feather name="minus-circle" size={scale(30)} color={text} />
+                </TouchableOpacity>
+                <Text
+                  style={{
+                    paddingHorizontal: scale(15),
+                    color: text,
+                    fontSize: scale(16),
+                    alignSelf: "center",
+                    fontFamily: "Popins",
+                    width: Dimensions.get("window").width * 0.14,
+                  }}
+                >
+                  {arrTime}
+                </Text>
+                <TouchableOpacity
+                  onPress={() => {
+                    if (arrTime < 5) {
+                      setArrTime(arrTime + 1);
+                      Vibration.vibrate(80);
+                    } else {
+                      alert("Sorry! Can't increase Arrival Time anymore!");
+                    }
+                  }}
+                >
+                  <Feather name="plus-circle" size={scale(30)} color={text} />
+                </TouchableOpacity>
+              </View>
+            </View>
+            <View>
+              <Text
+                style={{
+                  alignSelf: "center",
+                  color: text,
+                  fontSize: scale(16),
+                  fontFamily: "Popins",
+                }}
+              >
+                Burst Time
+              </Text>
+              <View
+                style={{
+                  flexDirection: "row",
+                  alignSelf: "center",
+                  margin: scale(10),
+                  padding: scale(5),
+                  justifyContent: "center",
+                  alignContent: "center",
+                }}
+              >
+                <TouchableOpacity
+                  onPress={() => {
+                    if (Bursttime > 0) {
+                      setBursttime(Bursttime - 1);
+                      Vibration.vibrate(80);
+                    } else {
+                      alert(
+                        "Sorry! Can't decrease Burst Time anymore!",
+                        ToastAndroscaleid.SHORT
+                      );
+                    }
+                  }}
+                >
+                  <Feather name="minus-circle" size={scale(30)} color={text} />
+                </TouchableOpacity>
+                <Text
+                  style={{
+                    paddingHorizontal: scale(15),
+                    color: text,
+                    fontSize: scale(16),
+                    alignSelf: "center",
+                    fontFamily: "Popins",
+                    width: Dimensions.get("window").width * 0.14,
+                  }}
+                >
+                  {Bursttime}
+                </Text>
+                <TouchableOpacity
+                  onPress={() => {
+                    if (Bursttime < 5) {
+                      setBursttime(Bursttime + 1);
+                      Vibration.vibrate(80);
+                    } else {
+                      alert("Sorry! Can't increase Burst Time anymore!");
+                    }
+                  }}
+                >
+                  <Feather name="plus-circle" size={scale(30)} color={text} />
+                </TouchableOpacity>
+              </View>
+            </View>
+          </View>
           <View>
             <Text
               style={{
@@ -65,7 +198,7 @@ const FCFSAlgoScreen = () => {
                 fontFamily: "Popins",
               }}
             >
-              Arrival Time
+              Priority
             </Text>
             <View
               style={{
@@ -79,8 +212,8 @@ const FCFSAlgoScreen = () => {
             >
               <TouchableOpacity
                 onPress={() => {
-                  if (arrTime > 0) {
-                    setArrTime(arrTime - 1);
+                  if (priority > 0) {
+                    setPriority(priority - 1);
                     Vibration.vibrate(80);
                   } else {
                     alert("Sorry! Can't decrease Arrival Time anymore!");
@@ -99,12 +232,12 @@ const FCFSAlgoScreen = () => {
                   width: Dimensions.get("window").width * 0.14,
                 }}
               >
-                {arrTime}
+                {priority}
               </Text>
               <TouchableOpacity
                 onPress={() => {
-                  if (arrTime < 5) {
-                    setArrTime(arrTime + 1);
+                  if (priority < 9) {
+                    setPriority(priority + 1);
                     Vibration.vibrate(80);
                   } else {
                     alert("Sorry! Can't increase Arrival Time anymore!");
@@ -115,67 +248,7 @@ const FCFSAlgoScreen = () => {
               </TouchableOpacity>
             </View>
           </View>
-          <View>
-            <Text
-              style={{
-                alignSelf: "center",
-                color: text,
-                fontSize: scale(16),
-                fontFamily: "Popins",
-              }}
-            >
-              Burst Time
-            </Text>
-            <View
-              style={{
-                flexDirection: "row",
-                alignSelf: "center",
-                margin: scale(10),
-                padding: scale(5),
-                justifyContent: "center",
-                alignContent: "center",
-              }}
-            >
-              <TouchableOpacity
-                onPress={() => {
-                  if (Bursttime > 0) {
-                    setBursttime(Bursttime - 1);
-                    Vibration.vibrate(80);
-                  } else {
-                    alert("Sorry! Can't decrease Burst Time anymore!");
-                  }
-                }}
-              >
-                <Feather name="minus-circle" size={scale(30)} color={text} />
-              </TouchableOpacity>
-              <Text
-                style={{
-                  paddingHorizontal: scale(15),
-                  color: text,
-                  fontSize: scale(16),
-                  alignSelf: "center",
-                  fontFamily: "Popins",
-                  width: Dimensions.get("window").width * 0.14,
-                }}
-              >
-                {Bursttime}
-              </Text>
-              <TouchableOpacity
-                onPress={() => {
-                  if (Bursttime < 5) {
-                    setBursttime(Bursttime + 1);
-                    Vibration.vibrate(80);
-                  } else {
-                    alert("Sorry! Can't increase Burst Time anymore!");
-                  }
-                }}
-              >
-                <Feather name="plus-circle" size={scale(30)} color={text} />
-              </TouchableOpacity>
-            </View>
-          </View>
         </View>
-
         <View
           style={{
             flexDirection: "row",
@@ -188,9 +261,10 @@ const FCFSAlgoScreen = () => {
           <Button
             title="Clear"
             onPress={() => {
-              clear("FCFS");
+              clear("PR");
               setArrTime(0);
               setBursttime(0);
+              setPriority(0);
               setRefresh(!refresh);
               setCurTime(0);
             }}
@@ -199,8 +273,8 @@ const FCFSAlgoScreen = () => {
           <Button
             title="Schedule"
             onPress={() => {
-              if (state.FCFSprocess.length > 0) {
-                schedule("FCFS");
+              if (state.PRprocess.length > 0) {
+                schedule("PR");
                 setRefresh(!refresh);
                 setCurTime(0);
               } else {
@@ -215,18 +289,19 @@ const FCFSAlgoScreen = () => {
                 if (
                   arrTime >= 0 &&
                   Bursttime > 0 &&
-                  state.FCFSprocess.length < 4
+                  state.PRprocess.length < 4
                 ) {
                   setArrTime(arrTime);
                   setBursttime(Bursttime);
-                  addProcess(arrTime, Bursttime, "FCFS");
+                  addProcessWithPR(arrTime, Bursttime, priority, "PR");
                   setArrTime(0);
                   setBursttime(0);
+                  setPriority(0);
                   setRefresh(!refresh);
                 } else if (Bursttime <= 0) {
                   alert("Invalid Burst Time!");
                 } else {
-                  alert("You Can't add more processes.");
+                  alert("You Can't add more processes. ");
                 }
               }
             }}
@@ -234,7 +309,7 @@ const FCFSAlgoScreen = () => {
         </View>
       </View>
 
-      {state.FCFSshowProcess ? (
+      {state.PRshowProcess ? (
         <>
           <Text
             style={{
@@ -255,7 +330,7 @@ const FCFSAlgoScreen = () => {
               paddingHorizontal: scale(10),
             }}
           >
-            <View style={styles.tableBox}>
+            <View style={styles.tableBox1}>
               <Text style={styles.text}>Id</Text>
             </View>
             <View style={styles.tableBox}>
@@ -264,10 +339,13 @@ const FCFSAlgoScreen = () => {
             <View style={styles.tableBox}>
               <Text style={styles.text}>Burst Time</Text>
             </View>
+            <View style={styles.tableBox}>
+              <Text style={styles.text}>Priority</Text>
+            </View>
           </View>
           <FlatList
             style={{ alignSelf: "center", flex: 1 }}
-            data={state.FCFSprocess}
+            data={state.PRprocess}
             renderItem={({ item }) => {
               return (
                 <View
@@ -277,7 +355,7 @@ const FCFSAlgoScreen = () => {
                     paddingHorizontal: scale(10),
                   }}
                 >
-                  <View style={styles.tableBox}>
+                  <View style={styles.tableBox1}>
                     <View
                       style={{
                         flexDirection: "row",
@@ -304,6 +382,9 @@ const FCFSAlgoScreen = () => {
                   <View style={styles.tableBox}>
                     <Text style={styles.text}>{item.burstTime}</Text>
                   </View>
+                  <View style={styles.tableBox}>
+                    <Text style={styles.text}>{item.Pr}</Text>
+                  </View>
                 </View>
               );
             }}
@@ -311,7 +392,7 @@ const FCFSAlgoScreen = () => {
         </>
       ) : null}
 
-      {state.FCFSshowScheduled ? (
+      {state.PRshowScheduled ? (
         <View>
           <Text
             style={{
@@ -326,12 +407,12 @@ const FCFSAlgoScreen = () => {
           <View
             style={{ marginBottom: verticalScale(5), marginLeft: scale(10) }}
           >
-            <Bar isScheduled={state.FCFSisScheduled} type={"FCFS"} />
+            <Bar isScheduled={state.PRisScheduled} type={"PR"} />
           </View>
         </View>
       ) : null}
 
-      {state.FCFSshowScheduled ? (
+      {state.PRshowScheduled ? (
         <View style={{ marginBottom: verticalScale(20) }}>
           <Text
             style={{
@@ -355,6 +436,9 @@ const FCFSAlgoScreen = () => {
               <Text style={styles.text}>Id</Text>
             </View>
             <View style={styles.tableBox}>
+              <Text style={styles.text}>PR</Text>
+            </View>
+            <View style={styles.tableBox}>
               <Text style={styles.text}>AT</Text>
             </View>
             <View style={styles.tableBox}>
@@ -370,9 +454,9 @@ const FCFSAlgoScreen = () => {
               <Text style={styles.text}>WT</Text>
             </View>
           </View>
-          {state.FCFSisScheduled ? (
+          {state.PRisScheduled ? (
             <FlatList
-              data={state.FCFSscheduledProcess}
+              data={state.PRscheduledProcess}
               style={{ alignSelf: "center", flex: 1 }}
               renderItem={({ item }) => {
                 return (
@@ -384,6 +468,9 @@ const FCFSAlgoScreen = () => {
                   >
                     <View style={styles.tableBox}>
                       <Text style={styles.text}>{`P${item.id}`}</Text>
+                    </View>
+                    <View style={styles.tableBox}>
+                      <Text style={styles.text}>{item.Pr}</Text>
                     </View>
                     <View style={styles.tableBox}>
                       <Text style={styles.text}>{item.arrTime}</Text>
@@ -408,7 +495,7 @@ const FCFSAlgoScreen = () => {
         </View>
       ) : null}
 
-      {state.FCFSshowScheduled ? (
+      {state.PRshowScheduled ? (
         <>
           <Text
             style={{
@@ -448,7 +535,7 @@ const FCFSAlgoScreen = () => {
                   color={main}
                 />
               </TouchableOpacity>
-              {state.FCFSisScheduled ? (
+              {state.PRisScheduled ? (
                 <View
                   style={{
                     alignItems: "center",
@@ -620,10 +707,10 @@ const FCFSAlgoScreen = () => {
 
               <TouchableOpacity
                 onPress={() => {
-                  if (curTime < state.FCFSwaitingTimeLine.length - 1) {
+                  if (curTime < state.PRwaitingTimeLine.length - 1) {
                     setCurTime(curTime + 1);
                     console.log(curTime);
-                  } else if (curTime == state.FCFStimeLine.length - 1) {
+                  } else if (curTime == state.PRtimeLine.length - 1) {
                     setCurTime(curTime + 1);
                     // setEnded(true);
                   }
@@ -637,11 +724,11 @@ const FCFSAlgoScreen = () => {
                 />
               </TouchableOpacity>
             </View>
-            {state.FCFSshowScheduled && state.FCFSisScheduled ? (
+            {state.PRshowScheduled && state.PRisScheduled ? (
               <ProgressiveBar
-                isScheduled={state.FCFSisScheduled}
+                isScheduled={state.PRisScheduled}
                 curTime={curTime}
-                type={"FCFS"}
+                type={"PR"}
               />
             ) : null}
           </View>
@@ -651,7 +738,7 @@ const FCFSAlgoScreen = () => {
   );
 };
 
-export default FCFSAlgoScreen;
+export default PriorityAlgoScreen;
 
 const styles = StyleSheet.create({
   line: {
@@ -659,7 +746,16 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   tableBox: {
-    flex: 1,
+    flex: 3,
+    borderWidth: scale(1),
+    borderColor: primary,
+    alignContent: "center",
+    paddingLeft: scale(1),
+    backgroundColor: background,
+    alignItems: "center",
+  },
+  tableBox1: {
+    flex: 2,
     borderWidth: scale(1),
     borderColor: primary,
     alignContent: "center",
@@ -670,5 +766,6 @@ const styles = StyleSheet.create({
   text: {
     color: text,
     fontFamily: "Popins",
+    fontSize: scale(14),
   },
 });

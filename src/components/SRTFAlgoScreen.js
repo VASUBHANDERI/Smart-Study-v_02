@@ -9,32 +9,30 @@ import {
   Vibration,
   ToastAndroid,
 } from "react-native";
-import { scale, verticalScale, moderateScale } from "react-native-size-matters";
-
+import { scale, verticalScale } from "react-native-size-matters";
 import React, { useState, useContext } from "react";
 import { Context as AlgoContext } from "../context/schedulingAlgoContext";
 import { Feather, Ionicons } from "@expo/vector-icons";
 import Bar from "./Bar";
 import { useFonts } from "expo-font";
 import { main, primary, text, background } from "./Colors";
-import Button from "../components/Button";
+import Button from "./Button";
 import { processColor } from "./Colors";
 import ProgressiveBar from "./ProgressiveBar";
 
-const PrePriorityAlgoScreen = () => {
+const SRTFAlgoScreen = () => {
   const [arrTime, setArrTime] = useState(0);
   const [Bursttime, setBursttime] = useState(0);
   const [curTime, setCurTime] = useState(0);
-  const [priority, setPriority] = useState(0);
   const { width, height } = Dimensions.get("window");
   const [refresh, setRefresh] = useState(false);
-  const { addProcessWithPR, state, clear, schedule } = useContext(AlgoContext);
+  const { addProcess, state, clear, schedule } = useContext(AlgoContext);
 
-  const timeLine = [...state.PrePRtimeLine, -1];
-  const waitingTimeLine = [...state.PrePRwaitingTimeLine, [-1]];
+  const timeLine = [...state.SRTFtimeLine, -1];
+  const waitingTimeLine = [...state.SRTFwaitingTimeLine, [-1]];
 
   const [loaded] = useFonts({
-    Popins: require("../../assets/fonts/Poppins-Light.ttf"),
+    Popins: require("../../public/assets/fonts/Poppins-Light.ttf"),
   });
 
   if (!loaded) {
@@ -52,140 +50,13 @@ const PrePriorityAlgoScreen = () => {
           style={{
             justifyContent: "space-evenly",
             // borderColor: "red",
-            // borderWidth: scale(1),
+            // borderWidth: 1,
             flex: 1,
             padding: scale(10),
             paddingRight: scale(15),
             paddingLeft: scale(20),
           }}
         >
-          <View
-            style={{
-              flexDirection: "row",
-              alignItems: "stretch",
-              alignContent: "flex-start",
-              justifyContent: "space-around",
-            }}
-          >
-            <View>
-              <Text
-                style={{
-                  alignSelf: "center",
-                  color: text,
-                  fontSize: scale(16),
-                  fontFamily: "Popins",
-                }}
-              >
-                Arrival Time
-              </Text>
-              <View
-                style={{
-                  flexDirection: "row",
-                  alignSelf: "center",
-                  margin: scale(5),
-                  padding: scale(5),
-                  justifyContent: "center",
-                  alignContent: "center",
-                }}
-              >
-                <TouchableOpacity
-                  onPress={() => {
-                    if (arrTime > 0) {
-                      setArrTime(arrTime - 1);
-                      Vibration.vibrate(80);
-                    } else {
-                      alert("Sorry! Can't decrease Arrival Time anymore!");
-                    }
-                  }}
-                >
-                  <Feather name="minus-circle" size={scale(30)} color={text} />
-                </TouchableOpacity>
-                <Text
-                  style={{
-                    paddingHorizontal: scale(15),
-                    color: text,
-                    fontSize: scale(16),
-                    alignSelf: "center",
-                    fontFamily: "Popins",
-                    width: Dimensions.get("window").width * 0.14,
-                  }}
-                >
-                  {arrTime}
-                </Text>
-                <TouchableOpacity
-                  onPress={() => {
-                    if (arrTime < 5) {
-                      setArrTime(arrTime + 1);
-                      Vibration.vibrate(80);
-                    } else {
-                      alert("Sorry! Can't increase Arrival Time anymore!");
-                    }
-                  }}
-                >
-                  <Feather name="plus-circle" size={scale(30)} color={text} />
-                </TouchableOpacity>
-              </View>
-            </View>
-            <View>
-              <Text
-                style={{
-                  alignSelf: "center",
-                  color: text,
-                  fontSize: scale(16),
-                  fontFamily: "Popins",
-                }}
-              >
-                Burst Time
-              </Text>
-              <View
-                style={{
-                  flexDirection: "row",
-                  alignSelf: "center",
-                  margin: scale(10),
-                  padding: scale(5),
-                  justifyContent: "center",
-                  alignContent: "center",
-                }}
-              >
-                <TouchableOpacity
-                  onPress={() => {
-                    if (Bursttime > 0) {
-                      setBursttime(Bursttime - 1);
-                      Vibration.vibrate(80);
-                    } else {
-                      alert("Sorry! Can't decrease Burst Time anymore!");
-                    }
-                  }}
-                >
-                  <Feather name="minus-circle" size={scale(30)} color={text} />
-                </TouchableOpacity>
-                <Text
-                  style={{
-                    paddingHorizontal: scale(15),
-                    color: text,
-                    fontSize: scale(16),
-                    alignSelf: "center",
-                    fontFamily: "Popins",
-                    width: Dimensions.get("window").width * 0.14,
-                  }}
-                >
-                  {Bursttime}
-                </Text>
-                <TouchableOpacity
-                  onPress={() => {
-                    if (Bursttime < 5) {
-                      setBursttime(Bursttime + 1);
-                      Vibration.vibrate(80);
-                    } else {
-                      alert("Sorry! Can't increase Burst Time anymore!");
-                    }
-                  }}
-                >
-                  <Feather name="plus-circle" size={scale(30)} color={text} />
-                </TouchableOpacity>
-              </View>
-            </View>
-          </View>
           <View>
             <Text
               style={{
@@ -195,7 +66,7 @@ const PrePriorityAlgoScreen = () => {
                 fontFamily: "Popins",
               }}
             >
-              Priority
+              Arrival Time
             </Text>
             <View
               style={{
@@ -209,8 +80,8 @@ const PrePriorityAlgoScreen = () => {
             >
               <TouchableOpacity
                 onPress={() => {
-                  if (priority > 0) {
-                    setPriority(priority - 1);
+                  if (arrTime > 0) {
+                    setArrTime(arrTime - 1);
                     Vibration.vibrate(80);
                   } else {
                     alert("Sorry! Can't decrease Arrival Time anymore!");
@@ -229,15 +100,74 @@ const PrePriorityAlgoScreen = () => {
                   width: Dimensions.get("window").width * 0.14,
                 }}
               >
-                {priority}
+                {arrTime}
               </Text>
               <TouchableOpacity
                 onPress={() => {
-                  if (priority < 9) {
-                    setPriority(priority + 1);
+                  if (arrTime < 5) {
+                    setArrTime(arrTime + 1);
                     Vibration.vibrate(80);
                   } else {
                     alert("Sorry! Can't increase Arrival Time anymore!");
+                  }
+                }}
+              >
+                <Feather name="plus-circle" size={scale(30)} color={text} />
+              </TouchableOpacity>
+            </View>
+          </View>
+          <View>
+            <Text
+              style={{
+                alignSelf: "center",
+                color: text,
+                fontSize: scale(16),
+                fontFamily: "Popins",
+              }}
+            >
+              Burst Time
+            </Text>
+            <View
+              style={{
+                flexDirection: "row",
+                alignSelf: "center",
+                margin: scale(10),
+                padding: scale(5),
+                justifyContent: "center",
+                alignContent: "center",
+              }}
+            >
+              <TouchableOpacity
+                onPress={() => {
+                  if (Bursttime > 0) {
+                    setBursttime(Bursttime - 1);
+                    Vibration.vibrate(80);
+                  } else {
+                    alert("Sorry! Can't decrease Burst Time anymore!");
+                  }
+                }}
+              >
+                <Feather name="minus-circle" size={scale(30)} color={text} />
+              </TouchableOpacity>
+              <Text
+                style={{
+                  paddingHorizontal: scale(15),
+                  color: text,
+                  fontSize: scale(16),
+                  alignSelf: "center",
+                  fontFamily: "Popins",
+                  width: Dimensions.get("window").width * 0.14,
+                }}
+              >
+                {Bursttime}
+              </Text>
+              <TouchableOpacity
+                onPress={() => {
+                  if (Bursttime < 5) {
+                    setBursttime(Bursttime + 1);
+                    Vibration.vibrate(80);
+                  } else {
+                    alert("Sorry! Can't increase Burst Time anymore!");
                   }
                 }}
               >
@@ -258,10 +188,9 @@ const PrePriorityAlgoScreen = () => {
           <Button
             title="Clear"
             onPress={() => {
-              clear("PrePR");
+              clear("SRTF");
               setArrTime(0);
               setBursttime(0);
-              setPriority(0);
               setRefresh(!refresh);
               setCurTime(0);
             }}
@@ -270,8 +199,8 @@ const PrePriorityAlgoScreen = () => {
           <Button
             title="Schedule"
             onPress={() => {
-              if (state.PrePRprocess.length > 0) {
-                schedule("PrePR");
+              if (state.SRTFprocess.length > 0) {
+                schedule("SRTF");
                 setRefresh(!refresh);
                 setCurTime(0);
               } else {
@@ -279,7 +208,6 @@ const PrePriorityAlgoScreen = () => {
               }
             }}
           />
-
           <Button
             title="Add"
             onPress={() => {
@@ -287,14 +215,13 @@ const PrePriorityAlgoScreen = () => {
                 if (
                   arrTime >= 0 &&
                   Bursttime > 0 &&
-                  state.PrePRprocess.length < 4
+                  state.SRTFprocess.length < 4
                 ) {
                   setArrTime(arrTime);
                   setBursttime(Bursttime);
-                  addProcessWithPR(arrTime, Bursttime, priority, "PrePR");
+                  addProcess(arrTime, Bursttime, "SRTF");
                   setArrTime(0);
                   setBursttime(0);
-                  setPriority(0);
                   setRefresh(!refresh);
                 } else if (Bursttime <= 0) {
                   alert("Invalid Burst Time!");
@@ -307,7 +234,7 @@ const PrePriorityAlgoScreen = () => {
         </View>
       </View>
 
-      {state.PrePRshowProcess ? (
+      {state.SRTFshowProcess ? (
         <>
           <Text
             style={{
@@ -328,7 +255,7 @@ const PrePriorityAlgoScreen = () => {
               paddingHorizontal: scale(10),
             }}
           >
-            <View style={styles.tableBox1}>
+            <View style={styles.tableBox}>
               <Text style={styles.text}>Id</Text>
             </View>
             <View style={styles.tableBox}>
@@ -337,13 +264,10 @@ const PrePriorityAlgoScreen = () => {
             <View style={styles.tableBox}>
               <Text style={styles.text}>Burst Time</Text>
             </View>
-            <View style={styles.tableBox}>
-              <Text style={styles.text}>Priority</Text>
-            </View>
           </View>
           <FlatList
             style={{ alignSelf: "center", flex: 1 }}
-            data={state.PrePRprocess}
+            data={state.SRTFprocess}
             renderItem={({ item }) => {
               return (
                 <View
@@ -353,7 +277,7 @@ const PrePriorityAlgoScreen = () => {
                     paddingHorizontal: scale(10),
                   }}
                 >
-                  <View style={styles.tableBox1}>
+                  <View style={styles.tableBox}>
                     <View
                       style={{
                         flexDirection: "row",
@@ -380,9 +304,6 @@ const PrePriorityAlgoScreen = () => {
                   <View style={styles.tableBox}>
                     <Text style={styles.text}>{item.burstTime}</Text>
                   </View>
-                  <View style={styles.tableBox}>
-                    <Text style={styles.text}>{item.Pr}</Text>
-                  </View>
                 </View>
               );
             }}
@@ -390,7 +311,7 @@ const PrePriorityAlgoScreen = () => {
         </>
       ) : null}
 
-      {state.PrePRshowScheduled ? (
+      {state.SRTFshowScheduled ? (
         <View>
           <Text
             style={{
@@ -405,12 +326,12 @@ const PrePriorityAlgoScreen = () => {
           <View
             style={{ marginBottom: verticalScale(5), marginLeft: scale(10) }}
           >
-            <Bar isScheduled={state.PrePRisScheduled} type={"PrePR"} />
+            <Bar isScheduled={state.SRTFisScheduled} type={"SRTF"} />
           </View>
         </View>
       ) : null}
 
-      {state.PrePRshowScheduled ? (
+      {state.SRTFshowScheduled ? (
         <View style={{ marginBottom: verticalScale(20) }}>
           <Text
             style={{
@@ -434,9 +355,6 @@ const PrePriorityAlgoScreen = () => {
               <Text style={styles.text}>Id</Text>
             </View>
             <View style={styles.tableBox}>
-              <Text style={styles.text}>PR</Text>
-            </View>
-            <View style={styles.tableBox}>
               <Text style={styles.text}>AT</Text>
             </View>
             <View style={styles.tableBox}>
@@ -452,9 +370,9 @@ const PrePriorityAlgoScreen = () => {
               <Text style={styles.text}>WT</Text>
             </View>
           </View>
-          {state.PrePRisScheduled ? (
+          {state.SRTFisScheduled ? (
             <FlatList
-              data={state.PrePRscheduledProcess}
+              data={state.SRTFscheduledProcess}
               style={{ alignSelf: "center", flex: 1 }}
               renderItem={({ item }) => {
                 return (
@@ -466,9 +384,6 @@ const PrePriorityAlgoScreen = () => {
                   >
                     <View style={styles.tableBox}>
                       <Text style={styles.text}>{`P${item.id}`}</Text>
-                    </View>
-                    <View style={styles.tableBox}>
-                      <Text style={styles.text}>{item.Pr}</Text>
                     </View>
                     <View style={styles.tableBox}>
                       <Text style={styles.text}>{item.arrTime}</Text>
@@ -493,7 +408,7 @@ const PrePriorityAlgoScreen = () => {
         </View>
       ) : null}
 
-      {state.PrePRshowScheduled ? (
+      {state.SRTFshowScheduled ? (
         <>
           <Text
             style={{
@@ -506,7 +421,7 @@ const PrePriorityAlgoScreen = () => {
           >
             Steps Visualizer
           </Text>
-          <View style={{ borderWidth: scale(1), borderColor: primary }}>
+          <View style={{ borderWidth: 1, borderColor: primary }}>
             <View
               style={{
                 flexDirection: "row",
@@ -514,7 +429,7 @@ const PrePriorityAlgoScreen = () => {
                 alignItems: "center",
                 justifyContent: "center",
                 paddingVertical: verticalScale(10),
-                // borderWidth: scale(1),
+                // borderWidth: 1,
                 // borderColor: primary,
               }}
             >
@@ -533,20 +448,20 @@ const PrePriorityAlgoScreen = () => {
                   color={main}
                 />
               </TouchableOpacity>
-              {state.PrePRisScheduled ? (
+              {state.SRTFisScheduled ? (
                 <View
                   style={{
                     alignItems: "center",
                     flex: 1,
                     // justifyContent:'center'
-                    borderWidth: scale(1),
+                    borderWidth: 1,
                     borderColor: background,
                   }}
                 >
                   <View
                     style={{
                       borderColor: background,
-                      borderWidth: scale(1),
+                      borderWidth: 1,
                       flex: 1,
                       justifyContent: "center",
                     }}
@@ -554,7 +469,7 @@ const PrePriorityAlgoScreen = () => {
                     <Text
                       style={{
                         ...styles.text,
-                        marginBottom: 5,
+                        marginBottom: verticalScale(5),
                         alignSelf: "center",
                       }}
                     >
@@ -630,9 +545,9 @@ const PrePriorityAlgoScreen = () => {
                                   height: Dimensions.get("screen").width * 0.08,
                                   backgroundColor: "#CAE9FF",
                                   justifyContent: "center",
-                                  marginRight: scale(1),
+                                  marginRight: 1,
 
-                                  // borderWidth: scale(1),
+                                  // borderWidth: 1,
                                   // borderColor: "#000",
                                 }}
                               >
@@ -705,10 +620,10 @@ const PrePriorityAlgoScreen = () => {
 
               <TouchableOpacity
                 onPress={() => {
-                  if (curTime < state.PrePRwaitingTimeLine.length - 1) {
+                  if (curTime < state.SRTFwaitingTimeLine.length - 1) {
                     setCurTime(curTime + 1);
                     console.log(curTime);
-                  } else if (curTime == state.PrePRtimeLine.length - 1) {
+                  } else if (curTime == state.SRTFtimeLine.length - 1) {
                     setCurTime(curTime + 1);
                     // setEnded(true);
                   }
@@ -722,11 +637,11 @@ const PrePriorityAlgoScreen = () => {
                 />
               </TouchableOpacity>
             </View>
-            {state.PrePRshowScheduled && state.PrePRisScheduled ? (
+            {state.SRTFshowScheduled && state.SRTFisScheduled ? (
               <ProgressiveBar
-                isScheduled={state.PrePRisScheduled}
+                isScheduled={state.SRTFisScheduled}
                 curTime={curTime}
-                type={"PrePR"}
+                type={"SRTF"}
               />
             ) : null}
           </View>
@@ -736,7 +651,7 @@ const PrePriorityAlgoScreen = () => {
   );
 };
 
-export default PrePriorityAlgoScreen;
+export default SRTFAlgoScreen;
 
 const styles = StyleSheet.create({
   line: {
@@ -744,26 +659,16 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   tableBox: {
-    flex: 3,
-    borderWidth: scale(1),
+    flex: 1,
+    borderWidth: 1,
     borderColor: primary,
     alignContent: "center",
-    paddingLeft: scale(1),
-    backgroundColor: background,
-    alignItems: "center",
-  },
-  tableBox1: {
-    flex: 2,
-    borderWidth: scale(1),
-    borderColor: primary,
-    alignContent: "center",
-    paddingLeft: scale(1),
+    paddingLeft: 1,
     backgroundColor: background,
     alignItems: "center",
   },
   text: {
     color: text,
     fontFamily: "Popins",
-    fontSize: scale(14),
   },
 });

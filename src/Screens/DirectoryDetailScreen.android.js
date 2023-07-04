@@ -28,7 +28,7 @@ const DirectoryDetailScreen = (props) => {
   }
   var n = state.dirs[dir_id].files.length;
   const [loaded] = useFonts({
-    Popins: require("../../assets/fonts/Poppins-Light.ttf"),
+    Popins: require("../../public/assets/fonts/Poppins-Light.ttf"),
   });
   if (!loaded) {
     return null;

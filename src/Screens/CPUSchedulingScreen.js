@@ -23,7 +23,7 @@ const CPUSchedulingScreen = () => {
   const { state, changeTheAlgo } = useContext(AlgoContext);
 
   const [loaded] = useFonts({
-    Popins: require("../../assets/fonts/Poppins-Light.ttf"),
+    Popins: require("../../public/assets/fonts/Poppins-Light.ttf"),
   });
 
   if (!loaded) {
