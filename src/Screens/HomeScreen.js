@@ -58,7 +58,7 @@ const HomeScreen = () => {
             style={{ marginRight: scale(5) }}
           />
 
-          <Text style={styles.heading}>SmartStudy</Text>
+          <Text style={styles.heading}>Smart Study</Text>
         </View>
         <View
           style={{
