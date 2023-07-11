@@ -3,7 +3,10 @@ import React, { useState, useEffect, useContext } from "react";
 import { processColor } from "./Colors";
 import { Context as AlgoContext } from "../context/schedulingAlgoContext";
 import { scale, verticalScale, moderateScale  } from "react-native-size-matters";
+import useWindowSize from "../Hooks/useWindowSize";
 const ProgressiveBar = ({ isScheduled, curTime, type }) => {
+  const [width, height] = useWindowSize();
+
   const { state } = useContext(AlgoContext);
   if (type == "FCFS") {
     const n = state.FCFStimeLine.length;

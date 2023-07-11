@@ -9,11 +9,14 @@ import {
   moderateScale,
   ScaledSheet,
 } from "react-native-size-matters";
+import useWindowSize from "../Hooks/useWindowSize";
 Text.defaultProps = {
   ...(Text.defaultProps || {}),
   allowFontScaling: false,
 };
 const CommandTutorial = ({ command, content, argument, executable }) => {
+    const [width, height] = useWindowSize();
+
   const [loaded] = useFonts({
     Popins: require("../../public/assets/fonts/Poppins-Light.ttf"),
   });
@@ -30,7 +33,7 @@ const CommandTutorial = ({ command, content, argument, executable }) => {
           </View>
           <MaterialIcons
             name="event-available"
-            size={scale(24)}
+            size={scale(18)}
             color="green"
           />
         </View>
@@ -58,47 +61,49 @@ const CommandTutorial = ({ command, content, argument, executable }) => {
 
 export default CommandTutorial;
 
-const styles = ScaledSheet.create({
+const styles = StyleSheet.create({
   container: {
-    margin: "2@s",
-    padding: "5@s",
+    margin: scale(2),
+    padding: scale(5),
   },
   headerContainer: {
-    borderTopLeftRadius: "10@s",
-    borderTopEndRadius: "10@s",
+    borderTopLeftRadius: scale(5),
+    borderTopEndRadius: scale(5),
     flexDirection: "row",
     flex: 1,
     alignItems: "center",
+  
   },
   headerContainerPro: {
-    padding: "10@s",
+    padding: scale(5),
+    paddingVertical:verticalScale(1),
     backgroundColor: "#E07A50",
-    borderTopLeftRadius: "10@s",
-    borderTopEndRadius: "10@s",
+    borderTopLeftRadius: scale(5),
+    borderTopEndRadius: scale(5),
     flexDirection: "row",
     alignItems: "center",
     flex: 1,
   },
   contentContainer: {
-    padding: "10@s",
-    paddingLeft: "8@s",
+    padding: scale(1),
+    paddingLeft: scale(8),
     backgroundColor: "#e5e5e580",
-    borderBottomEndRadius: "10@s",
-    borderBottomLeftRadius: "10@s",
+    borderBottomEndRadius: scale(5),
+    borderBottomLeftRadius: scale(5),
   },
   Heading: {
-    fontSize: "30@s",
+    fontSize: scale(12),
     fontFamily: "Popins",
     fontWeight: "500",
     color: background,
   },
   content: {
-    fontSize: "16@s",
+    fontSize: scale(8),
     fontFamily: "Popins",
   },
   argument: {
-    fontSize: "25@s",
-    marginLeft: "5@s",
+    fontSize: scale(10),
+    marginLeft: scale(5),
     color: "grey",
     fontFamily: "Popins",
   },

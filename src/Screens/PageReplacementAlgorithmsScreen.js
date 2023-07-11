@@ -16,707 +16,764 @@ import Animated, { FadeIn, SlideInRight } from "react-native-reanimated";
 
 import Button from "../components/Button";
 import { Ionicons } from "@expo/vector-icons";
+import useWindowSize from "../Hooks/useWindowSize";
+import getMediaQuery from "../Hooks/getMediaQuery";
+import { back } from "react-native/Libraries/Animated/Easing";
 
 Text.defaultProps = {
   ...(Text.defaultProps || {}),
   allowFontScaling: false,
 };
-const { width } = Dimensions.get("window");
 
 const PageReplacementAlgorithmsScreen = () => {
-  const { state, addPage, clear, remove, schedule, changeTheAlgo } =
+  let { state, addPage, clear, remove, schedule, changeTheAlgo } =
     useContext(AlgoContext);
+
   const [refresh, setRefresh] = useState(true);
   const [curTime, setCurTime] = useState(0);
+  const [width, height] = useWindowSize();
+
+  const [isMobileWidth, isTabletWidth, isDesktopWidth, isWide] =
+    getMediaQuery();
+  const algoWidth = isWide ? width * 0.6 : width;
+  const algoHeight = isWide ? height : height * 0.6;
 
   const [loaded] = useFonts({
     Popins: require("../../public/assets/fonts/Poppins-Light.ttf"),
+  });
+
+  const styles = StyleSheet.create({
+    button: {
+      shadowColor: "#00000040", // IOS
+      shadowOffset: { height: scale(1), width: scale(1) }, // IOS
+      shadowOpacity: scale(1), // IOS
+      shadowRadius: scale(1), //IOS
+      backgroundColor: "#CAE9FF",
+      elevation: algoHeight / 100, // Android
+      justifyContent: "center",
+      alignItems: "center",
+      paddingHorizontal: algoWidth / 53,
+      paddingVertical: algoWidth / 100,
+      borderRadius: algoWidth / 100,
+      marginHorizontal: algoWidth / 100,
+    },
+    text: {
+      color: "#6930C3",
+      fontSize: algoWidth / 53,
+      alignSelf: "center",
+      fontFamily: "Popins",
+    },
+    processButton: {
+      height: algoWidth / 23,
+      width: algoWidth / 23,
+      alignContent: "center",
+      justifyContent: "center",
+      alignItems: "center",
+      margin: algoWidth / 150,
+      borderRadius: algoHeight / 20,
+      marginTop: verticalScale(5),
+    },
+
+    sequenceBox: {
+      height: algoWidth / 22,
+      width: algoWidth / 22,
+      alignContent: "center",
+      justifyContent: "center",
+      alignItems: "center",
+      margin: algoWidth / 300,
+      backgroundColor: "#CAE9FF",
+    },
+    normalText: {
+      fontFamily: "Popins",
+      fontSize: algoWidth / 53,
+    },
+
+    selectAlgoButton: {
+      marginHorizontal: scale(2),
+      borderRadius: scale(5),
+      borderColor: main,
+      borderWidth: scale(1),
+      paddingVertical: algoHeight / 100,
+      paddingHorizontal: algoWidth / 53,
+      backgroundColor: main,
+      alignSelf: "center",
+      shadowColor: "#00000040", // IOS
+      shadowOffset: { height: scale(1), width: scale(1) }, // IOS
+      shadowOpacity: scale(1), // IOS
+      shadowRadius: scale(2), //IOS
+      elevation: algoHeight / 100,
+    },
+
+    notSelectAlgoButton: {
+      marginHorizontal: scale(2),
+      borderRadius: scale(5),
+      borderColor: main,
+      borderWidth: scale(1),
+      paddingVertical: algoHeight / 100,
+      paddingHorizontal: algoHeight / 53,
+      backgroundColor: background,
+      alignSelf: "center",
+      shadowColor: "#00000040", // IOS
+      shadowOffset: { height: scale(1), width: scale(1) }, // IOS
+      shadowOpacity: scale(1), // IOS
+      shadowRadius: scale(2), //IOS
+      elevation: algoHeight / 100,
+    },
+    selectAlgoButtonText: {
+      color: background,
+      fontSize: algoWidth / 53,
+    },
+    notSelectAlgoButtonText: {
+      color: main,
+      fontSize: algoWidth / 53,
+    },
+    explanation: {
+      fontFamily: "Popins",
+      marginLeft: scale(5),
+      fontSize: algoWidth / 53,
+    },
   });
 
   if (!loaded) {
     return null;
   }
   return (
-    <View style={{ backgroundColor: background, flex: 1 }}>
-      <ScrollView
-        contentContainerStyle={{
-          alignItems: "center",
-          backgroundColor: background,
-        }}
-        showsVerticalScrollIndicator={false}
-      >
-        <View style={{ paddingVertical: verticalScale(15) }}>
+    <ScrollView
+      contentContainerStyle={{
+        backgroundColor: background,
+        flex: 1,
+        flexDirection: isWide ? "row" : "column",
+      }}
+    >
+      <View style={{ flex: 4 }}>
+        <ScrollView
+          contentContainerStyle={{
+            alignItems: "center",
+            backgroundColor: background,
+            borderRightColor: "grey",
+            borderBottomColor: "grey",
+            borderRightWidth: isWide ? algoWidth / 100 : 0,
+            borderBottomWidth: isWide ? 0 : algoWidth / 100,
+            flex:1
+          }}
+          showsVerticalScrollIndicator={true}
+        >
+          <View style={{ justifyContent: "center", alignItems: "center" }}>
+            <Text>Content will be available soon!</Text>
+            <Text>{width}</Text>
+            <Text>{algoWidth}</Text>
+          </View>
+        </ScrollView>
+      </View>
+      <View style={{ flex: 6 }}>
+        <ScrollView
+          contentContainerStyle={{
+            alignItems: "stretch",
+            backgroundColor: background,
+            paddingHorizontal: scale(5),
+          }}
+          showsVerticalScrollIndicator={false}
+        >
           <View
             style={{
-              marginBottom: scale(15),
-              borderWidth: scale(1),
-              borderRadius: scale(20),
-              borderColor: main,
-              width: scale(340),
-              paddingHorizontal: scale(5),
+              paddingVertical: verticalScale(5),
+              flex: 1,
             }}
           >
             <View
               style={{
-                flexDirection: "row",
-                alignItems: "center",
-                justifyContent: "space-around",
+                marginBottom: scale(5),
+                borderWidth: scale(1),
+                borderRadius: scale(20),
+                borderColor: main,
+                paddingHorizontal: algoWidth / 53,
+                alignContent: "space-between",
               }}
             >
-              <TouchableOpacity
-                onPress={() => {
-                  if (state.requestSequence.length < 10) {
-                    addPage(1);
-                    setRefresh(!refresh);
-                  } else {
-                    alert("Sorry! Can't add more pages");
-                  }
+              <View
+                style={{
+                  flexDirection: "row",
+                  alignContent: "center",
+                  justifyContent: "center",
                 }}
               >
                 <View
                   style={{
-                    ...styles.processButton,
-                    backgroundColor: "#d9ed92",
+                    flex: 4,
+                    justifyContent: "center",
                   }}
                 >
-                  <Text style={styles.normalText}>1</Text>
-                </View>
-              </TouchableOpacity>
-              <TouchableOpacity
-                onPress={() => {
-                  if (state.requestSequence.length < 10) {
-                    addPage(2);
-                    setRefresh(!refresh);
-                  } else {
-                    alert("Sorry! Can't add more pages");
-                  }
-                }}
-              >
-                <View
-                  style={{
-                    ...styles.processButton,
-                    backgroundColor: "#76c893",
-                  }}
-                >
-                  <Text style={styles.normalText}>2</Text>
-                </View>
-              </TouchableOpacity>
-              <TouchableOpacity
-                onPress={() => {
-                  if (state.requestSequence.length < 10) {
-                    addPage(3);
-                    setRefresh(!refresh);
-                  } else {
-                    alert("Sorry! Can't add more pages");
-                  }
-                }}
-              >
-                <View
-                  style={{
-                    ...styles.processButton,
-                    backgroundColor: "#168aad",
-                  }}
-                >
-                  <Text style={styles.normalText}>3</Text>
-                </View>
-              </TouchableOpacity>
-              <TouchableOpacity
-                onPress={() => {
-                  if (state.requestSequence.length < 10) {
-                    addPage(4);
-                    setRefresh(!refresh);
-                  } else {
-                    alert("Sorry! Can't add more pages");
-                  }
-                }}
-              >
-                <View
-                  style={{
-                    ...styles.processButton,
-                    backgroundColor: "#9FE2BF",
-                  }}
-                >
-                  <Text style={styles.normalText}>4</Text>
-                </View>
-              </TouchableOpacity>
-              <TouchableOpacity
-                onPress={() => {
-                  if (state.requestSequence.length < 10) {
-                    addPage(5);
-                    setRefresh(!refresh);
-                  } else {
-                    alert("Sorry! Can't add more pages");
-                  }
-                }}
-              >
-                <View
-                  style={{
-                    ...styles.processButton,
-                    backgroundColor: "#0096FF",
-                  }}
-                >
-                  <Text style={styles.normalText}>5</Text>
-                </View>
-              </TouchableOpacity>
-            </View>
-
-            <View
-              style={{
-                alignItems: "center",
-                paddingVertical: verticalScale(10),
-              }}
-            >
-              {state.requestSequence.length > 0 ? (
-                <FlatList
-                  data={state.requestSequence}
-                  horizontal
-                  showsHorizontalScrollIndicator={false}
-                  renderItem={({ item, index }) => {
-                    return (
-                      <Animated.View
-                        style={[
-                          styles.sequenceBox,
-                          state.showScheduled && index === curTime
-                            ? { borderColor: primary, borderWidth: scale(2) }
-                            : null,
-                        ]}
-                        entering={FadeIn.duration(700)}
+                  <View style={{ flexDirection: "row" }}>
+                    <View
+                      style={{
+                        flexDirection: "row",
+                        alignItems: "center",
+                        justifyContent: "space-around",
+                      }}
+                    >
+                      <TouchableOpacity
+                        onPress={() => {
+                          if (state.requestSequence.length < 10) {
+                            addPage(1);
+                            setRefresh(!refresh);
+                          } else {
+                            alert("Sorry! Can't add more pages");
+                          }
+                        }}
                       >
-                        <Text style={styles.normalText}>{item}</Text>
-                      </Animated.View>
-                    );
+                        <View
+                          style={{
+                            ...styles.processButton,
+                            backgroundColor: "#d9ed92",
+                          }}
+                        >
+                          <Text style={styles.normalText}>1</Text>
+                        </View>
+                      </TouchableOpacity>
+
+                      <TouchableOpacity
+                        onPress={() => {
+                          if (state.requestSequence.length < 10) {
+                            addPage(2);
+                            setRefresh(!refresh);
+                          } else {
+                            alert("Sorry! Can't add more pages");
+                          }
+                        }}
+                      >
+                        <View
+                          style={{
+                            ...styles.processButton,
+                            backgroundColor: "#76c893",
+                          }}
+                        >
+                          <Text style={styles.normalText}>2</Text>
+                        </View>
+                      </TouchableOpacity>
+                    </View>
+                    <View
+                      style={{
+                        flexDirection: "row",
+                        alignItems: "center",
+                        justifyContent: "space-around",
+                      }}
+                    >
+                      <TouchableOpacity
+                        onPress={() => {
+                          if (state.requestSequence.length < 10) {
+                            addPage(3);
+                            setRefresh(!refresh);
+                          } else {
+                            alert("Sorry! Can't add more pages");
+                          }
+                        }}
+                      >
+                        <View
+                          style={{
+                            ...styles.processButton,
+                            backgroundColor: "#168aad",
+                          }}
+                        >
+                          <Text style={styles.normalText}>3</Text>
+                        </View>
+                      </TouchableOpacity>
+                      <TouchableOpacity
+                        onPress={() => {
+                          if (state.requestSequence.length < 10) {
+                            addPage(4);
+                            setRefresh(!refresh);
+                          } else {
+                            alert("Sorry! Can't add more pages");
+                          }
+                        }}
+                      >
+                        <View
+                          style={{
+                            ...styles.processButton,
+                            backgroundColor: "#9FE2BF",
+                          }}
+                        >
+                          <Text style={styles.normalText}>4</Text>
+                        </View>
+                      </TouchableOpacity>
+                    </View>
+                    <View
+                      style={{
+                        flexDirection: "row",
+                        alignItems: "center",
+                        justifyContent: "space-around",
+                      }}
+                    >
+                      <TouchableOpacity
+                        onPress={() => {
+                          if (state.requestSequence.length < 10) {
+                            addPage(5);
+                            setRefresh(!refresh);
+                          } else {
+                            alert("Sorry! Can't add more pages");
+                          }
+                        }}
+                      >
+                        <View
+                          style={{
+                            ...styles.processButton,
+                            backgroundColor: "#0096FF",
+                          }}
+                        >
+                          <Text style={styles.normalText}>5</Text>
+                        </View>
+                      </TouchableOpacity>
+                    </View>
+                  </View>
+                </View>
+                <View
+                  style={{
+                    flex: 5,
+                    alignItems: "center",
+                    alignSelf: "center",
+                    justifyContent: "center",
                   }}
-                />
-              ) : (
-                <View style={{ height: width * 0.1, justifyContent: "center" }}>
+                >
+                  {state.requestSequence.length > 0 ? (
+                    <FlatList
+                      data={state.requestSequence}
+                      // horizontal
+                      numColumns={5}
+                      showsHorizontalScrollIndicator={false}
+                      renderItem={({ item, index }) => {
+                        return (
+                          <Animated.View
+                            style={[
+                              styles.sequenceBox,
+                              state.showScheduled && index === curTime
+                                ? {
+                                    shadowColor: "#00000040", // IOS
+                                    shadowOffset: {
+                                      height: scale(1),
+                                      width: scale(1),
+                                    }, // IOS
+                                    shadowOpacity: scale(1), // IOS
+                                    shadowRadius: scale(5), //IOS
+                                    elevation: 5,
+                                  }
+                                : null,
+                            ]}
+                            entering={FadeIn.duration(700)}
+                          >
+                            <Text style={styles.normalText}>{item}</Text>
+                          </Animated.View>
+                        );
+                      }}
+                    />
+                  ) : (
+                    <Text
+                      style={{
+                        fontFamily: "Popins",
+                        fontSize: algoWidth / 60,
+                        color: primary,
+                        alignSelf: "center",
+                        padding: 2,
+                      }}
+                    >
+                      *Click on above buttons to add the pages into the
+                      sequence.
+                    </Text>
+                  )}
+                </View>
+                <View
+                  style={{
+                    flex: 4,
+                    justifyContent: "center",
+                    alignContent: "center",
+                  }}
+                >
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      marginVertical: verticalScale(5),
+                      alignItems: "center",
+                      alignContent: "space-between",
+                      justifyContent: "center",
+                    }}
+                  >
+                    {state.requestSequence.length > 0 &&
+                    state.showRun == false ? (
+                      <View>
+                        <View
+                          style={{
+                            flexDirection: "row",
+                            marginBottom: algoHeight / 50,
+                          }}
+                        >
+                          <TouchableOpacity
+                            onPress={() => {
+                              clear();
+                              setRefresh(!refresh);
+                            }}
+                          >
+                            <View style={styles.button}>
+                              <Text style={styles.text}>Clear</Text>
+                            </View>
+                          </TouchableOpacity>
+                          <TouchableOpacity
+                            onPress={() => {
+                              remove();
+                              setRefresh(!refresh);
+                            }}
+                          >
+                            <View style={styles.button}>
+                              <Text style={styles.text}>Remove</Text>
+                            </View>
+                          </TouchableOpacity>
+                        </View>
+
+                        <TouchableOpacity
+                          onPress={() => {
+                            if (state.requestSequence.length > 0) {
+                              state.showRun = true;
+                              setRefresh(!refresh);
+                            } else {
+                              alert("Please add the pages first!");
+                            }
+                          }}
+                        >
+                          <View style={styles.button}>
+                            <Text style={styles.text}>Confirm</Text>
+                          </View>
+                        </TouchableOpacity>
+                      </View>
+                    ) : state.showRun ? (
+                      <View>
+                        <View
+                          style={{
+                            marginBottom: algoHeight / 50,
+                            flexDirection: "row",
+                            justifyContent: "center",
+                          }}
+                        >
+                          <TouchableOpacity
+                            onPress={() => {
+                              state.showRun = false;
+                              state.showScheduled = false;
+                              setRefresh(!refresh);
+                            }}
+                          >
+                            <View style={styles.button}>
+                              <Text style={styles.text}>Edit</Text>
+                            </View>
+                          </TouchableOpacity>
+                          <TouchableOpacity
+                            onPress={() => {
+                              schedule(state.selectedAlgorithm);
+                              setRefresh(!refresh);
+                              setCurTime(0);
+                            }}
+                          >
+                            <View style={styles.button}>
+                              <Text style={styles.text}>Run</Text>
+                            </View>
+                          </TouchableOpacity>
+                        </View>
+                        <View
+                          style={{
+                            flexDirection: "row",
+                            justifyContent: "center",
+                          }}
+                        >
+                          <TouchableOpacity
+                            style={
+                              state.selectedAlgorithm == "FIFO"
+                                ? styles.selectAlgoButton
+                                : styles.notSelectAlgoButton
+                            }
+                            onPress={() => {
+                              changeTheAlgo("FIFO");
+                              setRefresh(!refresh);
+                            }}
+                          >
+                            <Text
+                              style={
+                                state.selectedAlgorithm == "FIFO"
+                                  ? styles.selectAlgoButtonText
+                                  : styles.notSelectAlgoButtonText
+                              }
+                            >
+                              FIFO
+                            </Text>
+                          </TouchableOpacity>
+                          <TouchableOpacity
+                            style={
+                              state.selectedAlgorithm == "LRU"
+                                ? styles.selectAlgoButton
+                                : styles.notSelectAlgoButton
+                            }
+                            onPress={() => {
+                              changeTheAlgo("LRU");
+                              setRefresh(!refresh);
+                            }}
+                          >
+                            <Text
+                              style={
+                                state.selectedAlgorithm == "LRU"
+                                  ? styles.selectAlgoButtonText
+                                  : styles.notSelectAlgoButtonText
+                              }
+                            >
+                              LRU
+                            </Text>
+                          </TouchableOpacity>
+                          <TouchableOpacity
+                            style={
+                              state.selectedAlgorithm == "MRU"
+                                ? styles.selectAlgoButton
+                                : styles.notSelectAlgoButton
+                            }
+                            onPress={() => {
+                              changeTheAlgo("MRU");
+                              setRefresh(!refresh);
+                            }}
+                          >
+                            <Text
+                              style={
+                                state.selectedAlgorithm == "MRU"
+                                  ? styles.selectAlgoButtonText
+                                  : styles.notSelectAlgoButtonText
+                              }
+                            >
+                              MRU
+                            </Text>
+                          </TouchableOpacity>
+                        </View>
+                      </View>
+                    ) : null}
+                  </View>
+                </View>
+              </View>
+            </View>
+            {state.showScheduled ? (
+              <View
+                style={{
+                  flexDirection: "row",
+                  borderColor: primary,
+                  borderLeftWidth: 0,
+                  borderRightWidth: 0,
+                  borderTopWidth: scale(1),
+                  borderBottomWidth: scale(1),
+                  alignItems: "center",
+                  paddingVertical: verticalScale(5),
+                  marginBottom: verticalScale(5),
+                }}
+              >
+                {curTime > 0 ? (
+                  <TouchableOpacity
+                    onPress={() => {
+                      if (curTime > 0) {
+                        setCurTime(curTime - 1);
+                      }
+                    }}
+                  >
+                    <Ionicons
+                      name="chevron-back-outline"
+                      size={40}
+                      color={main}
+                    />
+                  </TouchableOpacity>
+                ) : (
+                  <TouchableOpacity>
+                    <Ionicons
+                      name="chevron-back-outline"
+                      size={40}
+                      color={main50}
+                    />
+                  </TouchableOpacity>
+                )}
+
+                <View
+                  style={{
+                    flex: 1,
+                    alignSelf: "center",
+                    flexWrap: "nowrap",
+                  }}
+                >
                   <Text
                     style={{
-                      fontFamily: "Popins",
-                      fontSize: scale(10),
-                      color: primary,
                       alignSelf: "center",
+                      fontFamily: "Popins",
+                      marginBottom: verticalScale(5),
+                      fontSize: algoWidth / 53,
                     }}
                   >
-                    *Click on above buttons to add the pages into the sequence.
+                    Time = {curTime}
                   </Text>
+                  {state.hitMissArray[curTime] === -1 ? (
+                    <Text style={styles.explanation}>
+                      Page {state.requestSequence[curTime]} is Missed.
+                    </Text>
+                  ) : (
+                    <Text style={styles.explanation}>
+                      Page {state.requestSequence[curTime]} is Hit.
+                    </Text>
+                  )}
+                  {state.replacedArray[curTime] != 0 ? (
+                    <View style={{ marginTop: 3 }}>
+                      <Text style={styles.explanation}>
+                        Page {state.requestSequence[curTime]} is replaced with
+                        the Page {state.replacedArray[curTime]} ,because we are
+                        using {state.selectedAlgorithm} algorithm. And Page{" "}
+                        {state.replacedArray[curTime]} came earliest in the RAM.
+                      </Text>
+                      {/* <Text style={styles.explanation}></Text> */}
+                      {/* <Text style={styles.explanation}></Text> */}
+                    </View>
+                  ) : (
+                    <View style={{ marginTop: 3 }}>
+                      <Text style={styles.explanation}>
+                        No need of replacement.
+                      </Text>
+                      <Text style={styles.explanation}> </Text>
+                    </View>
+                  )}
                 </View>
-              )}
-            </View>
-
-            <View
-              style={{
-                flexDirection: "row",
-                marginVertical: verticalScale(10),
-                alignItems: "stretch",
-                alignContent: "flex-start",
-                justifyContent: "space-around",
-              }}
-            >
-              {state.requestSequence.length > 0 && state.showRun == false ? (
-                <>
-                  <Button
-                    title={"Clear"}
-                    onPress={() => {
-                      clear();
-                      setRefresh(!refresh);
-                    }}
-                  />
-
-                  <Button
-                    title={"Confirm"}
-                    onPress={() => {
-                      if (state.requestSequence.length > 0) {
-                        state.showRun = true;
-                        setRefresh(!refresh);
-                      } else {
-                        alert("Please add the pages first!");
-                      }
-                    }}
-                  />
-
-                  <Button
-                    title={"Remove"}
-                    onPress={() => {
-                      remove();
-                      setRefresh(!refresh);
-                    }}
-                  />
-                </>
-              ) : state.showRun ? (
-                <Button
-                  title={"Edit the Request Sequence"}
-                  onPress={() => {
-                    state.showRun = false;
-                    state.showScheduled = false;
-                    setRefresh(!refresh);
-                  }}
-                />
-              ) : null}
-            </View>
-
-            {state.showRun ? (
-              <View style={{ justifyContent: "center", alignItems: "center" }}>
-                <View style={{ flexDirection: "row" }}>
+                {curTime < state.requestSequence.length - 1 ? (
                   <TouchableOpacity
-                    style={
-                      state.selectedAlgorithm == "FIFO"
-                        ? styles.selectAlgoButton
-                        : styles.notSelectAlgoButton
-                    }
                     onPress={() => {
-                      changeTheAlgo("FIFO");
-                      setRefresh(!refresh);
+                      if (curTime < state.requestSequence.length - 1) {
+                        setCurTime(curTime + 1);
+                      }
                     }}
                   >
-                    <Text
-                      style={
-                        state.selectedAlgorithm == "FIFO"
-                          ? styles.selectAlgoButtonText
-                          : styles.notSelectAlgoButtonText
-                      }
-                    >
-                      FIFO
-                    </Text>
+                    <Ionicons
+                      name="chevron-forward-outline"
+                      size={40}
+                      color={main}
+                    />
                   </TouchableOpacity>
-                  <TouchableOpacity
-                    style={
-                      state.selectedAlgorithm == "LRU"
-                        ? styles.selectAlgoButton
-                        : styles.notSelectAlgoButton
-                    }
-                    onPress={() => {
-                      changeTheAlgo("LRU");
-                      setRefresh(!refresh);
+                ) : (
+                  <TouchableOpacity>
+                    <Ionicons
+                      name="chevron-forward-outline"
+                      size={40}
+                      color={main50}
+                    />
+                  </TouchableOpacity>
+                )}
+              </View>
+            ) : null}
+
+            {state.showScheduled ? (
+              <View
+                style={{
+                  alignItems: "center",
+                  justifyContent: "center",
+                  alignContent: "center",
+                }}
+              >
+                {curTime === state.requestSequence.length - 1 ? (
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      justifyContent: "space-around",
+                      width: algoWidth,
                     }}
                   >
-                    <Text
-                      style={
-                        state.selectedAlgorithm == "LRU"
-                          ? styles.selectAlgoButtonText
-                          : styles.notSelectAlgoButtonText
-                      }
-                    >
-                      LRU
+                    <Text style={styles.normalText}>
+                      Hit Ratio : {state.HitRatio}
                     </Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    style={
-                      state.selectedAlgorithm == "MRU"
-                        ? styles.selectAlgoButton
-                        : styles.notSelectAlgoButton
-                    }
-                    onPress={() => {
-                      changeTheAlgo("MRU");
-                      setRefresh(!refresh);
-                    }}
-                  >
-                    <Text
-                      style={
-                        state.selectedAlgorithm == "MRU"
-                          ? styles.selectAlgoButtonText
-                          : styles.notSelectAlgoButtonText
-                      }
-                    >
-                      MRU
+                    <Text style={styles.normalText}>
+                      Miss Ratio: {state.MissRatio}
                     </Text>
-                  </TouchableOpacity>
-                </View>
+                  </View>
+                ) : (
+                  <Text> </Text>
+                )}
+
                 <View
                   style={{
-                    marginVertical: verticalScale(10),
-                    alignItems: "stretch",
-                    alignContent: "flex-start",
-                    justifyContent: "space-around",
+                    justifyContent: "center",
+                    marginTop: verticalScale(5),
+                    flexDirection: "row",
+                    alignContent: "center",
+                    alignItems: "center",
+                    alignSelf: "center",
+                    marginLeft: scale(10),
                   }}
                 >
-                  <Button
-                    title={"Run"}
-                    onPress={() => {
-                      schedule(state.selectedAlgorithm);
-                      setRefresh(!refresh);
-                      setCurTime(0);
+                  <FlatList
+                    contentContainerStyle={{
+                      alignSelf: "center",
+                      alignContent: "space-around",
+                      justifyContent: "center",
+                    }}
+                    data={state.ScheduledArray}
+                    numColumns={10}
+                    keyExtractor={(item, index) => `outer_${index}`} // Generate unique key for outer FlatList
+                    renderItem={({ item, index }) => {
+                      if (index <= curTime) {
+                        return (
+                          <View
+                            style={{
+                              marginBottom: verticalScale(5),
+                              alignItems: "center",
+                              marginRight: algoWidth / 53,
+                            }}
+                          >
+                            <Animated.FlatList
+                              entering={SlideInRight}
+                              data={item}
+                              keyExtractor={(item, index) => `inner_${index}`} // Generate unique key for inner FlatList
+                              renderItem={({ item }) => {
+                                return (
+                                  <Animated.View
+                                    style={styles.sequenceBox}
+                                    entering={SlideInRight}
+                                  >
+                                    {item > 0 ? (
+                                      <Text style={styles.normalText}>
+                                        {item}
+                                      </Text>
+                                    ) : (
+                                      <Text style={styles.normalText}> </Text>
+                                    )}
+                                  </Animated.View>
+                                );
+                              }}
+                            />
+                            {state.hitMissArray[index] === -1 ? (
+                              <Animated.View
+                                entering={SlideInRight}
+                                style={{
+                                  ...styles.sequenceBox,
+                                  marginTop: verticalScale(5),
+                                  backgroundColor: "#FF7F5095",
+                                }}
+                              >
+                                <Text style={styles.normalText}>M</Text>
+                              </Animated.View>
+                            ) : (
+                              <Animated.View
+                                entering={SlideInRight}
+                                style={{
+                                  ...styles.sequenceBox,
+                                  marginTop: verticalScale(5),
+                                  backgroundColor: "#9FE2BF",
+                                }}
+                              >
+                                <Text style={styles.normalText}>H</Text>
+                              </Animated.View>
+                            )}
+                          </View>
+                        );
+                      }
                     }}
                   />
                 </View>
               </View>
             ) : null}
           </View>
-          {state.showScheduled ? (
-            <View
-              style={{
-                flexDirection: "row",
-                borderColor: primary,
-                borderLeftWidth: 0,
-                borderRightWidth: 0,
-                borderTopWidth: scale(1),
-                borderBottomWidth: scale(1),
-                alignItems: "center",
-                paddingVertical: verticalScale(10),
-                marginBottom: verticalScale(5),
-              }}
-            >
-              {curTime > 0 ? (
-                <TouchableOpacity
-                  onPress={() => {
-                    if (curTime > 0) {
-                      setCurTime(curTime - 1);
-                    }
-                  }}
-                >
-                  <Ionicons
-                    name="chevron-back-outline"
-                    size={40}
-                    color={main}
-                  />
-                </TouchableOpacity>
-              ) : (
-                <TouchableOpacity>
-                  <Ionicons
-                    name="chevron-back-outline"
-                    size={40}
-                    color={main50}
-                  />
-                </TouchableOpacity>
-              )}
-
-              <View
-                style={{
-                  flex: 1,
-                  alignSelf: "center",
-                  flexWrap: "nowrap",
-                }}
-              >
-                <Text
-                  style={{
-                    alignSelf: "center",
-                    fontFamily: "Popins",
-                    marginBottom: verticalScale(5),
-                  }}
-                >
-                  Time = {curTime}
-                </Text>
-                {state.hitMissArray[curTime] === -1 ? (
-                  <Text
-                    style={{
-                      fontFamily: "Popins",
-                      marginLeft: scale(5),
-                      fontSize: scale(13.5),
-                    }}
-                  >
-                    Page {state.requestSequence[curTime]} is Missed.
-                  </Text>
-                ) : (
-                  <Text
-                    style={{
-                      fontFamily: "Popins",
-                      marginLeft: scale(5),
-                      fontSize: scale(13.5),
-                    }}
-                  >
-                    Page {state.requestSequence[curTime]} is Hit.
-                  </Text>
-                )}
-                {state.replacedArray[curTime] != 0 ? (
-                  <View style={{ marginTop: 3 }}>
-                    <Text
-                      style={{
-                        fontFamily: "Popins",
-                        marginLeft: scale(5),
-                        fontSize: scale(13.5),
-                      }}
-                    >
-                      Page {state.requestSequence[curTime]} is replaced with the
-                      Page {state.replacedArray[curTime]} ,
-                    </Text>
-                    <Text
-                      style={{
-                        fontFamily: "Popins",
-                        marginLeft: scale(5),
-                        fontSize: scale(13.5),
-                      }}
-                    >
-                      because we are using {state.selectedAlgorithm} algorithm.
-                    </Text>
-                    <Text
-                      style={{
-                        fontFamily: "Popins",
-                        marginLeft: scale(5),
-                        fontSize: scale(13.5),
-                      }}
-                    >
-                      And Page {state.replacedArray[curTime]} came earliest in
-                      the RAM.
-                    </Text>
-                  </View>
-                ) : (
-                  <View style={{ marginTop: 3 }}>
-                    <Text
-                      style={{
-                        fontFamily: "Popins",
-                        marginLeft: scale(5),
-                        fontSize: scale(13.5),
-                      }}
-                    >
-                      No need of replacement.
-                    </Text>
-                    <Text
-                      style={{
-                        fontFamily: "Popins",
-                        marginLeft: scale(5),
-                        fontSize: scale(13.5),
-                      }}
-                    >
-                      {" "}
-                    </Text>
-                    <Text
-                      style={{
-                        fontFamily: "Popins",
-                        marginLeft: scale(5),
-                        fontSize: scale(13.5),
-                      }}
-                    >
-                      {" "}
-                    </Text>
-                  </View>
-                )}
-              </View>
-              {curTime < state.requestSequence.length - 1 ? (
-                <TouchableOpacity
-                  onPress={() => {
-                    if (curTime < state.requestSequence.length - 1) {
-                      setCurTime(curTime + 1);
-                    }
-                  }}
-                >
-                  <Ionicons
-                    name="chevron-forward-outline"
-                    size={40}
-                    color={main}
-                  />
-                </TouchableOpacity>
-              ) : (
-                <TouchableOpacity>
-                  <Ionicons
-                    name="chevron-forward-outline"
-                    size={40}
-                    color={main50}
-                  />
-                </TouchableOpacity>
-              )}
-            </View>
-          ) : null}
-
-          {state.showScheduled ? (
-            <View
-              style={{
-                alignItems: "center",
-                justifyContent: "center",
-                alignContent: "center",
-              }}
-            >
-              {curTime === state.requestSequence.length - 1 ? (
-                <View
-                  style={{
-                    flexDirection: "row",
-                    justifyContent: "space-around",
-                    width: width,
-                  }}
-                >
-                  <Text style={styles.normalText}>
-                    Hit Ratio : {state.HitRatio}
-                  </Text>
-                  <Text style={styles.normalText}>
-                    Miss Ratio: {state.MissRatio}
-                  </Text>
-                </View>
-              ) : (
-                <Text> </Text>
-              )}
-
-              <View
-                style={{
-                  justifyContent: "center",
-                  marginTop: verticalScale(10),
-                  flexDirection: "row",
-                  alignContent: "center",
-                  alignItems: "center",
-                  alignSelf: "center",
-                  marginLeft: scale(10),
-                }}
-              >
-                <FlatList
-                  contentContainerStyle={{
-                    alignSelf: "center",
-                    alignContent: "space-around",
-                    justifyContent: "center",
-                  }}
-                  data={state.ScheduledArray}
-                  numColumns={5}
-                  keyExtractor={(item, index) => `outer_${index}`} // Generate unique key for outer FlatList
-                  renderItem={({ item, index }) => {
-                    if (index <= curTime) {
-                      return (
-                        <View
-                          style={{
-                            marginBottom: verticalScale(10),
-                            alignItems: "center",
-                            marginRight: scale(20),
-                          }}
-                        >
-                          <Animated.FlatList
-                            entering={SlideInRight}
-                            data={item}
-                            keyExtractor={(item, index) => `inner_${index}`} // Generate unique key for inner FlatList
-                            renderItem={({ item }) => {
-                              return (
-                                <Animated.View
-                                  style={styles.sequenceBox}
-                                  entering={SlideInRight}
-                                >
-                                  {item > 0 ? (
-                                    <Text style={styles.normalText}>
-                                      {item}
-                                    </Text>
-                                  ) : (
-                                    <Text style={styles.normalText}> </Text>
-                                  )}
-                                </Animated.View>
-                              );
-                            }}
-                          />
-                          {state.hitMissArray[index] === -1 ? (
-                            <Animated.View
-                              entering={SlideInRight}
-                              style={{
-                                ...styles.sequenceBox,
-                                marginTop: verticalScale(10),
-                                backgroundColor: "#FF7F5095",
-                              }}
-                            >
-                              <Text style={styles.normalText}>M</Text>
-                            </Animated.View>
-                          ) : (
-                            <Animated.View
-                              entering={SlideInRight}
-                              style={{
-                                ...styles.sequenceBox,
-                                marginTop: verticalScale(10),
-                                backgroundColor: "#9FE2BF",
-                              }}
-                            >
-                              <Text style={styles.normalText}>H</Text>
-                            </Animated.View>
-                          )}
-                        </View>
-                      );
-                    }
-                  }}
-                />
-              </View>
-            </View>
-          ) : (
-            <Text style={styles.normalText}></Text>
-          )}
-        </View>
-      </ScrollView>
-    </View>
+        </ScrollView>
+      </View>
+    </ScrollView>
   );
 };
 
 export default PageReplacementAlgorithmsScreen;
-
-const styles = StyleSheet.create({
-  processButton: {
-    height: width * 0.12,
-    width: width * 0.12,
-    alignContent: "center",
-    justifyContent: "center",
-    alignItems: "center",
-    margin: scale(10),
-    borderRadius: width * 0.12,
-  },
-
-  sequenceBox: {
-    height: width * 0.09,
-    width: width * 0.09,
-    alignContent: "center",
-    justifyContent: "center",
-    alignItems: "center",
-    margin: scale(1),
-    backgroundColor: "#CAE9FF",
-  },
-  normalText: {
-    fontFamily: "Popins",
-  },
-  heading: {
-    fontFamily: "Popins",
-    fontSize: scale(35),
-    fontWeight: "400",
-    marginTop: verticalScale(5),
-    marginBottom: verticalScale(10),
-    color: primary,
-  },
-  head1: {
-    fontFamily: "Popins",
-    fontSize: scale(14),
-    color: primary,
-  },
-  head2: {
-    fontFamily: "Popins",
-    fontSize: scale(16),
-    color: primary,
-  },
-  name: {
-    fontFamily: "Popins",
-    fontSize: scale(20),
-    marginTop: verticalScale(10),
-    color: primary,
-  },
-  rights: {
-    fontFamily: "Popins",
-    fontSize: scale(12),
-    color: primary,
-    marginTop: scale(10),
-  },
-  rights1: {
-    fontFamily: "Popins",
-    fontSize: scale(12),
-    color: primary,
-    marginBottom: verticalScale(10),
-  },
-  selectAlgoButton: {
-    margin: scale(4),
-    borderRadius: scale(10),
-    borderColor: background,
-    borderWidth: scale(1),
-    padding: scale(8),
-    backgroundColor: main,
-    alignSelf: "center",
-  },
-  selectAlgoButtonText: {
-    color: background,
-    fontSize: scale(15),
-  },
-  notSelectAlgoButton: {
-    margin: scale(4),
-    borderRadius: scale(10),
-    borderColor: main,
-    borderWidth: scale(1),
-    padding: scale(8),
-    backgroundColor: background,
-    alignSelf: "center",
-  },
-  notSelectAlgoButtonText: {
-    color: main,
-    fontSize: scale(15),
-  },
-  item: {
-    backgroundColor: "#81f51b50",
-    width: scale(30),
-    height: scale(30),
-    alignItems: "center",
-    paddingTop: scale(5),
-    marginRight: scale(2),
-    borderRadius: scale(5),
-  },
-});

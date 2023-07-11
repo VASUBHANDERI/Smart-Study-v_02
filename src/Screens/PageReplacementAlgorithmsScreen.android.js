@@ -13,19 +13,17 @@ import { scale, verticalScale } from "react-native-size-matters";
 import { background, main, main50, primary } from "../components/Colors";
 import { Context as AlgoContext } from "../context/pageReplacementAlgoContext";
 import { useFonts } from "expo-font";
-import Animated, {
-  FadeIn,
-  SlideInRight,
-} from "react-native-reanimated";
+import Animated, { FadeIn, SlideInRight } from "react-native-reanimated";
 
 import Button from "../components/Button";
-import { Ionicons } from "@expo/vector-icons";
+import { Entypo, Ionicons } from "@expo/vector-icons";
+import { Stack } from "expo-router";
 
 Text.defaultProps = {
   ...(Text.defaultProps || {}),
   allowFontScaling: false,
 };
-const { width } = Dimensions.get("window");
+const { width, height } = Dimensions.get("window");
 
 const PageReplacementAlgorithmsScreen = () => {
   const { state, addPage, clear, remove, schedule, changeTheAlgo } =
@@ -41,11 +39,17 @@ const PageReplacementAlgorithmsScreen = () => {
     return null;
   }
   return (
-    <View style={{ backgroundColor: background, flex: 1 }}>
+    <View
+      style={{
+        backgroundColor: background,
+        flex: 1,
+      }}
+    >
       <ScrollView
         contentContainerStyle={{
           alignItems: "center",
           backgroundColor: background,
+          position: "absolute",
         }}
         showsVerticalScrollIndicator={false}
       >
@@ -56,8 +60,9 @@ const PageReplacementAlgorithmsScreen = () => {
               borderWidth: scale(1),
               borderRadius: scale(20),
               borderColor: main,
-              width: scale(340),
-              paddingHorizontal: scale(5),
+              marginHorizontal: scale(2),
+              width: width - scale(4),
+              paddingHorizontal: scale(2),
             }}
           >
             <View

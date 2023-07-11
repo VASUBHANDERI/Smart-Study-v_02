@@ -15,12 +15,15 @@ import { scale, verticalScale } from "react-native-size-matters";
 import Button from "../components/Button";
 import { Context as DiskContext } from "../context/diskManagementAlgoContext";
 import Graph from "../components/Graph";
+import useWindowSize from "../Hooks/useWindowSize";
 
 Text.defaultProps = {
   ...(Text.defaultProps || {}),
   allowFontScaling: false,
 };
+
 const DiskManagementScreen = () => {
+  const [width, height] = useWindowSize();
   const {
     state,
     schedule,

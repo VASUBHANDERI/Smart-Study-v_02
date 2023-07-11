@@ -11,10 +11,13 @@ import { useContext } from "react";
 import { Context as DiskContext } from "../context/diskManagementAlgoContext";
 import { scale, verticalScale } from "react-native-size-matters";
 import React from "react";
+import useWindowSize from "../Hooks/useWindowSize";
 
 const AnimatedSvg = Animated.createAnimatedComponent(Svg);
 
 const Graph = () => {
+    const [width, height] = useWindowSize();
+
   const { state } = useContext(DiskContext);
 
   // Calculate the height of the graph container based on the maximum value

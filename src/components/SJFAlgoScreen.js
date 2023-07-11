@@ -20,12 +20,14 @@ import { main, primary, text, background } from "./Colors";
 import Button from "./Button";
 import { processColor } from "./Colors";
 import ProgressiveBar from "./ProgressiveBar";
+import useWindowSize from "../Hooks/useWindowSize";
 
 const SJFAlgoScreen = () => {
   const [arrTime, setArrTime] = useState(0);
   const [Bursttime, setBursttime] = useState(0);
   const [curTime, setCurTime] = useState(0);
-  const { width, height } = Dimensions.get("window");
+  const [width, height] = useWindowSize();
+
   const [refresh, setRefresh] = useState(false);
   const { addProcess, state, clear, schedule } = useContext(AlgoContext);
 

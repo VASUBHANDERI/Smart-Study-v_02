@@ -3,8 +3,11 @@ import React, { useState, useEffect, useContext } from "react";
 import { processColor } from "./Colors";
 import { Context as AlgoContext } from "../context/schedulingAlgoContext";
 import { scale, verticalScale, moderateScale } from "react-native-size-matters";
+import useWindowSize from "../Hooks/useWindowSize";
 const Bar = ({ isScheduled, type }) => {
   const { state } = useContext(AlgoContext);
+    const [width, height] = useWindowSize();
+
   if (type == "FCFS") {
     const n = state.FCFStimeLine.length;
     return (

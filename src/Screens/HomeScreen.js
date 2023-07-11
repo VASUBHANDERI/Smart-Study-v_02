@@ -1,25 +1,112 @@
-import { StyleSheet, Text, View, Image } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  Dimensions,
+  ScrollView,
+} from "react-native";
 import React from "react";
-import { background, main, primary } from "../components/Colors";
+import { background, main, main50, primary } from "../components/Colors";
 import { useFonts } from "expo-font";
 import { Entypo } from "@expo/vector-icons";
 import { scale, verticalScale, moderateScale } from "react-native-size-matters";
+import getMediaQuery from "../Hooks/getMediaQuery";
+import useWindowSize from "../Hooks/useWindowSize";
+import { Link } from "expo-router";
 
-import Animated, {
-  useSharedValue,
-  useAnimatedStyle,
-  withRepeat,
-  withTiming,
-  withSequence,
-  runOnJS,
-} from "react-native-reanimated";
 Text.defaultProps = {
   ...(Text.defaultProps || {}),
   allowFontScaling: false,
 };
-import Button from "../components/Button";
 
 const HomeScreen = () => {
+  const [isMobileWidth, isTabletWidth, isDesktopWidth] = getMediaQuery();
+
+  const styles = StyleSheet.create({
+    heading: {
+      fontFamily: "Popins",
+      fontSize: isMobileWidth
+        ? 45
+        : isTabletWidth
+        ? 50
+        : isDesktopWidth
+        ? 55
+        : null,
+      fontWeight: "400",
+      marginVertical: 10,
+      color: primary,
+      marginLeft: scale(5),
+    },
+
+    head1: {
+      fontFamily: "Popins",
+      fontSize: isMobileWidth
+        ? 20
+        : isTabletWidth
+        ? 23
+        : isDesktopWidth
+        ? 25
+        : null,
+      color: primary,
+      alignSelf: "center",
+    },
+    head2: {
+      fontFamily: "Popins",
+      fontSize: isMobileWidth
+        ? 19
+        : isTabletWidth
+        ? 23
+        : isDesktopWidth
+        ? 30
+        : null,
+      color: primary,
+    },
+    name: {
+      fontFamily: "Popins",
+      fontSize: isMobileWidth
+        ? 30
+        : isTabletWidth
+        ? 30
+        : isDesktopWidth
+        ? 35
+        : null,
+      color: primary,
+    },
+    rights: {
+      fontFamily: "Popins",
+      fontSize: isMobileWidth
+        ? 12
+        : isTabletWidth
+        ? 15
+        : isDesktopWidth
+        ? 15
+        : null,
+      color: primary,
+      marginTop: 10,
+      alignSelf: "center",
+    },
+    rights1: {
+      fontFamily: "Popins",
+      fontSize: isMobileWidth
+        ? 12
+        : isTabletWidth
+        ? 15
+        : isDesktopWidth
+        ? 15
+        : null,
+      color: primary,
+      marginBottom: 10,
+      alignSelf: "center",
+    },
+    nameRow: {
+      flexDirection: "row",
+      alignContent: "center",
+      alignItems: "center",
+      marginVertical: 4,
+    },
+  });
+
   const [loaded] = useFonts({
     Popins: require("../../public/assets/fonts/Poppins-Light.ttf"),
   });
@@ -36,130 +123,95 @@ const HomeScreen = () => {
     >
       <View
         style={{
-          alignItems: "center",
-
-          backgroundColor: background,
+          flex: 1,
         }}
       >
+        
         <View
           style={{
             justifyContent: "center",
             alignItems: "center",
-            backgroundColor: background,
-            paddingVertical: verticalScale(10),
-            // paddingLeft: scale(10),
+            paddingVertical: 10,
             flexDirection: "row",
           }}
         >
           <Entypo
             name="network"
-            size={scale(70)}
+            size={
+              isMobileWidth
+                ? 55
+                : isTabletWidth
+                ? 60
+                : isDesktopWidth
+                ? 75
+                : null
+            }
             color={main}
             style={{ marginRight: scale(5) }}
           />
 
-          <Text style={styles.heading}>SmartStudy</Text>
+          <Text style={[styles.heading]}>SmartStudy</Text>
         </View>
         <View
           style={{
             flex: 1,
             justifyContent: "center",
-            // borderColor: "Green",
-            // borderWidth: 3,
           }}
         >
           <View
             style={{
               alignItems: "center",
               justifyContent: "center",
-              // borderColor: "red",
-              // borderWidth: 3,
             }}
           >
             <View style={styles.nameRow}>
-              <Text style={styles.name}>Dr. Nileshchandra Pikle </Text>
-              <Text style={styles.head1}>(Mentor)</Text>
+              <Text style={[styles.name]}>Dr. Nileshchandra Pikle</Text>
+              <Text style={[styles.head1]}>(Mentor)</Text>
             </View>
             <View style={styles.nameRow}>
-              <Text style={styles.name}>Vasu Bhanderi </Text>
-              <Text style={styles.head1}>(Developer)</Text>
+              <Text style={[styles.name]}>Vasu Bhanderi</Text>
+              <Text style={[styles.head1]}>(Developer)</Text>
             </View>
             <View style={styles.nameRow}>
-              <Text style={styles.name}>Vishnu Bhanderi </Text>
-              <Text style={styles.head1}>(Developer)</Text>
+              <Text style={[styles.name]}>Vishnu Bhanderi</Text>
+              <Text style={[styles.head1]}>(Developer)</Text>
             </View>
           </View>
           <View
             style={{
               alignItems: "center",
-              marginBottom: verticalScale(20),
-              // borderColor: "red",
-              // borderWidth: 3,
+              marginVertical: 20,
             }}
           >
             <Image
               source={require("../../public/assets/IIITN.png")}
-              style={{ height: verticalScale(65), width: scale(65) }}
+              style={{
+                height: isMobileWidth
+                  ? 120
+                  : isTabletWidth
+                  ? 140
+                  : isDesktopWidth
+                  ? 150
+                  : null,
+                width: isMobileWidth
+                  ? 120
+                  : isTabletWidth
+                  ? 140
+                  : isDesktopWidth
+                  ? 150
+                  : null,
+              }}
             />
-            <Text style={styles.head2}>
+            <Text numberOfLines={1} style={styles.head2}>
               Indian Institute of Information Technology, Nagpur
             </Text>
           </View>
+          <Text style={styles.rights}>Copyright © 2023 SmartStudy</Text>
+          <Text style={styles.rights1}>All rights reserved</Text>
         </View>
-      </View>
-      <View style={{ alignItems: "center", backgroundColor: background }}>
-        <Text style={styles.rights}>Copyright © 2023 SmartStudy</Text>
-        <Text style={styles.rights1}>All rights reserved</Text>
       </View>
     </View>
   );
 };
 
 export default HomeScreen;
-
-const styles = StyleSheet.create({
-  heading: {
-    fontFamily: "Popins",
-    fontSize: scale(35),
-    fontWeight: "400",
-    marginTop: verticalScale(5),
-    marginBottom: verticalScale(5),
-    color: primary,
-    marginLeft: scale(5),
-  },
-  head1: {
-    fontFamily: "Popins",
-    fontSize: scale(14),
-    color: primary,
-    alignSelf: "center",
-  },
-  head2: {
-    fontFamily: "Popins",
-    fontSize: scale(16),
-    color: primary,
-  },
-  name: {
-    fontFamily: "Popins",
-    fontSize: scale(20),
-    // marginTop: verticalScale(10),
-    color: primary,
-  },
-  rights: {
-    fontFamily: "Popins",
-    fontSize: scale(12),
-    color: primary,
-    marginTop: scale(10),
-  },
-  rights1: {
-    fontFamily: "Popins",
-    fontSize: scale(12),
-    color: primary,
-    marginBottom: verticalScale(10),
-  },
-  nameRow: {
-    flexDirection: "row",
-    alignContent: "center",
-    alignItems: "center",
-    marginVertical: scale(4),
-  },
-});

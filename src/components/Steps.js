@@ -2,10 +2,13 @@ import { StyleSheet, Text, View, FlatList, Button } from "react-native";
 import React, { useState, useContext } from "react";
 import { Context as AlgoContext } from "../context/schedulingAlgoContext";
 import { scale, verticalScale, moderateScale } from "react-native-size-matters";
+import useWindowSize from "../Hooks/useWindowSize";
 const Steps = () => {
   const { state } = useContext(AlgoContext);
   const [curTime, setCurTime] = useState(0);
   //   let n = state.waitingTimeLine[curTime].length;
+  const [width, height] = useWindowSize();
+
   console.log(state.waitingTimeLine[curTime]);
 
   return (

@@ -16,9 +16,10 @@ import SJFAlgoScreen from "../components/SJFAlgoScreen";
 import SRTFAlgoScreen from "../components/SRTFAlgoScreen";
 import PriorityAlgoScreen from "../components/PriorityAlgoScreen";
 import PrePriorityAlgoScreen from "../components/PrePriorityAlgoScreen";
+import useWindowSize from "../Hooks/useWindowSize";
 
 const CPUSchedulingScreen = () => {
-  const { width } = Dimensions.get("window");
+    const [width, height] = useWindowSize();
   const [refresh, setRefresh] = useState(false);
   const { state, changeTheAlgo } = useContext(AlgoContext);
 

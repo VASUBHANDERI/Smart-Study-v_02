@@ -1,12 +1,14 @@
 import { Text, ScrollView } from "react-native";
 import React from "react";
-import CommandTutorial from "../components/CommandTutorial.android";
+import CommandTutorial from "../components/CommandTutorial";
 import { background } from "../components/Colors";
+import useWindowSize from "../Hooks/useWindowSize";
 Text.defaultProps = {
   ...(Text.defaultProps || {}),
   allowFontScaling: false,
 };
 const LearnCommandsScreen = () => {
+  const [width, height] = useWindowSize();
   return (
     <ScrollView
       style={{ flex: 1, backgroundColor: background }}

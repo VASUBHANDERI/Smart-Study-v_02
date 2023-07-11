@@ -15,13 +15,12 @@ import Constants from "expo-constants";
 import { useFonts } from "expo-font";
 import { AntDesign, Entypo, FontAwesome5, Ionicons } from "@expo/vector-icons";
 import { DrawerContent } from "@react-navigation/drawer";
-import { useNavigation } from "expo-router";
+import { Stack, useNavigation } from "expo-router";
 import { useEffect, useState } from "react";
 
 const isWeb = Platform.OS === "web";
 
 export default function Layout() {
-  const [ready, setReady] = useState(false);
   const [loaded] = useFonts({
     Popins: require("../public/assets/fonts/Poppins-Light.ttf"),
   });

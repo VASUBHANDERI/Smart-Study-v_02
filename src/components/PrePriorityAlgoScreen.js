@@ -20,18 +20,20 @@ import { main, primary, text, background } from "./Colors";
 import Button from "./Button";
 import { processColor } from "./Colors";
 import ProgressiveBar from "./ProgressiveBar";
+import useWindowSize from "../Hooks/useWindowSize";
 
 const PrePriorityAlgoScreen = () => {
   const [arrTime, setArrTime] = useState(0);
   const [Bursttime, setBursttime] = useState(0);
   const [curTime, setCurTime] = useState(0);
   const [priority, setPriority] = useState(0);
-  const { width, height } = Dimensions.get("window");
+
   const [refresh, setRefresh] = useState(false);
   const { addProcessWithPR, state, clear, schedule } = useContext(AlgoContext);
 
   const timeLine = [...state.PrePRtimeLine, -1];
   const waitingTimeLine = [...state.PrePRwaitingTimeLine, [-1]];
+  const [width, height] = useWindowSize();
 
   const [loaded] = useFonts({
     Popins: require("../../public/assets/fonts/Poppins-Light.ttf"),
