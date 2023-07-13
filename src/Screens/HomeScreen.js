@@ -126,7 +126,6 @@ const HomeScreen = () => {
           flex: 1,
         }}
       >
-        
         <View
           style={{
             justifyContent: "center",
@@ -165,16 +164,16 @@ const HomeScreen = () => {
             }}
           >
             <View style={styles.nameRow}>
-              <Text style={[styles.name]}>Dr. Nileshchandra Pikle</Text>
-              <Text style={[styles.head1]}>(Mentor)</Text>
-            </View>
-            <View style={styles.nameRow}>
               <Text style={[styles.name]}>Vasu Bhanderi</Text>
               <Text style={[styles.head1]}>(Developer)</Text>
             </View>
             <View style={styles.nameRow}>
               <Text style={[styles.name]}>Vishnu Bhanderi</Text>
               <Text style={[styles.head1]}>(Developer)</Text>
+            </View>
+            <View style={styles.nameRow}>
+              <Text style={[styles.name]}>Dr. Nileshchandra Pikle</Text>
+              <Text style={[styles.head1]}>(Mentor)</Text>
             </View>
           </View>
           <View
