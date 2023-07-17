@@ -56,134 +56,143 @@ const FCFSAlgoScreen = () => {
             paddingLeft: scale(20),
           }}
         >
-          <View>
-            <Text
-              style={{
-                alignSelf: "center",
-                color: text,
-                fontSize: scale(16),
-                fontFamily: "Popins",
-              }}
-            >
-              Arrival Time
-            </Text>
-            <View
-              style={{
-                flexDirection: "row",
-                alignSelf: "center",
-                margin: scale(5),
-                padding: scale(5),
-                justifyContent: "center",
-                alignContent: "center",
-              }}
-            >
-              <TouchableOpacity
-                onPress={() => {
-                  if (arrTime > 0) {
-                    setArrTime(arrTime - 1);
-                    Vibration.vibrate(80);
-                  } else {
-                    ToastAndroid.show(
-                      "Sorry! Can't decrease Arrival Time anymore!",
-                      ToastAndroid.SHORT
-                    );
-                  }
-                }}
-              >
-                <Feather name="minus-circle" size={scale(30)} color={text} />
-              </TouchableOpacity>
+          <View
+            style={{
+              flexDirection: "row",
+              alignItems: "stretch",
+              alignContent: "flex-start",
+              justifyContent: "space-around",
+            }}
+          >
+            <View>
               <Text
                 style={{
-                  paddingHorizontal: scale(15),
+                  alignSelf: "center",
                   color: text,
                   fontSize: scale(16),
-                  alignSelf: "center",
                   fontFamily: "Popins",
-                  width: Dimensions.get("window").width * 0.14,
                 }}
               >
-                {arrTime}
+                Arrival Time
               </Text>
-              <TouchableOpacity
-                onPress={() => {
-                  if (arrTime < 5) {
-                    setArrTime(arrTime + 1);
-                    Vibration.vibrate(80);
-                  } else {
-                    ToastAndroid.show(
-                      "Sorry! Can't increase Arrival Time anymore!",
-                      ToastAndroid.SHORT
-                    );
-                  }
+              <View
+                style={{
+                  flexDirection: "row",
+                  alignSelf: "center",
+                  margin: scale(5),
+                  padding: scale(5),
+                  justifyContent: "center",
+                  alignContent: "center",
                 }}
               >
-                <Feather name="plus-circle" size={scale(30)} color={text} />
-              </TouchableOpacity>
+                <TouchableOpacity
+                  onPress={() => {
+                    if (arrTime > 0) {
+                      setArrTime(arrTime - 1);
+                      Vibration.vibrate(80);
+                    } else {
+                      ToastAndroid.show(
+                        "Sorry! Can't decrease Arrival Time anymore!",
+                        ToastAndroid.SHORT
+                      );
+                    }
+                  }}
+                >
+                  <Feather name="minus-circle" size={scale(30)} color={text} />
+                </TouchableOpacity>
+                <Text
+                  style={{
+                    paddingHorizontal: scale(15),
+                    color: text,
+                    fontSize: scale(16),
+                    alignSelf: "center",
+                    fontFamily: "Popins",
+                    width: Dimensions.get("window").width * 0.14,
+                  }}
+                >
+                  {arrTime}
+                </Text>
+                <TouchableOpacity
+                  onPress={() => {
+                    if (arrTime < 5) {
+                      setArrTime(arrTime + 1);
+                      Vibration.vibrate(80);
+                    } else {
+                      ToastAndroid.show(
+                        "Sorry! Can't increase Arrival Time anymore!",
+                        ToastAndroid.SHORT
+                      );
+                    }
+                  }}
+                >
+                  <Feather name="plus-circle" size={scale(30)} color={text} />
+                </TouchableOpacity>
+              </View>
             </View>
-          </View>
-          <View>
-            <Text
-              style={{
-                alignSelf: "center",
-                color: text,
-                fontSize: scale(16),
-                fontFamily: "Popins",
-              }}
-            >
-              Burst Time
-            </Text>
-            <View
-              style={{
-                flexDirection: "row",
-                alignSelf: "center",
-                margin: scale(10),
-                padding: scale(5),
-                justifyContent: "center",
-                alignContent: "center",
-              }}
-            >
-              <TouchableOpacity
-                onPress={() => {
-                  if (Bursttime > 0) {
-                    setBursttime(Bursttime - 1);
-                    Vibration.vibrate(80);
-                  } else {
-                    ToastAndroid.show(
-                      "Sorry! Can't decrease Burst Time anymore!",
-                      ToastAndroid.SHORT
-                    );
-                  }
-                }}
-              >
-                <Feather name="minus-circle" size={scale(30)} color={text} />
-              </TouchableOpacity>
+            <View>
               <Text
                 style={{
-                  paddingHorizontal: scale(15),
+                  alignSelf: "center",
                   color: text,
                   fontSize: scale(16),
-                  alignSelf: "center",
                   fontFamily: "Popins",
-                  width: Dimensions.get("window").width * 0.14,
                 }}
               >
-                {Bursttime}
+                Burst Time
               </Text>
-              <TouchableOpacity
-                onPress={() => {
-                  if (Bursttime < 5) {
-                    setBursttime(Bursttime + 1);
-                    Vibration.vibrate(80);
-                  } else {
-                    ToastAndroid.show(
-                      "Sorry! Can't increase Burst Time anymore!",
-                      ToastAndroid.SHORT
-                    );
-                  }
+              <View
+                style={{
+                  flexDirection: "row",
+                  alignSelf: "center",
+                  margin: scale(10),
+                  padding: scale(5),
+                  justifyContent: "center",
+                  alignContent: "center",
                 }}
               >
-                <Feather name="plus-circle" size={scale(30)} color={text} />
-              </TouchableOpacity>
+                <TouchableOpacity
+                  onPress={() => {
+                    if (Bursttime > 0) {
+                      setBursttime(Bursttime - 1);
+                      Vibration.vibrate(80);
+                    } else {
+                      ToastAndroid.show(
+                        "Sorry! Can't decrease Burst Time anymore!",
+                        ToastAndroid.SHORT
+                      );
+                    }
+                  }}
+                >
+                  <Feather name="minus-circle" size={scale(30)} color={text} />
+                </TouchableOpacity>
+                <Text
+                  style={{
+                    paddingHorizontal: scale(15),
+                    color: text,
+                    fontSize: scale(16),
+                    alignSelf: "center",
+                    fontFamily: "Popins",
+                    width: Dimensions.get("window").width * 0.14,
+                  }}
+                >
+                  {Bursttime}
+                </Text>
+                <TouchableOpacity
+                  onPress={() => {
+                    if (Bursttime < 5) {
+                      setBursttime(Bursttime + 1);
+                      Vibration.vibrate(80);
+                    } else {
+                      ToastAndroid.show(
+                        "Sorry! Can't increase Burst Time anymore!",
+                        ToastAndroid.SHORT
+                      );
+                    }
+                  }}
+                >
+                  <Feather name="plus-circle" size={scale(30)} color={text} />
+                </TouchableOpacity>
+              </View>
             </View>
           </View>
         </View>
