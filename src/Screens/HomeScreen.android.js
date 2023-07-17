@@ -41,12 +41,12 @@ const HomeScreen = () => {
         <View
           style={{ alignItems: "center", flex: 1, justifyContent: "center" }}
         >
-          <Text style={styles.name}>Dr. Nileshchandra Pikle</Text>
-          <Text style={styles.head1}>(Mentor)</Text>
           <Text style={styles.name}>Vasu Bhanderi</Text>
           <Text style={styles.head1}>(Developer)</Text>
           <Text style={styles.name}>Vishnu Bhanderi</Text>
           <Text style={styles.head1}>(Developer)</Text>
+          <Text style={styles.name}>Dr. Nileshchandra Pikle</Text>
+          <Text style={styles.head1}>(Mentor)</Text>
         </View>
         <View style={{ alignItems: "center", marginBottom: verticalScale(20) }}>
           <Image
