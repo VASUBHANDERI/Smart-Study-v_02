@@ -16,6 +16,7 @@ import Button from "../components/Button";
 import { Context as DiskContext } from "../context/diskManagementAlgoContext";
 import Graph from "../components/Graph";
 import useWindowSize from "../Hooks/useWindowSize";
+import getMediaQuery from "../Hooks/getMediaQuery";
 
 Text.defaultProps = {
   ...(Text.defaultProps || {}),
@@ -24,6 +25,91 @@ Text.defaultProps = {
 
 const DiskManagementScreen = () => {
   const [width, height] = useWindowSize();
+
+  const [isMobileWidth, isTabletWidth, isDesktopWidth, isWide] =
+    getMediaQuery();
+  const algoWidth = isWide ? width * 0.6 : width;
+  const algoHeight = isWide ? height : height * 0.6;
+
+  const styles = StyleSheet.create({
+    button: {
+      shadowColor: "#00000040", // IOS
+      shadowOffset: { height: scale(1), width: scale(1) }, // IOS
+      shadowOpacity: scale(1), // IOS
+      shadowRadius: scale(1), //IOS
+      backgroundColor: "#CAE9FF",
+      elevation: algoHeight / 100, // Android
+      justifyContent: "center",
+      alignItems: "center",
+      paddingHorizontal: algoWidth / 53,
+      paddingVertical: algoWidth / 100,
+      borderRadius: algoWidth / 100,
+      marginHorizontal: algoWidth / 100,
+      marginTop: algoWidth / 100,
+    },
+    buttonText: {
+      color: "#6930C3",
+      fontSize: algoWidth / 53,
+      alignSelf: "center",
+      fontFamily: "Popins",
+    },
+    text: {
+      fontFamily: "Popins",
+      fontSize: algoWidth / 53,
+      color: primary,
+    },
+
+    selectAlgoButton: {
+      marginHorizontal: algoWidth / 100,
+      borderRadius: algoWidth / 100,
+      borderColor: main,
+      borderWidth: algoWidth / 200,
+      paddingVertical: algoWidth / 100,
+      paddingHorizontal: algoWidth / 53,
+      backgroundColor: main,
+      alignSelf: "center",
+      shadowColor: "#00000040", // IOS
+      shadowOffset: { height: scale(1), width: scale(1) }, // IOS
+      shadowOpacity: scale(1), // IOS
+      shadowRadius: scale(2), //IOS
+      elevation: algoWidth / 100,
+    },
+
+    notSelectAlgoButton: {
+      marginHorizontal: algoWidth / 100,
+      marginVertical: algoWidth / 100,
+      borderRadius: algoWidth / 100,
+      borderColor: main,
+      borderWidth: algoWidth / 300,
+      paddingVertical: algoWidth / 100,
+      paddingHorizontal: algoWidth / 53,
+      backgroundColor: background,
+      alignSelf: "center",
+      shadowColor: "#00000040", // IOS
+      shadowOffset: { height: scale(1), width: scale(1) }, // IOS
+      shadowOpacity: scale(1), // IOS
+      shadowRadius: scale(2), //IOS
+      elevation: algoWidth / 100,
+    },
+    selectAlgoButtonText: {
+      color: background,
+      fontSize: algoWidth / 53,
+    },
+    notSelectAlgoButtonText: {
+      color: main,
+      fontSize: algoWidth / 53,
+    },
+    item: {
+      backgroundColor: "#81f51b50",
+      width: algoWidth / 25,
+      height: algoWidth / 25,
+      alignItems: "center",
+      padding: algoWidth / 100,
+      marginRight: algoWidth / 200,
+      borderRadius: algoWidth / 100,
+    },
+  });
+
   const {
     state,
     schedule,
@@ -48,313 +134,424 @@ const DiskManagementScreen = () => {
   }
 
   return (
-    <View style={{ backgroundColor: background, flex: 1 }}>
-      <ScrollView
-        contentContainerStyle={{
-          alignItems: "center",
-          backgroundColor: background,
-        }}
-        showsVerticalScrollIndicator={false}
-      >
-        <View style={{ paddingVertical: verticalScale(15) }}>
+    <View
+      style={{
+        backgroundColor: background,
+        flex: 1,
+        flexDirection: isWide ? "row" : "column",
+      }}
+    >
+      <View style={{ flex: 4 }}>
+        <ScrollView
+          contentContainerStyle={{
+            alignItems: "center",
+            backgroundColor: background,
+            borderRightColor: "grey",
+            borderBottomColor: "grey",
+            borderRightWidth: isWide ? algoWidth / 100 : 0,
+            borderBottomWidth: isWide ? 0 : algoWidth / 100,
+            flex: 1,
+          }}
+          showsVerticalScrollIndicator={true}
+        >
+          <View style={{ justifyContent: "center", alignItems: "center" }}>
+            <Text>Content will be available soon!</Text>
+            <Text>{width}</Text>
+            <Text>{algoWidth}</Text>
+          </View>
+        </ScrollView>
+      </View>
+      <View style={{ flex: 6 }}>
+        <ScrollView
+          contentContainerStyle={{
+            alignItems: "center",
+            backgroundColor: background,
+          }}
+          showsVerticalScrollIndicator={false}
+        >
           <View
             style={{
               justifyContent: "center",
               alignItems: "center",
               backgroundColor: background,
-              paddingBottom: verticalScale(25),
+              paddingVertical: algoWidth / 100,
             }}
           >
             <View
               style={{
-                marginBottom: scale(15),
-                borderWidth: scale(1),
-                borderRadius: scale(20),
+                marginBottom: algoWidth / 53,
+                borderWidth: algoWidth / 300,
+                borderRadius: algoWidth / 30,
                 borderColor: main,
-                width: scale(340),
-                paddingHorizontal: scale(5),
+                width: algoWidth - algoWidth / 10,
+                paddingHorizontal: algoWidth / 50,
+                // alignItems: "center",
               }}
             >
               <View
                 style={{
-                  borderRadius: scale(20),
-                  backgroundColor: "#00000000",
+                  flexDirection: "row",
+                  flex: 1,
                 }}
               >
-                <View
-                  style={{
-                    flexDirection: "row",
-                    marginVertical: verticalScale(10),
-                    alignItems: "stretch",
-                    alignContent: "flex-start",
-                    alignSelf: "flex-start",
-                    marginLeft: scale(10),
-                  }}
-                >
-                  <Text style={styles.head2}>Enter Total No. of tracks: </Text>
-                  <TextInput
-                    style={{
-                      width: scale(40),
-                      fontSize: scale(14),
-                      paddingLeft: scale(5),
-                      paddingBottom: verticalScale(5),
-                      color: primary,
-                      outline: "none",
-                      borderBottomColor: primary,
-                      borderBottomWidth: 1,
-                    }}
-                    autoFocus={false}
-                    mode="outlined"
-                    value={totalTrack}
-                    onChangeText={(text) => setTotaltrack(text)}
-                    keyboardType="numeric"
-                    editable={!state.basicInfoCollected}
-                  />
-                  {state.basicInfoCollected ? (
-                    <Fontisto
-                      name="locked"
-                      size={scale(20)}
-                      color={main}
-                      style={{ marginLeft: scale(55), marginRight: scale(5) }}
-                    />
-                  ) : null}
-                </View>
-                <View
-                  style={{
-                    flexDirection: "row",
-                    marginVertical: verticalScale(10),
-                    alignItems: "stretch",
-                    alignContent: "flex-start",
-                    alignSelf: "flex-start",
-                    marginLeft: scale(10),
-                  }}
-                >
-                  <Text style={styles.head2}>
-                    Enter Current Position of Head:{" "}
-                  </Text>
-                  <TextInput
-                    style={{
-                      width: scale(40),
-                      marginRight: scale(15),
-                      fontSize: scale(14),
-                      paddingLeft: scale(5),
-                      paddingBottom: verticalScale(5),
-                      color: primary,
-                      outline: "none",
-                      borderBottomColor: primary,
-                      borderBottomWidth: 1,
-                    }}
-                    underlineColorAndroid={"#00000050"}
-                    value={currentPosition}
-                    onChangeText={(text) => setCurrentPosition(text)}
-                    keyboardType="numeric"
-                    editable={!state.basicInfoCollected}
-                  />
-                  {state.basicInfoCollected ? (
-                    <Fontisto
-                      name="locked"
-                      size={scale(20)}
-                      color={main}
-                      style={{ marginLeft: scale(-12) }}
-                    />
-                  ) : null}
-                </View>
-              </View>
-
-              {state.basicInfoCollected ? (
-                <Button
-                  title={"Try Another Example"}
-                  onPress={() => {
-                    state.basicInfoCollected = false;
-                    state.showRun = false;
-                    state.requestSequence = [];
-                    state.scheduleSequence = [];
-                    state.YAxisCoordinates = [];
-                    state.FCFS = [];
-                    state.SCAN = [];
-                    state.CSCAN = [];
-                    state.LOOK = [];
-                    state.CLOOK = [];
-                    state.SSTF = [];
-                    state.showScheduledGraph = false;
-                    setRefresh(!refresh);
-                  }}
-                />
-              ) : (
-                <Button
-                  title={"Confirm"}
-                  onPress={() => {
-                    const parsedTotalTrack = parseInt(totalTrack);
-                    const parsedCurrentPosition = parseInt(currentPosition);
-
-                    if (
-                      isNaN(parsedTotalTrack) ||
-                      isNaN(parsedCurrentPosition)
-                    ) {
-                      alert(
-                        "Please enter a valid value for Total Tracks and Current Position"
-                      );
-                    } else if (
-                      parsedTotalTrack > 0 &&
-                      parsedTotalTrack <= 100 &&
-                      parsedCurrentPosition >= 0 &&
-                      parsedCurrentPosition < parsedTotalTrack
-                    ) {
-                      state.totalTracks = parsedTotalTrack;
-                      state.currentPosition = parsedCurrentPosition;
-                      state.basicInfoCollected = true;
-                    } else {
-                      alert(
-                        "Invalid Total Tracks or Current Head Position !\nTotal Tracks Limit is 100"
-                      );
-                    }
-
-                    setRefresh(!refresh);
-                  }}
-                  s
-                />
-              )}
-
-              {state.basicInfoCollected ? (
-                <View
-                  style={{
-                    flexDirection: "row",
-                    marginVertical: verticalScale(10),
-                    alignItems: "flex-end",
-                    alignContent: "flex-start",
-                    alignSelf: "flex-start",
-                    marginLeft: scale(10),
-                  }}
-                >
-                  {state.requestSequence.length < 10 &&
-                  state.showRun == false ? (
-                    <>
-                      <Text style={styles.head2}>Enter Request Sequence: </Text>
-
+                <View>
+                  <View>
+                    <View
+                      style={{
+                        flexDirection: "row",
+                        marginBottom: algoWidth / 100,
+                        marginTop: algoWidth / 53,
+                        alignContent: "flex-start",
+                        alignSelf: "flex-start",
+                      }}
+                    >
+                      <Text style={styles.text}>
+                        Enter Total No. of tracks:{" "}
+                      </Text>
                       <TextInput
                         style={{
-                          width: scale(60),
-                          fontSize: scale(14),
-                          paddingHorizontal: scale(10),
-                          paddingBottom: verticalScale(5),
+                          width: (algoWidth / 53) * 3,
+                          fontSize: algoWidth / 53,
+                          paddingBottom: algoWidth / 150,
                           color: primary,
                           outline: "none",
                           borderBottomColor: primary,
                           borderBottomWidth: 1,
+                          marginLeft: algoWidth / 100,
                         }}
-                        underlineColorAndroid={"#00000050"}
-                        value={inputValue}
-                        onChangeText={(text) => setInputValue(text)}
+                        autoFocus={false}
+                        mode="outlined"
+                        value={totalTrack}
+                        onChangeText={(text) => setTotaltrack(text)}
                         keyboardType="numeric"
+                        editable={!state.basicInfoCollected}
                       />
-                      <Button
-                        title="Add"
-                        onPress={() => {
-                          if (isNaN(inputValue)) {
-                            setInputValue("");
-                          } else if (
-                            state.requestSequence.includes(
-                              parseInt(inputValue)
-                            ) ||
-                            state.currentPosition === parseInt(inputValue) ||
-                            parseInt(inputValue) > state.totalTracks ||
-                            parseInt(inputValue) < 0
-                          ) {
-                            alert("Invalid Request!! ");
-                            setInputValue("");
-                          } else {
-                            addRequest(parseInt(inputValue));
-                            setInputValue("");
-                            console.log(inputValue);
-                            setRefresh(!refresh);
-                          }
-                        }}
-                      />
-                    </>
-                  ) : (
+                      {state.basicInfoCollected ? (
+                        <Fontisto
+                          name="locked"
+                          size={algoWidth / 53}
+                          color={main}
+                          style={{
+                            alignSelf: "center",
+                            marginHorizontal: algoWidth / 100,
+                            paddingBottom: algoWidth / 100,
+                          }}
+                        />
+                      ) : null}
+                    </View>
                     <View
                       style={{
-                        marginTop: verticalScale(10),
+                        flexDirection: "row",
+                        marginBottom: algoWidth / 100,
+                        marginTop: algoWidth / 53,
+                        alignItems: "stretch",
+                        alignContent: "flex-start",
+                        alignSelf: "flex-start",
                       }}
                     >
-                      <Text style={styles.head2}>Request Sequence: </Text>
+                      <Text style={styles.text}>
+                        Enter Current Position of Head:
+                      </Text>
+                      <TextInput
+                        style={{
+                          width: (algoWidth / 53) * 3,
+                          fontSize: algoWidth / 53,
+                          paddingBottom: algoWidth / 150,
+                          color: primary,
+                          outline: "none",
+                          borderBottomColor: primary,
+                          borderBottomWidth: 1,
+                          marginLeft: algoWidth / 100,
+                        }}
+                        underlineColorAndroid={"#00000050"}
+                        value={currentPosition}
+                        onChangeText={(text) => setCurrentPosition(text)}
+                        keyboardType="numeric"
+                        editable={!state.basicInfoCollected}
+                      />
+                      {state.basicInfoCollected ? (
+                        <Fontisto
+                          name="locked"
+                          size={algoWidth / 53}
+                          color={main}
+                          style={{
+                            alignSelf: "center",
+                            marginHorizontal: algoWidth / 100,
+                            paddingBottom: algoWidth / 100,
+                          }}
+                        />
+                      ) : null}
                     </View>
-                  )}
-                </View>
-              ) : null}
-              <View
-                style={{ alignSelf: "center", marginTop: verticalScale(10) }}
-              >
-                <FlatList
-                  style={{ maxHeight: verticalScale(45) }}
-                  data={state.requestSequence}
-                  renderItem={({ item }) => (
-                    <View style={styles.item}>
-                      <Text style={{ color: "#4f8a01" }}>{item}</Text>
-                    </View>
-                  )}
-                  keyExtractor={(item) => item}
-                  horizontal
-                  showsHorizontalScrollIndicator={true}
-                />
-              </View>
-              <View
-                style={{
-                  flexDirection: "row",
-                  marginVertical: verticalScale(10),
-                  alignItems: "stretch",
-                  alignContent: "flex-start",
-                  justifyContent: "space-around",
-                }}
-              >
-                {state.requestSequence.length > 0 && state.showRun == false ? (
-                  <>
-                    <Button
-                      title={"Clear"}
-                      onPress={() => {
-                        clear(state.selectedAlgorithm);
+                  </View>
 
-                        setRefresh(!refresh);
-                      }}
-                    />
-
-                    <Button
-                      title={"Confirm"}
-                      onPress={() => {
-                        state.showRun = true;
-                        setRefresh(!refresh);
-                      }}
-                    />
-
-                    <Button
-                      title={"Remove"}
-                      onPress={() => {
-                        remove(state.selectedAlgorithm);
-                        setRefresh(!refresh);
-                      }}
-                    />
-                  </>
-                ) : state.showRun ? (
-                  <Button
-                    title={"Edit the Request Sequence"}
-                    onPress={() => {
-                      state.showRun = false;
-                      setRefresh(!refresh);
+                  <View
+                    style={{
+                      alignItems: "center",
+                      marginTop: algoWidth / 70,
+                      marginBottom:algoWidth/70
                     }}
-                  />
-                ) : null}
+                  >
+                    {state.basicInfoCollected ? (
+                      <TouchableOpacity
+                        onPress={() => {
+                          state.basicInfoCollected = false;
+                          state.showRun = false;
+                          state.requestSequence = [];
+                          state.scheduleSequence = [];
+                          state.YAxisCoordinates = [];
+                          state.FCFS = [];
+                          state.SCAN = [];
+                          state.CSCAN = [];
+                          state.LOOK = [];
+                          state.CLOOK = [];
+                          state.SSTF = [];
+                          state.showScheduledGraph = false;
+                          setRefresh(!refresh);
+                        }}
+                      >
+                        <View style={styles.button}>
+                          <Text style={styles.buttonText}>
+                            Try Another Example
+                          </Text>
+                        </View>
+                      </TouchableOpacity>
+                    ) : (
+                      <TouchableOpacity
+                        onPress={() => {
+                          const parsedTotalTrack = parseInt(totalTrack);
+                          const parsedCurrentPosition =
+                            parseInt(currentPosition);
+
+                          if (
+                            isNaN(parsedTotalTrack) ||
+                            isNaN(parsedCurrentPosition)
+                          ) {
+                            alert(
+                              "Please enter a valid value for Total Tracks and Current Position"
+                            );
+                          } else if (
+                            parsedTotalTrack > 0 &&
+                            parsedTotalTrack <= 100 &&
+                            parsedCurrentPosition >= 0 &&
+                            parsedCurrentPosition < parsedTotalTrack
+                          ) {
+                            state.totalTracks = parsedTotalTrack;
+                            state.currentPosition = parsedCurrentPosition;
+                            state.basicInfoCollected = true;
+                          } else {
+                            alert(
+                              "Invalid Total Tracks or Current Head Position !\nTotal Tracks Limit is 100"
+                            );
+                          }
+
+                          setRefresh(!refresh);
+                        }}
+                      >
+                        <View style={styles.button}>
+                          <Text style={styles.buttonText}>Confirm</Text>
+                        </View>
+                      </TouchableOpacity>
+                    )}
+                  </View>
+                </View>
+                <View style={{ flex: 1 }}>
+                  <View>
+                    {state.basicInfoCollected ? (
+                      <View
+                        style={{
+                          flexDirection: "row",
+                          marginTop: algoWidth / 170,
+                          alignItems: "flex-end",
+                          alignContent: "flex-start",
+                          alignSelf: "flex-start",
+                          marginLeft: scale(10),
+                        }}
+                      >
+                        {state.requestSequence.length < 10 &&
+                        state.showRun == false ? (
+                          <>
+                            <Text
+                              style={[
+                                styles.text,
+                                { marginTop: -1 * (algoWidth / 53) },
+                              ]}
+                            >
+                              Enter Request Sequence:{" "}
+                            </Text>
+
+                            <TextInput
+                              style={{
+                                width: (algoWidth / 53) * 3,
+                                fontSize: algoWidth / 53,
+                                paddingBottom: algoWidth / 150,
+                                color: primary,
+                                outline: "none",
+                                borderBottomColor: primary,
+                                borderBottomWidth: 1,
+                                marginLeft: algoWidth / 100,
+                              }}
+                              underlineColorAndroid={"#00000050"}
+                              value={inputValue}
+                              onChangeText={(text) => setInputValue(text)}
+                              keyboardType="numeric"
+                            />
+                            <TouchableOpacity
+                              onPress={() => {
+                                if (isNaN(inputValue)) {
+                                  setInputValue("");
+                                } else if (
+                                  state.requestSequence.includes(
+                                    parseInt(inputValue)
+                                  ) ||
+                                  state.currentPosition ===
+                                    parseInt(inputValue) ||
+                                  parseInt(inputValue) > state.totalTracks ||
+                                  parseInt(inputValue) < 0
+                                ) {
+                                  alert("Invalid Request!! ");
+                                  setInputValue("");
+                                } else {
+                                  addRequest(parseInt(inputValue));
+                                  setInputValue("");
+                                  console.log(inputValue);
+                                  setRefresh(!refresh);
+                                }
+                              }}
+                            >
+                              <View
+                                style={[
+                                  styles.button,
+                                  { paddingVertical: algoWidth / 300 },
+                                ]}
+                              >
+                                <Text style={styles.buttonText}>Add</Text>
+                              </View>
+                            </TouchableOpacity>
+                          </>
+                        ) : (
+                          <View
+                            style={{
+                              marginTop: algoWidth / 53,
+                            }}
+                          >
+                            <Text style={styles.text}>Request Sequence: </Text>
+                          </View>
+                        )}
+                      </View>
+                    ) : null}
+                  </View>
+                  <View
+                    style={{
+                      alignSelf: "center",
+                      marginTop: algoWidth / 53,
+                      alignContent: "center",
+                      justifyContent: "center",
+                    }}
+                  >
+                    <FlatList
+                      style={{ maxHeight: verticalScale(45) }}
+                      data={state.requestSequence}
+                      renderItem={({ item }) => (
+                        <View style={styles.item}>
+                          <Text
+                            style={{
+                              color: "#4f8a01",
+                              fontSize: algoWidth / 63,
+                            }}
+                          >
+                            {item}
+                          </Text>
+                        </View>
+                      )}
+                      keyExtractor={(item) => item}
+                      horizontal
+                      showsHorizontalScrollIndicator={true}
+                    />
+                  </View>
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      marginVertical: algoWidth / 100,
+                      marginTop: algoWidth / 40,
+                      alignItems: "stretch",
+                      alignContent: "flex-start",
+                      justifyContent: "space-around",
+                    }}
+                  >
+                    {state.requestSequence.length > 0 &&
+                    state.showRun == false ? (
+                      <>
+                        <TouchableOpacity
+                          onPress={() => {
+                            clear(state.selectedAlgorithm);
+                            setRefresh(!refresh);
+                          }}
+                        >
+                          <View style={styles.button}>
+                            <Text style={styles.buttonText}>Clear</Text>
+                          </View>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                          onPress={() => {
+                            state.showRun = true;
+                            setRefresh(!refresh);
+                          }}
+                        >
+                          <View style={styles.button}>
+                            <Text style={styles.buttonText}>Confirm</Text>
+                          </View>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                          onPress={() => {
+                            remove(state.selectedAlgorithm);
+                            setRefresh(!refresh);
+                          }}
+                        >
+                          <View style={styles.button}>
+                            <Text style={styles.buttonText}>Remove</Text>
+                          </View>
+                        </TouchableOpacity>
+                      </>
+                    ) : state.showRun ? (
+                      <View style={{ flexDirection: "row" }}>
+                        <TouchableOpacity
+                          onPress={() => {
+                            state.showRun = false;
+                            setRefresh(!refresh);
+                          }}
+                        >
+                          <View style={styles.button}>
+                            <Text style={styles.buttonText}>Edit</Text>
+                          </View>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                          onPress={() => {
+                            schedule(state.selectedAlgorithm);
+                            setRefresh(!refresh);
+                            console.log("totalTracks");
+                            console.log(state.selectedAlgorithm);
+                            console.log(state.totalTracks);
+                            console.log("currentPosition");
+                            console.log(state.currentPosition);
+                            console.log("requestSequence");
+                            console.log(state.requestSequence);
+                          }}
+                        >
+                          <View style={styles.button}>
+                            <Text style={styles.buttonText}>Run</Text>
+                          </View>
+                        </TouchableOpacity>
+                      </View>
+                    ) : null}
+                  </View>
+                </View>
               </View>
+
               {state.showRun ? (
                 <View
                   style={{ justifyContent: "center", alignItems: "center" }}
                 >
-                  <View
-                    style={{
-                      flexDirection: "row",
-                      justifyContent: "center",
-                      alignItems: "center",
-                    }}
-                  >
+                  <View style={{ flexDirection: "row" }}>
                     <TouchableOpacity
                       style={
                         state.selectedAlgorithm == "SSTF"
@@ -376,8 +573,6 @@ const DiskManagementScreen = () => {
                         SSTF
                       </Text>
                     </TouchableOpacity>
-                  </View>
-                  <View style={{ flexDirection: "row" }}>
                     <TouchableOpacity
                       style={
                         state.selectedAlgorithm == "FCFS"
@@ -489,10 +684,11 @@ const DiskManagementScreen = () => {
                     <View
                       style={{
                         alignSelf: "center",
-                        marginTop: verticalScale(15),
+                        marginTop: algoWidth / 100,
+                        flexDirection: "row",
                       }}
                     >
-                      <Text style={styles.head2}>
+                      <Text style={[styles.text, { alignSelf: "center" }]}>
                         Select the Direction of Head:{" "}
                       </Text>
                       <TouchableOpacity
@@ -541,20 +737,6 @@ const DiskManagementScreen = () => {
                       </TouchableOpacity>
                     </View>
                   ) : null}
-                  <Button
-                    title={"Run"}
-                    onPress={() => {
-                      schedule(state.selectedAlgorithm);
-                      setRefresh(!refresh);
-                      console.log("totalTracks");
-                      console.log(state.selectedAlgorithm);
-                      console.log(state.totalTracks);
-                      console.log("currentPosition");
-                      console.log(state.currentPosition);
-                      console.log("requestSequence");
-                      console.log(state.requestSequence);
-                    }}
-                  />
                 </View>
               ) : null}
             </View>
@@ -564,10 +746,12 @@ const DiskManagementScreen = () => {
                   style={{
                     flexDirection: "row",
                     borderColor: primary,
-                    borderWidth: scale(1),
+                    borderWidth: algoWidth / 300,
                     alignItems: "center",
-                    paddingVertical: verticalScale(10),
-                    marginBottom: verticalScale(5),
+                    paddingVertical: algoWidth / 53,
+                    marginBottom: algoWidth / 100,
+                    width: algoWidth - algoWidth / 10,
+                    borderRadius: algoWidth / 30,
                   }}
                 >
                   {state.scheduleSequence.length > 1 ? (
@@ -579,7 +763,7 @@ const DiskManagementScreen = () => {
                     >
                       <Ionicons
                         name="chevron-back-outline"
-                        size={40}
+                        size={algoWidth / 30}
                         color={main}
                       />
                     </TouchableOpacity>
@@ -587,7 +771,7 @@ const DiskManagementScreen = () => {
                     <TouchableOpacity>
                       <Ionicons
                         name="chevron-back-outline"
-                        size={40}
+                        size={algoWidth / 30}
                         color={"#E07A5F50"}
                       />
                     </TouchableOpacity>
@@ -605,6 +789,7 @@ const DiskManagementScreen = () => {
                         alignSelf: "center",
                         fontFamily: "Popins",
                         marginBottom: verticalScale(5),
+                        fontSize: algoWidth / 53,
                       }}
                     >
                       Step = {state.scheduleSequence.length - 1}
@@ -616,7 +801,7 @@ const DiskManagementScreen = () => {
                           style={{
                             fontFamily: "Popins",
                             marginLeft: scale(5),
-                            fontSize: scale(13.5),
+                            fontSize: algoWidth / 53,
                           }}
                         >
                           Initially the Head is at Position{" "}
@@ -626,7 +811,7 @@ const DiskManagementScreen = () => {
                           style={{
                             fontFamily: "Popins",
                             marginLeft: scale(5),
-                            fontSize: scale(13.5),
+                            fontSize: algoWidth / 53,
                           }}
                         >
                           Now next request is{" "}
@@ -644,7 +829,7 @@ const DiskManagementScreen = () => {
                           style={{
                             fontFamily: "Popins",
                             marginLeft: scale(5),
-                            fontSize: scale(13.5),
+                            fontSize: algoWidth / 53,
                           }}
                         >
                           Initially the Head is at Position{" "}
@@ -654,7 +839,7 @@ const DiskManagementScreen = () => {
                           style={{
                             fontFamily: "Popins",
                             marginLeft: scale(5),
-                            fontSize: scale(13.5),
+                            fontSize: algoWidth / 53,
                           }}
                         >
                           Now, according to {state.selectedAlgorithm} Disk
@@ -681,7 +866,7 @@ const DiskManagementScreen = () => {
                           style={{
                             fontFamily: "Popins",
                             marginLeft: scale(5),
-                            fontSize: scale(13.5),
+                            fontSize: algoWidth / 53,
                           }}
                         >
                           Now, the Head is at Position{" "}
@@ -695,7 +880,7 @@ const DiskManagementScreen = () => {
                           style={{
                             fontFamily: "Popins",
                             marginLeft: scale(5),
-                            fontSize: scale(13.5),
+                            fontSize: algoWidth / 53,
                           }}
                         >
                           Now next request is{" "}
@@ -715,7 +900,7 @@ const DiskManagementScreen = () => {
                           style={{
                             fontFamily: "Popins",
                             marginLeft: scale(5),
-                            fontSize: scale(13.5),
+                            fontSize: algoWidth / 53,
                           }}
                         >
                           Now, the Head is at Position{" "}
@@ -729,7 +914,7 @@ const DiskManagementScreen = () => {
                           style={{
                             fontFamily: "Popins",
                             marginLeft: scale(5),
-                            fontSize: scale(13.5),
+                            fontSize: algoWidth / 53,
                           }}
                         >
                           Now, according to {state.selectedAlgorithm} Disk
@@ -755,7 +940,7 @@ const DiskManagementScreen = () => {
                           style={{
                             fontFamily: "Popins",
                             marginLeft: scale(5),
-                            fontSize: scale(13.5),
+                            fontSize: algoWidth / 53,
                           }}
                         >
                           Now, the Head is at Position{" "}
@@ -769,7 +954,7 @@ const DiskManagementScreen = () => {
                           style={{
                             fontFamily: "Popins",
                             marginLeft: scale(5),
-                            fontSize: scale(13.5),
+                            fontSize: algoWidth / 53,
                           }}
                         >
                           Hence, all requests are entertained and our Disk
@@ -794,7 +979,7 @@ const DiskManagementScreen = () => {
                     >
                       <Ionicons
                         name="chevron-forward-outline"
-                        size={40}
+                        size={algoWidth / 30}
                         color={main}
                       />
                     </TouchableOpacity>
@@ -802,7 +987,7 @@ const DiskManagementScreen = () => {
                     <TouchableOpacity>
                       <Ionicons
                         name="chevron-forward-outline"
-                        size={40}
+                        size={algoWidth / 30}
                         color={"#E07A5F50"}
                       />
                     </TouchableOpacity>
@@ -810,11 +995,11 @@ const DiskManagementScreen = () => {
                 </View>
                 <View
                   style={{
-                    marginTop: verticalScale(10),
-                    paddingHorizontal: scale(10),
+                    marginTop: algoWidth / 200,
+                    paddingHorizontal: algoWidth / 53,
                   }}
                 >
-                  <Text style={styles.head2}>
+                  <Text style={styles.text}>
                     Total Distance Covered by Head is {state.totalDistance}{" "}
                     units.{" "}
                   </Text>
@@ -827,84 +1012,10 @@ const DiskManagementScreen = () => {
               </View>
             ) : null}
           </View>
-        </View>
-      </ScrollView>
+        </ScrollView>
+      </View>
     </View>
   );
 };
 
 export default DiskManagementScreen;
-
-const styles = StyleSheet.create({
-  heading: {
-    fontFamily: "Popins",
-    fontSize: scale(35),
-    fontWeight: "400",
-    marginTop: verticalScale(5),
-    marginBottom: verticalScale(10),
-    color: primary,
-  },
-  head1: {
-    fontFamily: "Popins",
-    fontSize: scale(14),
-    color: primary,
-  },
-  head2: {
-    fontFamily: "Popins",
-    fontSize: scale(16),
-    color: primary,
-  },
-  name: {
-    fontFamily: "Popins",
-    fontSize: scale(20),
-    marginTop: verticalScale(10),
-    color: primary,
-  },
-  rights: {
-    fontFamily: "Popins",
-    fontSize: scale(12),
-    color: primary,
-    marginTop: scale(10),
-  },
-  rights1: {
-    fontFamily: "Popins",
-    fontSize: scale(12),
-    color: primary,
-    marginBottom: verticalScale(10),
-  },
-  selectAlgoButton: {
-    margin: scale(4),
-    borderRadius: scale(10),
-    borderColor: background,
-    borderWidth: scale(1),
-    padding: scale(8),
-    backgroundColor: main,
-    alignSelf: "center",
-  },
-  selectAlgoButtonText: {
-    color: background,
-    fontSize: scale(15),
-  },
-  notSelectAlgoButton: {
-    margin: scale(4),
-    borderRadius: scale(10),
-    borderColor: main,
-    borderWidth: scale(1),
-    padding: scale(8),
-    backgroundColor: background,
-    alignSelf: "center",
-  },
-  notSelectAlgoButtonText: {
-    color: main,
-    fontSize: scale(15),
-  },
-  item: {
-    backgroundColor: "#81f51b50",
-    width: scale(30),
-    height: scale(30),
-    alignItems: "center",
-    paddingTop: scale(5),
-    marginRight: scale(2),
-    borderRadius: scale(5),
-  },
-});
