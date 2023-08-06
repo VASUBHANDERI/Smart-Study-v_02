@@ -3,17 +3,13 @@ import {
   Text,
   View,
   Image,
-  Dimensions,
-  ScrollView,
 } from "react-native";
 import React from "react";
 import { background, main, main50, primary } from "../components/Colors";
 import { useFonts } from "expo-font";
 import { Entypo } from "@expo/vector-icons";
-import { scale, verticalScale, moderateScale } from "react-native-size-matters";
+import { scale} from "react-native-size-matters";
 import getMediaQuery from "../Hooks/getMediaQuery";
-import useWindowSize from "../Hooks/useWindowSize";
-import { Link } from "expo-router";
 
 Text.defaultProps = {
   ...(Text.defaultProps || {}),
@@ -151,6 +147,7 @@ const HomeScreen = () => {
 
           <Text style={styles.heading}>Smart Study</Text>
         </View>
+
         <View
           style={{
             flex: 1,
