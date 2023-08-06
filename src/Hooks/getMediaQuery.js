@@ -1,7 +1,5 @@
 import { useMediaQuery } from "react-responsive";
 import { Dimensions } from "react-native";
-import { useEffect, useState } from "react";
-import useWindowSize from "./useWindowSize";
 
 export default function getMediaQuery() {
   const width = Dimensions.get("screen").width;
