@@ -4,8 +4,14 @@ import { processColor } from "./Colors";
 import { Context as AlgoContext } from "../context/schedulingAlgoContext";
 import { scale, verticalScale, moderateScale  } from "react-native-size-matters";
 import useWindowSize from "../Hooks/useWindowSize";
+import getMediaQuery from "../Hooks/getMediaQuery";
 const ProgressiveBar = ({ isScheduled, curTime, type }) => {
-  const [width, height] = useWindowSize();
+    const [width, height] = useWindowSize();
+
+    const [isMobileWidth, isTabletWidth, isDesktopWidth, isWide] =
+      getMediaQuery();
+    const algoWidth = isWide ? width * 0.6 : width;
+    const algoHeight = isWide ? height : height * 0.6;
 
   const { state } = useContext(AlgoContext);
   if (type == "FCFS") {
@@ -30,8 +36,8 @@ const ProgressiveBar = ({ isScheduled, curTime, type }) => {
                   <View
                     style={{
                       backgroundColor: backgroundColor,
-                      width: (Dimensions.get("screen").width - scale(20)) / n,
-                      height: verticalScale(40),
+                      width: (algoWidth - scale(20)) / n,
+                      height:algoWidth/30,
                       flexDirection: "row",
                       justifyContent: "center",
                       alignItems: "center",
@@ -41,16 +47,16 @@ const ProgressiveBar = ({ isScheduled, curTime, type }) => {
                     <>
                       <View
                         style={{
-                          width: (Dimensions.get("screen").width - scale(20)) / n,
+                          width: (algoWidth - scale(20)) / n,
                           flexDirection: "row",
                           justifyContent: "space-between",
                           alignItems: "center",
                         }}
                       >
-                        <Text style={{ fontFamily: "Popins", fontSize: scale(10) }}>
+                        <Text style={{ fontFamily: "Popins", fontSize: algoWidth/53 }}>
                           0
                         </Text>
-                        <Text style={{ fontFamily: "Popins", fontSize: scale(10) }}>
+                        <Text style={{ fontFamily: "Popins", fontSize: algoWidth/53 }}>
                           1
                         </Text>
                       </View>
@@ -58,13 +64,13 @@ const ProgressiveBar = ({ isScheduled, curTime, type }) => {
                   ) : (
                     <View
                       style={{
-                        width: (Dimensions.get("screen").width - scale(20)) / n,
+                        width: (algoWidth - scale(20)) / n,
                         flexDirection: "row",
                         justifyContent: "flex-end",
                         alignItems: "center",
                       }}
                     >
-                      <Text style={{ fontFamily: "Popins", fontSize: scale(10) }}>
+                      <Text style={{ fontFamily: "Popins", fontSize: algoWidth/53 }}>
                         {index + 1}
                       </Text>
                     </View>
@@ -77,9 +83,9 @@ const ProgressiveBar = ({ isScheduled, curTime, type }) => {
         ) : (
           <View
             style={{
-              height: verticalScale(40),
+              height:algoWidth/30,
               backgroundColor: "white",
-              width: Dimensions.get("screen").width - scale(20),
+              width: algoWidth - scale(20),
             }}
           />
         )}
@@ -107,8 +113,8 @@ const ProgressiveBar = ({ isScheduled, curTime, type }) => {
                   <View
                     style={{
                       backgroundColor: backgroundColor,
-                      width: (Dimensions.get("screen").width - scale(20)) / n,
-                      height: verticalScale(40),
+                      width: (algoWidth - scale(20)) / n,
+                      height:algoWidth/30,
                       flexDirection: "row",
                       justifyContent: "center",
                       alignItems: "center",
@@ -118,16 +124,16 @@ const ProgressiveBar = ({ isScheduled, curTime, type }) => {
                     <>
                       <View
                         style={{
-                          width: (Dimensions.get("screen").width - scale(20)) / n,
+                          width: (algoWidth - scale(20)) / n,
                           flexDirection: "row",
                           justifyContent: "space-between",
                           alignItems: "center",
                         }}
                       >
-                        <Text style={{ fontFamily: "Popins", fontSize: scale(10) }}>
+                        <Text style={{ fontFamily: "Popins", fontSize: algoWidth/53 }}>
                           0
                         </Text>
-                        <Text style={{ fontFamily: "Popins", fontSize: scale(10) }}>
+                        <Text style={{ fontFamily: "Popins", fontSize: algoWidth/53 }}>
                           1
                         </Text>
                       </View>
@@ -135,13 +141,13 @@ const ProgressiveBar = ({ isScheduled, curTime, type }) => {
                   ) : (
                     <View
                       style={{
-                        width: (Dimensions.get("screen").width - scale(20)) / n,
+                        width: (algoWidth - scale(20)) / n,
                         flexDirection: "row",
                         justifyContent: "flex-end",
                         alignItems: "center",
                       }}
                     >
-                      <Text style={{ fontFamily: "Popins", fontSize: scale(10) }}>
+                      <Text style={{ fontFamily: "Popins", fontSize: algoWidth/53 }}>
                         {index + 1}
                       </Text>
                     </View>
@@ -154,9 +160,9 @@ const ProgressiveBar = ({ isScheduled, curTime, type }) => {
         ) : (
           <View
             style={{
-              height: verticalScale(40),
+              height:algoWidth/30,
               backgroundColor: "white",
-              width: Dimensions.get("screen").width - scale(20),
+              width: algoWidth - scale(20),
             }}
           />
         )}
@@ -184,8 +190,8 @@ const ProgressiveBar = ({ isScheduled, curTime, type }) => {
                   <View
                     style={{
                       backgroundColor: backgroundColor,
-                      width: (Dimensions.get("screen").width - scale(20)) / n,
-                      height: verticalScale(40),
+                      width: (algoWidth - scale(20)) / n,
+                      height:algoWidth/30,
                       flexDirection: "row",
                       justifyContent: "center",
                       alignItems: "center",
@@ -195,16 +201,16 @@ const ProgressiveBar = ({ isScheduled, curTime, type }) => {
                     <>
                       <View
                         style={{
-                          width: (Dimensions.get("screen").width - scale(20)) / n,
+                          width: (algoWidth - scale(20)) / n,
                           flexDirection: "row",
                           justifyContent: "space-between",
                           alignItems: "center",
                         }}
                       >
-                        <Text style={{ fontFamily: "Popins", fontSize: scale(10) }}>
+                        <Text style={{ fontFamily: "Popins", fontSize: algoWidth/53 }}>
                           0
                         </Text>
-                        <Text style={{ fontFamily: "Popins", fontSize: scale(10) }}>
+                        <Text style={{ fontFamily: "Popins", fontSize: algoWidth/53 }}>
                           1
                         </Text>
                       </View>
@@ -212,13 +218,13 @@ const ProgressiveBar = ({ isScheduled, curTime, type }) => {
                   ) : (
                     <View
                       style={{
-                        width: (Dimensions.get("screen").width - scale(20)) / n,
+                        width: (algoWidth - scale(20)) / n,
                         flexDirection: "row",
                         justifyContent: "flex-end",
                         alignItems: "center",
                       }}
                     >
-                      <Text style={{ fontFamily: "Popins", fontSize: scale(10) }}>
+                      <Text style={{ fontFamily: "Popins", fontSize: algoWidth/53 }}>
                         {index + 1}
                       </Text>
                     </View>
@@ -231,9 +237,9 @@ const ProgressiveBar = ({ isScheduled, curTime, type }) => {
         ) : (
           <View
             style={{
-              height: verticalScale(40),
+              height:algoWidth/30,
               backgroundColor: "white",
-              width: Dimensions.get("screen").width - scale(20),
+              width: algoWidth - scale(20),
             }}
           />
         )}
@@ -261,8 +267,8 @@ const ProgressiveBar = ({ isScheduled, curTime, type }) => {
                   <View
                     style={{
                       backgroundColor: backgroundColor,
-                      width: (Dimensions.get("screen").width - scale(20)) / n,
-                      height: verticalScale(40),
+                      width: (algoWidth - scale(20)) / n,
+                      height:algoWidth/30,
                       flexDirection: "row",
                       justifyContent: "center",
                       alignItems: "center",
@@ -272,16 +278,16 @@ const ProgressiveBar = ({ isScheduled, curTime, type }) => {
                     <>
                       <View
                         style={{
-                          width: (Dimensions.get("screen").width - scale(20)) / n,
+                          width: (algoWidth - scale(20)) / n,
                           flexDirection: "row",
                           justifyContent: "space-between",
                           alignItems: "center",
                         }}
                       >
-                        <Text style={{ fontFamily: "Popins", fontSize: scale(10) }}>
+                        <Text style={{ fontFamily: "Popins", fontSize: algoWidth/53 }}>
                           0
                         </Text>
-                        <Text style={{ fontFamily: "Popins", fontSize: scale(10) }}>
+                        <Text style={{ fontFamily: "Popins", fontSize: algoWidth/53 }}>
                           1
                         </Text>
                       </View>
@@ -289,13 +295,13 @@ const ProgressiveBar = ({ isScheduled, curTime, type }) => {
                   ) : (
                     <View
                       style={{
-                        width: (Dimensions.get("screen").width - scale(20)) / n,
+                        width: (algoWidth - scale(20)) / n,
                         flexDirection: "row",
                         justifyContent: "flex-end",
                         alignItems: "center",
                       }}
                     >
-                      <Text style={{ fontFamily: "Popins", fontSize: scale(10) }}>
+                      <Text style={{ fontFamily: "Popins", fontSize: algoWidth/53 }}>
                         {index + 1}
                       </Text>
                     </View>
@@ -308,9 +314,9 @@ const ProgressiveBar = ({ isScheduled, curTime, type }) => {
         ) : (
           <View
             style={{
-              height: verticalScale(40),
+              height:algoWidth/30,
               backgroundColor: "white",
-              width: Dimensions.get("screen").width - scale(20),
+              width: algoWidth - scale(20),
             }}
           />
         )}
@@ -338,8 +344,8 @@ const ProgressiveBar = ({ isScheduled, curTime, type }) => {
                   <View
                     style={{
                       backgroundColor: backgroundColor,
-                      width: (Dimensions.get("screen").width - scale(20)) / n,
-                      height: verticalScale(40),
+                      width: (algoWidth - scale(20)) / n,
+                      height:algoWidth/30,
                       flexDirection: "row",
                       justifyContent: "center",
                       alignItems: "center",
@@ -349,16 +355,16 @@ const ProgressiveBar = ({ isScheduled, curTime, type }) => {
                     <>
                       <View
                         style={{
-                          width: (Dimensions.get("screen").width - scale(20)) / n,
+                          width: (algoWidth - scale(20)) / n,
                           flexDirection: "row",
                           justifyContent: "space-between",
                           alignItems: "center",
                         }}
                       >
-                        <Text style={{ fontFamily: "Popins", fontSize: scale(10) }}>
+                        <Text style={{ fontFamily: "Popins", fontSize: algoWidth/53 }}>
                           0
                         </Text>
-                        <Text style={{ fontFamily: "Popins", fontSize: scale(10) }}>
+                        <Text style={{ fontFamily: "Popins", fontSize: algoWidth/53 }}>
                           1
                         </Text>
                       </View>
@@ -366,13 +372,13 @@ const ProgressiveBar = ({ isScheduled, curTime, type }) => {
                   ) : (
                     <View
                       style={{
-                        width: (Dimensions.get("screen").width - scale(20)) / n,
+                        width: (algoWidth - scale(20)) / n,
                         flexDirection: "row",
                         justifyContent: "flex-end",
                         alignItems: "center",
                       }}
                     >
-                      <Text style={{ fontFamily: "Popins", fontSize: scale(10) }}>
+                      <Text style={{ fontFamily: "Popins", fontSize: algoWidth/53 }}>
                         {index + 1}
                       </Text>
                     </View>
@@ -385,9 +391,9 @@ const ProgressiveBar = ({ isScheduled, curTime, type }) => {
         ) : (
           <View
             style={{
-              height: verticalScale(40),
+              height:algoWidth/30,
               backgroundColor: "white",
-              width: Dimensions.get("screen").width - scale(20),
+              width: algoWidth - scale(20),
             }}
           />
         )}
