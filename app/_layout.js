@@ -2,6 +2,7 @@ import { Drawer } from "expo-router/drawer";
 import { Provider as SchedulingAlgoProvider } from "../src/context/schedulingAlgoContext";
 import { Provider as DiskManagementProvider } from "../src/context/diskManagementAlgoContext";
 import { Provider as PageProvider } from "../src/context/pageReplacementAlgoContext";
+import { Provider as BankersAlgoProvider } from "../src/context/bankersContext";
 import {
   Platform,
   StyleSheet,
@@ -31,6 +32,7 @@ export default function Layout() {
     <PageProvider>
       <DiskManagementProvider>
         <SchedulingAlgoProvider>
+          <BankersAlgoProvider>
           <Drawer
             drawerContent={(props) => (
               <View style={styles.drawerContainer}>
@@ -179,7 +181,25 @@ export default function Layout() {
                 headerStyle: styles.headerStyle,
               }}
             />
+            <Drawer.Screen
+              name="Bankers_Algorithm_Screen"
+              options={{
+                title: "Banker's Algorithm",
+                drawerIcon: () => (
+                  <FontAwesome5
+                    name="record-vinyl"
+                    size={isWeb ? scale(18) : scale(24)}
+                    color={main}
+                    style={{ marginLeft: isWeb ? scale(10) : scale(15) }}
+                  />
+                ),
+                headerTintColor: background,
+                headerTitleStyle: styles.headerTitleStyle,
+                headerStyle: styles.headerStyle,
+              }}
+            />
           </Drawer>
+          </BankersAlgoProvider>
         </SchedulingAlgoProvider>
       </DiskManagementProvider>
     </PageProvider>
