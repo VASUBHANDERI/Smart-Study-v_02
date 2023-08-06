@@ -39,40 +39,43 @@ const BankersAlgorithmScreen = () => {
       flexDirection: "column",
     },
     fillFieldsText: {
-      fontSize: scale(12),
-      marginVertical: verticalScale(5),
+      fontSize: algoWidth / 50,
+      marginVertical: algoHeight / 100,
       color: "red",
       alignSelf: "center",
     },
     buttonContainer: {
-      marginTop: 10,
+      marginTop: algoHeight / 100,
+      marginHorizontal:algoWidth/60,
+      width:algoWidth
     },
     row: {
       flexDirection: "row",
-      marginBottom: 5,
+      marginBottom: algoHeight / 120,
     },
     rowGreen: {
       flexDirection: "row",
       backgroundColor: "#81f51b50",
-      marginBottom: 5,
+      marginBottom: algoHeight / 120,
     },
     rowYellow: {
       flexDirection: "row",
       backgroundColor: "#f7fa5f50",
-      marginBottom: 5,
+      marginBottom: algoHeight / 120,
     },
     rowRed: {
       flexDirection: "row",
       backgroundColor: "#f2705c",
-      marginBottom: 5,
+      marginBottom: algoHeight / 120,
     },
     headerRow: {
       backgroundColor: "#e3e3e3",
-      marginBottom: 5,
+      marginBottom: algoHeight / 120,
     },
     cell: {
       borderWidth: StyleSheet.hairlineWidth,
-      padding: 5,
+      padding: algoWidth / 100,
+      width: algoWidth / 13,
       flex: 1,
       justifyContent: "center",
       alignItems: "center",
@@ -80,7 +83,8 @@ const BankersAlgorithmScreen = () => {
     },
     enabledInput: {
       borderWidth: StyleSheet.hairlineWidth,
-      padding: 5,
+      padding: algoWidth / 100,
+      width: algoWidth / 13,
       flex: 1,
       justifyContent: "center",
       alignItems: "center",
@@ -94,27 +98,28 @@ const BankersAlgorithmScreen = () => {
     },
     container: {
       flex: 1,
-      padding: 10,
+      padding: algoWidth / 100,
+      marginHorizontal:algoHeight/50,
     },
 
     instructions: {
-      fontSize: 16,
-      marginBottom: 5,
+      fontSize: algoWidth / 50,
+      marginVertical: algoHeight / 120,
     },
 
     item: {
       backgroundColor: "#81f51b50",
-      width: scale(30),
-      height: scale(30),
+      width: algoWidth / 20,
+      height: algoWidth / 20,
       alignItems: "center",
-      paddingTop: scale(5),
-      marginRight: scale(2),
-      borderRadius: scale(5),
+      justifyContent: "center",
+      marginRight: algoWidth / 120,
+      borderRadius: algoWidth / 80,
     },
     StepText: {
       alignSelf: "flex-start",
       fontFamily: "Popins",
-      marginVertical: verticalScale(1.5),
+      marginVertical: algoHeight / 100,
     },
   });
   const [allocation, setAllocation] = useState(state.allocation || [[]]);
@@ -380,246 +385,230 @@ const BankersAlgorithmScreen = () => {
           }}
           showsVerticalScrollIndicator={false}
         >
-          <View style={{ paddingVertical: verticalScale(15) }}>
+          <View
+            style={{
+              flexDirection: "row",
+              marginTop: algoHeight / 50,
+            }}
+          >
             <View
               style={{
-                flexDirection: "row",
-                alignItems: "stretch",
-                alignContent: "flex-start",
-                justifyContent: "space-between",
+                backgroundColor: background,
+                marginHorizontal: algoWidth / 50,
+                paddingHorizontal: algoWidth / 20,
               }}
             >
-              <View
-                style={{
-                  justifyContent: "center",
-                  alignItems: "center",
-                  backgroundColor: background,
-                  paddingBottom: verticalScale(25),
-                  paddingHorizontal: scale(20),
-                }}
-              >
-                <View>
+              <View>
+                <Text
+                  style={{
+                    alignSelf: "center",
+                    color: text,
+                    fontSize: algoWidth / 40,
+                    fontFamily: "Popins",
+                  }}
+                >
+                  No. of Resources
+                </Text>
+                <View
+                  style={{
+                    flexDirection: "row",
+                    margin: algoWidth / 50,
+                  }}
+                >
+                  <TouchableOpacity
+                    onPress={() => {
+                      if (state.numResources > 0) {
+                        state.numResources = state.numResources - 1;
+                        state.allocation = Array.from(
+                          { length: state.numProcesses },
+                          () => Array(state.numResources).fill("")
+                        );
+                        state.maxNeed = Array.from(
+                          { length: state.numProcesses },
+                          () => Array(state.numResources).fill("")
+                        );
+                        state.totalResources = Array.from({ length: 1 }, () =>
+                          Array(state.numResources).fill("")
+                        );
+                        setTotalResources(state.totalResources);
+                        setAllocation(state.allocation);
+                        setMaxNeed(state.maxNeed);
+                        state.isSubmitted = false;
+                        state.isValidMatrix = true;
+                        setRefresh(!refresh);
+                        Vibration.vibrate(80);
+                      } else {
+                        alert(
+                          "Sorry! Can't decrease No. of Resources anymore!"
+                        );
+                      }
+                    }}
+                  >
+                    <Feather
+                      name="minus-circle"
+                      size={algoWidth / 20}
+                      color={text}
+                    />
+                  </TouchableOpacity>
                   <Text
                     style={{
-                      alignSelf: "center",
+                      paddingHorizontal: algoWidth / 50,
                       color: text,
-                      fontSize: scale(16),
+                      fontSize: algoWidth / 40,
+                      alignSelf: "center",
                       fontFamily: "Popins",
                     }}
                   >
-                    No. of Resources
+                    {state.numResources}
                   </Text>
-                  <View
-                    style={{
-                      flexDirection: "row",
-                      alignSelf: "center",
-                      margin: scale(5),
-                      padding: scale(5),
-                      justifyContent: "center",
-                      alignContent: "center",
+                  <TouchableOpacity
+                    onPress={() => {
+                      if (state.numResources < 5) {
+                        state.numResources = state.numResources + 1;
+                        state.allocation = Array.from(
+                          { length: state.numProcesses },
+                          () => Array(state.numResources).fill("")
+                        );
+                        state.maxNeed = Array.from(
+                          { length: state.numProcesses },
+                          () => Array(state.numResources).fill("")
+                        );
+                        state.totalResources = Array.from({ length: 1 }, () =>
+                          Array(state.numResources).fill("")
+                        );
+                        setTotalResources(state.totalResources);
+                        setAllocation(state.allocation);
+                        setMaxNeed(state.maxNeed);
+                        state.isSubmitted = false;
+                        state.isValidMatrix = true;
+                        setRefresh(!refresh);
+                        Vibration.vibrate(80);
+                      } else {
+                        alert(
+                          "Sorry! Can't increase No. of Resources anymore!"
+                        );
+                      }
                     }}
                   >
-                    <TouchableOpacity
-                      onPress={() => {
-                        if (state.numResources > 0) {
-                          state.numResources = state.numResources - 1;
-                          state.allocation = Array.from(
-                            { length: state.numProcesses },
-                            () => Array(state.numResources).fill("")
-                          );
-                          state.maxNeed = Array.from(
-                            { length: state.numProcesses },
-                            () => Array(state.numResources).fill("")
-                          );
-                          state.totalResources = Array.from({ length: 1 }, () =>
-                            Array(state.numResources).fill("")
-                          );
-                          setTotalResources(state.totalResources);
-                          setAllocation(state.allocation);
-                          setMaxNeed(state.maxNeed);
-                          state.isSubmitted = false;
-                          state.isValidMatrix = true;
-                          setRefresh(!refresh);
-                          Vibration.vibrate(80);
-                        } else {
-                          alert(
-                            "Sorry! Can't decrease No. of Resources anymore!"
-                          );
-                        }
-                      }}
-                    >
-                      <Feather
-                        name="minus-circle"
-                        size={scale(30)}
-                        color={text}
-                      />
-                    </TouchableOpacity>
-                    <Text
-                      style={{
-                        paddingHorizontal: scale(15),
-                        color: text,
-                        fontSize: scale(16),
-                        alignSelf: "center",
-                        fontFamily: "Popins",
-                        width: Dimensions.get("window").width * 0.14,
-                      }}
-                    >
-                      {state.numResources}
-                    </Text>
-                    <TouchableOpacity
-                      onPress={() => {
-                        if (state.numResources < 5) {
-                          state.numResources = state.numResources + 1;
-                          state.allocation = Array.from(
-                            { length: state.numProcesses },
-                            () => Array(state.numResources).fill("")
-                          );
-                          state.maxNeed = Array.from(
-                            { length: state.numProcesses },
-                            () => Array(state.numResources).fill("")
-                          );
-                          state.totalResources = Array.from({ length: 1 }, () =>
-                            Array(state.numResources).fill("")
-                          );
-                          setTotalResources(state.totalResources);
-                          setAllocation(state.allocation);
-                          setMaxNeed(state.maxNeed);
-                          state.isSubmitted = false;
-                          state.isValidMatrix = true;
-                          setRefresh(!refresh);
-                          Vibration.vibrate(80);
-                        } else {
-                          alert(
-                            "Sorry! Can't increase No. of Resources anymore!"
-                          );
-                        }
-                      }}
-                    >
-                      <Feather
-                        name="plus-circle"
-                        size={scale(30)}
-                        color={text}
-                      />
-                    </TouchableOpacity>
-                  </View>
-                </View>
-              </View>
-              <View
-                style={{
-                  justifyContent: "center",
-                  alignItems: "center",
-                  backgroundColor: background,
-                  paddingBottom: verticalScale(25),
-                  paddingHorizontal: scale(20),
-                }}
-              >
-                <View>
-                  <Text
-                    style={{
-                      alignSelf: "center",
-                      color: text,
-                      fontSize: scale(16),
-                      fontFamily: "Popins",
-                    }}
-                  >
-                    No. of Processes
-                  </Text>
-                  <View
-                    style={{
-                      flexDirection: "row",
-                      alignSelf: "center",
-                      margin: scale(5),
-                      padding: scale(5),
-                      justifyContent: "center",
-                      alignContent: "center",
-                    }}
-                  >
-                    <TouchableOpacity
-                      onPress={() => {
-                        if (state.numProcesses > 0) {
-                          state.numProcesses = state.numProcesses - 1;
-                          state.allocation = Array.from(
-                            { length: state.numProcesses },
-                            () => Array(state.numResources).fill("")
-                          );
-                          state.maxNeed = Array.from(
-                            { length: state.numProcesses },
-                            () => Array(state.numResources).fill("")
-                          );
-                          state.totalResources = Array.from({ length: 1 }, () =>
-                            Array(state.numResources).fill("")
-                          );
-                          setTotalResources(state.totalResources);
-                          setAllocation(state.allocation);
-                          setMaxNeed(state.maxNeed);
-                          state.isSubmitted = false;
-                          state.isValidMatrix = true;
-                          setRefresh(!refresh);
-                          Vibration.vibrate(80);
-                        } else {
-                          alert(
-                            "Sorry! Can't decrease  No. of Processes anymore!"
-                          );
-                        }
-                      }}
-                    >
-                      <Feather
-                        name="minus-circle"
-                        size={scale(30)}
-                        color={text}
-                      />
-                    </TouchableOpacity>
-                    <Text
-                      style={{
-                        paddingHorizontal: scale(15),
-                        color: text,
-                        fontSize: scale(16),
-                        alignSelf: "center",
-                        fontFamily: "Popins",
-                        width: Dimensions.get("window").width * 0.14,
-                      }}
-                    >
-                      {state.numProcesses}
-                    </Text>
-                    <TouchableOpacity
-                      onPress={() => {
-                        if (state.numProcesses < 5) {
-                          state.numProcesses = state.numProcesses + 1;
-                          state.allocation = Array.from(
-                            { length: state.numProcesses },
-                            () => Array(state.numResources).fill("")
-                          );
-                          state.maxNeed = Array.from(
-                            { length: state.numProcesses },
-                            () => Array(state.numResources).fill("")
-                          );
-                          state.totalResources = Array.from({ length: 1 }, () =>
-                            Array(state.numResources).fill("")
-                          );
-                          setTotalResources(state.totalResources);
-                          setAllocation(state.allocation);
-                          setMaxNeed(state.maxNeed);
-                          state.isSubmitted = false;
-                          state.isValidMatrix = true;
-                          setRefresh(!refresh);
-                          Vibration.vibrate(80);
-                        } else {
-                          alert(
-                            "Sorry! Can't increase  No. of Processes anymore!"
-                          );
-                        }
-                      }}
-                    >
-                      <Feather
-                        name="plus-circle"
-                        size={scale(30)}
-                        color={text}
-                      />
-                    </TouchableOpacity>
-                  </View>
+                    <Feather
+                      name="plus-circle"
+                      size={algoWidth / 20}
+                      color={text}
+                    />
+                  </TouchableOpacity>
                 </View>
               </View>
             </View>
+            <View
+              style={{
+                backgroundColor: background,
+                marginHorizontal: algoWidth / 50,
+                paddingHorizontal: algoWidth / 20,
+              }}
+            >
+              <View>
+                <Text
+                  style={{
+                    alignSelf: "center",
+                    color: text,
+                    fontSize: algoWidth / 40,
+                    fontFamily: "Popins",
+                  }}
+                >
+                  No. of Processes
+                </Text>
+                <View
+                  style={{
+                    flexDirection: "row",
+                    margin: algoWidth / 50,
+                  }}
+                >
+                  <TouchableOpacity
+                    onPress={() => {
+                      if (state.numProcesses > 0) {
+                        state.numProcesses = state.numProcesses - 1;
+                        state.allocation = Array.from(
+                          { length: state.numProcesses },
+                          () => Array(state.numResources).fill("")
+                        );
+                        state.maxNeed = Array.from(
+                          { length: state.numProcesses },
+                          () => Array(state.numResources).fill("")
+                        );
+                        state.totalResources = Array.from({ length: 1 }, () =>
+                          Array(state.numResources).fill("")
+                        );
+                        setTotalResources(state.totalResources);
+                        setAllocation(state.allocation);
+                        setMaxNeed(state.maxNeed);
+                        state.isSubmitted = false;
+                        state.isValidMatrix = true;
+                        setRefresh(!refresh);
+                        Vibration.vibrate(80);
+                      } else {
+                        alert(
+                          "Sorry! Can't decrease  No. of Processes anymore!"
+                        );
+                      }
+                    }}
+                  >
+                    <Feather
+                      name="minus-circle"
+                      size={algoWidth / 20}
+                      color={text}
+                    />
+                  </TouchableOpacity>
+                  <Text
+                    style={{
+                      paddingHorizontal: algoWidth / 50,
+                      color: text,
+                      fontSize: algoWidth / 40,
+                      alignSelf: "center",
+                      fontFamily: "Popins",
+                    }}
+                  >
+                    {state.numProcesses}
+                  </Text>
+                  <TouchableOpacity
+                    onPress={() => {
+                      if (state.numProcesses < 5) {
+                        state.numProcesses = state.numProcesses + 1;
+                        state.allocation = Array.from(
+                          { length: state.numProcesses },
+                          () => Array(state.numResources).fill("")
+                        );
+                        state.maxNeed = Array.from(
+                          { length: state.numProcesses },
+                          () => Array(state.numResources).fill("")
+                        );
+                        state.totalResources = Array.from({ length: 1 }, () =>
+                          Array(state.numResources).fill("")
+                        );
+                        setTotalResources(state.totalResources);
+                        setAllocation(state.allocation);
+                        setMaxNeed(state.maxNeed);
+                        state.isSubmitted = false;
+                        state.isValidMatrix = true;
+                        setRefresh(!refresh);
+                        Vibration.vibrate(80);
+                      } else {
+                        alert(
+                          "Sorry! Can't increase  No. of Processes anymore!"
+                        );
+                      }
+                    }}
+                  >
+                    <Feather
+                      name="plus-circle"
+                      size={algoWidth / 20}
+                      color={text}
+                    />
+                  </TouchableOpacity>
+                </View>
+              </View>
+            </View>
+          </View>
+          <View style={{ paddingVertical: algoHeight / 100 }}>
             {state.numResources > 0 ? (
               <View style={styles.container}>
                 <Text style={styles.instructions}>Total Resources:</Text>
@@ -658,14 +647,19 @@ const BankersAlgorithmScreen = () => {
             state.isSubmitted &&
             state.isValidMatrix ? (
               <>
-                <View style={styles.container}>
-                  <Text style={styles.instructions}>Need:</Text>
-                  {renderMatrix(state.need, styles.headerText)}
+                <View>
+                  <View style={styles.container}>
+                    <Text style={styles.instructions}>Need:</Text>
+                    {renderMatrix(state.need, styles.headerText)}
+                  </View>
                 </View>
-                <View style={styles.container}>
-                  <Text style={styles.instructions}>Available:</Text>
-                  {renderWork()}
+                <View>
+                  <View style={styles.container}>
+                    <Text style={styles.instructions}>Available:</Text>
+                    {renderWork()}
+                  </View>
                 </View>
+                <View style={{width:algoWidth}}>
                 {state.isSafe ? (
                   <View
                     style={{
@@ -680,7 +674,7 @@ const BankersAlgorithmScreen = () => {
                       style={{
                         alignSelf: "center",
                         fontFamily: "Popins",
-                        fontSize: scale(14),
+                        fontSize: algoWidth / 40,
                         color: "#30910a",
                         fontWeight: "bold",
                         marginVertical: verticalScale(10),
@@ -703,7 +697,7 @@ const BankersAlgorithmScreen = () => {
                       style={{
                         alignSelf: "center",
                         fontFamily: "Popins",
-                        fontSize: scale(14),
+                        fontSize: algoWidth / 40,
                         color: "#f2705c",
                         fontWeight: "bold",
                         marginVertical: verticalScale(10),
@@ -713,6 +707,7 @@ const BankersAlgorithmScreen = () => {
                     </Text>
                   </View>
                 )}
+                </View>
                 <View
                   style={{
                     flexDirection: "row",
