@@ -17,9 +17,10 @@ import SRTFAlgoScreen from "../components/SRTFAlgoScreen";
 import PriorityAlgoScreen from "../components/PriorityAlgoScreen";
 import PrePriorityAlgoScreen from "../components/PrePriorityAlgoScreen";
 import useWindowSize from "../Hooks/useWindowSize";
+import getMediaQuery from "../Hooks/getMediaQuery";
 
 const CPUSchedulingScreen = () => {
-    const [width, height] = useWindowSize();
+  const [width, height] = useWindowSize();
   const [refresh, setRefresh] = useState(false);
   const { state, changeTheAlgo } = useContext(AlgoContext);
 
@@ -27,32 +28,190 @@ const CPUSchedulingScreen = () => {
     Popins: require("../../public/assets/fonts/Poppins-Light.ttf"),
   });
 
+  const [isMobileWidth, isTabletWidth, isDesktopWidth, isWide] =
+    getMediaQuery();
+  const algoWidth = isWide ? width * 0.6 : width;
+  const algoHeight = isWide ? height : height * 0.6;
+
+  const styles = StyleSheet.create({
+    selectAlgoButton: {
+      marginHorizontal: scale(2),
+      borderRadius: scale(5),
+      borderColor: main,
+      borderWidth: scale(1),
+      paddingVertical: algoHeight / 100,
+      paddingHorizontal: algoWidth / 53,
+      backgroundColor: main,
+      alignSelf: "center",
+      shadowColor: "#00000040", // IOS
+      shadowOffset: { height: scale(1), width: scale(1) }, // IOS
+      shadowOpacity: scale(1), // IOS
+      shadowRadius: scale(2), //IOS
+      elevation: algoHeight / 100,
+    },
+
+    notSelectAlgoButton: {
+      marginHorizontal: scale(2),
+      borderRadius: scale(5),
+      borderColor: main,
+      borderWidth: scale(1),
+      paddingVertical: algoHeight / 100,
+      paddingHorizontal: algoHeight / 53,
+      backgroundColor: background,
+      alignSelf: "center",
+      shadowColor: "#00000040", // IOS
+      shadowOffset: { height: scale(1), width: scale(1) }, // IOS
+      shadowOpacity: scale(1), // IOS
+      shadowRadius: scale(2), //IOS
+      elevation: algoHeight / 100,
+    },
+    selectAlgoButtonText: {
+      color: background,
+      fontSize: algoWidth / 53,
+    },
+    notSelectAlgoButtonText: {
+      color: main,
+      fontSize: algoWidth / 53,
+    },
+  });
+
   if (!loaded) {
     return null;
   }
 
   return (
-    <View style={{ backgroundColor: background, flex: 1 }}>
-      <ScrollView
-        contentContainerStyle={{
-          alignItems: "center",
-          backgroundColor: background,
-        }}
-        nestedScrollEnabled={true}
-        showsVerticalScrollIndicator={false}
-      >
-        <View
-          style={{
-            paddingVertical: verticalScale(15),
+    <ScrollView
+      contentContainerStyle={{
+        backgroundColor: background,
+        flex: 1,
+        flexDirection: isWide ? "row" : "column",
+      }}
+    >
+      <View style={{ flex: 4 }}>
+        <ScrollView
+          contentContainerStyle={{
+            alignItems: "center",
+            backgroundColor: background,
+            borderRightColor: "grey",
+            borderBottomColor: "grey",
+            borderRightWidth: isWide ? algoWidth / 100 : 0,
+            borderBottomWidth: isWide ? 0 : algoWidth / 100,
+            flex: 1,
           }}
+          showsVerticalScrollIndicator={true}
+        >
+          <View style={{ justifyContent: "center", alignItems: "center" }}>
+            <Text>Content will be available soon!</Text>
+            <Text>{width}</Text>
+            <Text>{algoWidth}</Text>
+          </View>
+        </ScrollView>
+      </View>
+
+      <View style={{ flex: 6 }}>
+        <ScrollView
+          contentContainerStyle={{
+            alignItems: "stretch",
+            backgroundColor: background,
+            paddingHorizontal: scale(5),
+            paddingTop: algoWidth / 53,
+          }}
+          showsVerticalScrollIndicator={false}
         >
           <View
             style={{
               flexDirection: "row",
+              marginVertical: algoWidth / 100,
+              alignItems: "stretch",
+              alignContent: "flex-start",
               justifyContent: "space-around",
-              alignItems: "center",
+              width: algoWidth,
             }}
           >
+            <TouchableOpacity
+              style={
+                state.selectedAlgorithm == "FCFS"
+                  ? styles.selectAlgoButton
+                  : styles.notSelectAlgoButton
+              }
+              onPress={() => {
+                changeTheAlgo("FCFS");
+                setRefresh(!refresh);
+              }}
+            >
+              <Text
+                style={
+                  state.selectedAlgorithm == "FCFS"
+                    ? styles.selectAlgoButtonText
+                    : styles.notSelectAlgoButtonText
+                }
+              >
+                FCFS
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={
+                state.selectedAlgorithm == "SJF"
+                  ? styles.selectAlgoButton
+                  : styles.notSelectAlgoButton
+              }
+              onPress={() => {
+                changeTheAlgo("SJF");
+                setRefresh(!refresh);
+              }}
+            >
+              <Text
+                style={
+                  state.selectedAlgorithm == "SJF"
+                    ? styles.selectAlgoButtonText
+                    : styles.notSelectAlgoButtonText
+                }
+              >
+                SJF
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={
+                state.selectedAlgorithm == "SRTF"
+                  ? styles.selectAlgoButton
+                  : styles.notSelectAlgoButton
+              }
+              onPress={() => {
+                changeTheAlgo("SRTF");
+                setRefresh(!refresh);
+              }}
+            >
+              <Text
+                style={
+                  state.selectedAlgorithm == "SRTF"
+                    ? styles.selectAlgoButtonText
+                    : styles.notSelectAlgoButtonText
+                }
+              >
+                SRTF
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={
+                state.selectedAlgorithm == "Priority"
+                  ? styles.selectAlgoButton
+                  : styles.notSelectAlgoButton
+              }
+              onPress={() => {
+                changeTheAlgo("Priority");
+                setRefresh(!refresh);
+              }}
+            >
+              <Text
+                style={
+                  state.selectedAlgorithm == "Priority"
+                    ? styles.selectAlgoButtonText
+                    : styles.notSelectAlgoButtonText
+                }
+              >
+                Priority
+              </Text>
+            </TouchableOpacity>
             <TouchableOpacity
               style={
                 state.selectedAlgorithm == "Preemptive Priority"
@@ -75,104 +234,8 @@ const CPUSchedulingScreen = () => {
               </Text>
             </TouchableOpacity>
           </View>
-          <View style={{ justifyContent: "center", alignItems: "center" }}>
-            <View
-              style={{
-                flexDirection: "row",
-                marginVertical: verticalScale(10),
-                alignItems: "stretch",
-                alignContent: "flex-start",
-                justifyContent: "space-around",
-                width: width,
-              }}
-            >
-              <TouchableOpacity
-                style={
-                  state.selectedAlgorithm == "FCFS"
-                    ? styles.selectAlgoButton
-                    : styles.notSelectAlgoButton
-                }
-                onPress={() => {
-                  changeTheAlgo("FCFS");
-                  setRefresh(!refresh);
-                }}
-              >
-                <Text
-                  style={
-                    state.selectedAlgorithm == "FCFS"
-                      ? styles.selectAlgoButtonText
-                      : styles.notSelectAlgoButtonText
-                  }
-                >
-                  FCFS
-                </Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={
-                  state.selectedAlgorithm == "SJF"
-                    ? styles.selectAlgoButton
-                    : styles.notSelectAlgoButton
-                }
-                onPress={() => {
-                  changeTheAlgo("SJF");
-                  setRefresh(!refresh);
-                }}
-              >
-                <Text
-                  style={
-                    state.selectedAlgorithm == "SJF"
-                      ? styles.selectAlgoButtonText
-                      : styles.notSelectAlgoButtonText
-                  }
-                >
-                  SJF
-                </Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={
-                  state.selectedAlgorithm == "SRTF"
-                    ? styles.selectAlgoButton
-                    : styles.notSelectAlgoButton
-                }
-                onPress={() => {
-                  changeTheAlgo("SRTF");
-                  setRefresh(!refresh);
-                }}
-              >
-                <Text
-                  style={
-                    state.selectedAlgorithm == "SRTF"
-                      ? styles.selectAlgoButtonText
-                      : styles.notSelectAlgoButtonText
-                  }
-                >
-                  SRTF
-                </Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={
-                  state.selectedAlgorithm == "Priority"
-                    ? styles.selectAlgoButton
-                    : styles.notSelectAlgoButton
-                }
-                onPress={() => {
-                  changeTheAlgo("Priority");
-                  setRefresh(!refresh);
-                }}
-              >
-                <Text
-                  style={
-                    state.selectedAlgorithm == "Priority"
-                      ? styles.selectAlgoButtonText
-                      : styles.notSelectAlgoButtonText
-                  }
-                >
-                  Priority
-                </Text>
-              </TouchableOpacity>
-            </View>
-          </View>
-          <View style={{ margin: 5 }}>
+
+          <View style={{ margin: algoWidth / 53 }}>
             {state.selectedAlgorithm == "FCFS" ? (
               <FCFSAlgoScreen />
             ) : state.selectedAlgorithm == "SJF" ? (
@@ -185,101 +248,10 @@ const CPUSchedulingScreen = () => {
               <PrePriorityAlgoScreen />
             ) : null}
           </View>
-        </View>
-      </ScrollView>
-    </View>
+        </ScrollView>
+      </View>
+    </ScrollView>
   );
 };
 
 export default CPUSchedulingScreen;
-
-const styles = StyleSheet.create({
-  heading: {
-    fontFamily: "Popins",
-    fontSize: scale(35),
-    fontWeight: "400",
-    marginTop: verticalScale(5),
-    marginBottom: verticalScale(10),
-    color: primary,
-  },
-  head1: {
-    fontFamily: "Popins",
-    fontSize: scale(14),
-    color: primary,
-  },
-  head2: {
-    fontFamily: "Popins",
-    fontSize: scale(16),
-    color: primary,
-  },
-  name: {
-    fontFamily: "Popins",
-    fontSize: scale(20),
-    marginTop: verticalScale(10),
-    color: primary,
-  },
-  rights: {
-    fontFamily: "Popins",
-    fontSize: scale(12),
-    color: primary,
-    marginTop: scale(10),
-  },
-  rights1: {
-    fontFamily: "Popins",
-    fontSize: scale(12),
-    color: primary,
-    marginBottom: verticalScale(10),
-  },
-  selectAlgoButton: {
-    margin: scale(4),
-    borderRadius: scale(10),
-    borderColor: background,
-    borderWidth: scale(1),
-    padding: scale(8),
-    backgroundColor: main,
-    alignSelf: "center",
-  },
-  selectAlgoButtonText: {
-    color: background,
-    fontSize: scale(15),
-  },
-  notSelectAlgoButton: {
-    margin: scale(4),
-    borderRadius: scale(10),
-    borderColor: main,
-    borderWidth: scale(1),
-    padding: scale(8),
-    backgroundColor: background,
-    alignSelf: "center",
-  },
-  notSelectAlgoButtonText: {
-    color: main,
-    fontSize: scale(15),
-  },
-  item: {
-    backgroundColor: "#81f51b50",
-    width: scale(30),
-    height: scale(30),
-    alignItems: "center",
-    paddingTop: scale(5),
-    marginRight: scale(2),
-    borderRadius: scale(5),
-  },
-  line: {
-    flexDirection: "row",
-    alignItems: "center",
-  },
-  tableBox: {
-    flex: 1,
-    borderWidth: scale(1),
-    borderColor: primary,
-    alignContent: "center",
-    paddingLeft: scale(1),
-    backgroundColor: background,
-    alignItems: "center",
-  },
-  text: {
-    color: text,
-    fontFamily: "Popins",
-  },
-});

@@ -19,6 +19,7 @@ import Button from "./Button";
 import { processColor } from "./Colors";
 import ProgressiveBar from "./ProgressiveBar";
 import useWindowSize from "../Hooks/useWindowSize";
+import getMediaQuery from "../Hooks/getMediaQuery";
 
 const FCFSAlgoScreen = () => {
   const [arrTime, setArrTime] = useState(0);
@@ -32,6 +33,50 @@ const FCFSAlgoScreen = () => {
   const waitingTimeLine = [...state.FCFSwaitingTimeLine, [-1]];
   const [width, height] = useWindowSize();
 
+  const [isMobileWidth, isTabletWidth, isDesktopWidth, isWide] =
+    getMediaQuery();
+  const algoWidth = isWide ? width * 0.6 : width;
+  const algoHeight = isWide ? height : height * 0.6;
+  const styles = StyleSheet.create({
+    button: {
+      shadowColor: "#00000040", // IOS
+      shadowOffset: { height: scale(1), width: scale(1) }, // IOS
+      shadowOpacity: scale(1), // IOS
+      shadowRadius: scale(1), //IOS
+      backgroundColor: "#CAE9FF",
+      elevation: algoHeight / 100, // Android
+      justifyContent: "center",
+      alignItems: "center",
+      paddingHorizontal: algoWidth / 53,
+      paddingVertical: algoWidth / 100,
+      borderRadius: algoWidth / 100,
+      marginHorizontal: algoWidth / 100,
+    },
+    line: {
+      flexDirection: "row",
+      alignItems: "center",
+    },
+    tableBox: {
+      flex: 1,
+      borderWidth: scale(1),
+      borderColor: primary,
+      alignContent: "center",
+      paddingLeft: scale(1),
+      backgroundColor: background,
+      alignItems: "center",
+    },
+    text: {
+      color: text,
+      fontFamily: "Popins",
+    },
+    buttonText: {
+      color: "#6930C3",
+      fontSize: algoWidth / 53,
+      alignSelf: "center",
+      fontFamily: "Popins",
+    },
+  });
+
   const [loaded] = useFonts({
     Popins: require("../../public/assets/fonts/Poppins-Light.ttf"),
   });
@@ -42,20 +87,19 @@ const FCFSAlgoScreen = () => {
 
   return (
     <ScrollView
-      style={{ flex: 1, backgroundColor: background, width: "100%" }}
+      style={{ flex: 1, backgroundColor: background }}
       nestedScrollEnabled={true}
       showsVerticalScrollIndicator={false}
     >
-      <View style={{ width: width }}>
+      <View>
         <View
           style={{
             justifyContent: "space-evenly",
-            // borderColor: "red",
-            // borderWidth: scale(1),
             flex: 1,
             padding: scale(10),
             paddingRight: scale(15),
             paddingLeft: scale(20),
+            flexDirection: "row",
           }}
         >
           <View>
@@ -63,7 +107,7 @@ const FCFSAlgoScreen = () => {
               style={{
                 alignSelf: "center",
                 color: text,
-                fontSize: scale(16),
+                fontSize: algoWidth / 53,
                 fontFamily: "Popins",
               }}
             >
@@ -74,7 +118,7 @@ const FCFSAlgoScreen = () => {
                 flexDirection: "row",
                 alignSelf: "center",
                 margin: scale(5),
-                padding: scale(5),
+                padding: algoWidth / 100,
                 justifyContent: "center",
                 alignContent: "center",
               }}
@@ -89,16 +133,19 @@ const FCFSAlgoScreen = () => {
                   }
                 }}
               >
-                <Feather name="minus-circle" size={scale(30)} color={text} />
+                <Feather
+                  name="minus-circle"
+                  size={algoWidth / 30}
+                  color={text}
+                />
               </TouchableOpacity>
               <Text
                 style={{
-                  paddingHorizontal: scale(15),
+                  paddingHorizontal: algoWidth / 30,
                   color: text,
-                  fontSize: scale(16),
+                  fontSize: algoWidth / 53,
                   alignSelf: "center",
                   fontFamily: "Popins",
-                  width: Dimensions.get("window").width * 0.14,
                 }}
               >
                 {arrTime}
@@ -113,7 +160,11 @@ const FCFSAlgoScreen = () => {
                   }
                 }}
               >
-                <Feather name="plus-circle" size={scale(30)} color={text} />
+                <Feather
+                  name="plus-circle"
+                  size={algoWidth / 30}
+                  color={text}
+                />
               </TouchableOpacity>
             </View>
           </View>
@@ -122,7 +173,7 @@ const FCFSAlgoScreen = () => {
               style={{
                 alignSelf: "center",
                 color: text,
-                fontSize: scale(16),
+                fontSize: algoWidth / 53,
                 fontFamily: "Popins",
               }}
             >
@@ -132,8 +183,8 @@ const FCFSAlgoScreen = () => {
               style={{
                 flexDirection: "row",
                 alignSelf: "center",
-                margin: scale(10),
-                padding: scale(5),
+                margin: scale(5),
+                padding: algoWidth / 100,
                 justifyContent: "center",
                 alignContent: "center",
               }}
@@ -148,16 +199,19 @@ const FCFSAlgoScreen = () => {
                   }
                 }}
               >
-                <Feather name="minus-circle" size={scale(30)} color={text} />
+                <Feather
+                  name="minus-circle"
+                  size={algoWidth / 30}
+                  color={text}
+                />
               </TouchableOpacity>
               <Text
                 style={{
                   paddingHorizontal: scale(15),
                   color: text,
-                  fontSize: scale(16),
+                  fontSize: algoWidth / 53,
                   alignSelf: "center",
                   fontFamily: "Popins",
-                  width: Dimensions.get("window").width * 0.14,
                 }}
               >
                 {Bursttime}
@@ -172,7 +226,11 @@ const FCFSAlgoScreen = () => {
                   }
                 }}
               >
-                <Feather name="plus-circle" size={scale(30)} color={text} />
+                <Feather
+                  name="plus-circle"
+                  size={algoWidth / 30}
+                  color={text}
+                />
               </TouchableOpacity>
             </View>
           </View>
@@ -181,14 +239,13 @@ const FCFSAlgoScreen = () => {
         <View
           style={{
             flexDirection: "row",
-            marginVertical: verticalScale(10),
+            marginVertical: algoWidth / 53,
             alignItems: "stretch",
             alignContent: "flex-start",
             justifyContent: "space-around",
           }}
         >
-          <Button
-            title="Clear"
+          <TouchableOpacity
             onPress={() => {
               clear("FCFS");
               setArrTime(0);
@@ -196,10 +253,12 @@ const FCFSAlgoScreen = () => {
               setRefresh(!refresh);
               setCurTime(0);
             }}
-          />
-
-          <Button
-            title="Schedule"
+          >
+            <View style={styles.button}>
+              <Text style={styles.buttonText}>Clear</Text>
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity
             onPress={() => {
               if (state.FCFSprocess.length > 0) {
                 schedule("FCFS");
@@ -209,9 +268,12 @@ const FCFSAlgoScreen = () => {
                 alert("Please add the processes ");
               }
             }}
-          />
-          <Button
-            title="Add"
+          >
+            <View style={styles.button}>
+              <Text style={styles.buttonText}>Schedule</Text>
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity
             onPress={() => {
               {
                 if (
@@ -232,7 +294,13 @@ const FCFSAlgoScreen = () => {
                 }
               }
             }}
-          />
+          >
+            <View style={styles.button}>
+              <Text style={styles.buttonText}>Add</Text>
+            </View>
+          </TouchableOpacity>
+
+         
         </View>
       </View>
 
@@ -654,23 +722,3 @@ const FCFSAlgoScreen = () => {
 };
 
 export default FCFSAlgoScreen;
-
-const styles = StyleSheet.create({
-  line: {
-    flexDirection: "row",
-    alignItems: "center",
-  },
-  tableBox: {
-    flex: 1,
-    borderWidth: scale(1),
-    borderColor: primary,
-    alignContent: "center",
-    paddingLeft: scale(1),
-    backgroundColor: background,
-    alignItems: "center",
-  },
-  text: {
-    color: text,
-    fontFamily: "Popins",
-  },
-});
