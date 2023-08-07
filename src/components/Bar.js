@@ -4,9 +4,15 @@ import { processColor } from "./Colors";
 import { Context as AlgoContext } from "../context/schedulingAlgoContext";
 import { scale, verticalScale, moderateScale } from "react-native-size-matters";
 import useWindowSize from "../Hooks/useWindowSize";
-const Bar = ({ isScheduled, type }) => {
+import getMediaQuery from "../Hooks/getMediaQuery";
+const Bar = ({ isScheduled, type}) => {
   const { state } = useContext(AlgoContext);
-    const [width, height] = useWindowSize();
+  const [width, height] = useWindowSize();
+
+  const [isMobileWidth, isTabletWidth, isDesktopWidth, isWide] =
+    getMediaQuery();
+  const algoWidth = isWide ? width * 0.6 : width;
+  const algoHeight = isWide ? height : height * 0.6;
 
   if (type == "FCFS") {
     const n = state.FCFStimeLine.length;
@@ -29,9 +35,9 @@ const Bar = ({ isScheduled, type }) => {
                     style={{
                       backgroundColor: backgroundColor,
                       width:
-                        ((Dimensions.get("screen").width - scale(20)) / n) *
+                        ((algoWidth - scale(20)) / n) *
                         item.length,
-                      height: verticalScale(40),
+                      height:algoWidth/30,
                       flexDirection: "row",
                       justifyContent: "center",
                       alignItems: "center",
@@ -42,7 +48,8 @@ const Bar = ({ isScheduled, type }) => {
                       <View
                         style={{
                           width:
-                            ((Dimensions.get("screen").width - scale(20)) / n) *
+                            ((algoWidth - scale(20)) /
+                              n) *
                             item.length,
                           flexDirection: "row",
                           justifyContent: "space-between",
@@ -50,12 +57,12 @@ const Bar = ({ isScheduled, type }) => {
                         }}
                       >
                         <Text
-                          style={{ fontFamily: "Popins", fontSize: scale(10) }}
+                          style={{ fontFamily: "Popins", fontSize:algoWidth/53 }}
                         >
                           0
                         </Text>
                         <Text
-                          style={{ fontFamily: "Popins", fontSize: scale(10) }}
+                          style={{ fontFamily: "Popins", fontSize:algoWidth/53 }}
                         >
                           {state.FCFStimeIndex[index]}
                         </Text>
@@ -65,7 +72,8 @@ const Bar = ({ isScheduled, type }) => {
                     <View
                       style={{
                         width:
-                          ((Dimensions.get("screen").width - scale(20)) / n) *
+                          ((algoWidth - scale(20)) /
+                            n) *
                           item.length,
                         flexDirection: "row",
                         justifyContent: "flex-end",
@@ -73,7 +81,7 @@ const Bar = ({ isScheduled, type }) => {
                       }}
                     >
                       <Text
-                        style={{ fontFamily: "Popins", fontSize: scale(10) }}
+                        style={{ fontFamily: "Popins", fontSize:algoWidth/53 }}
                       >
                         {state.FCFStimeIndex[index]}
                       </Text>
@@ -87,9 +95,9 @@ const Bar = ({ isScheduled, type }) => {
         ) : (
           <View
             style={{
-              height: verticalScale(40),
+              height:algoWidth/30,
               backgroundColor: "white",
-              width: Dimensions.get("screen").width - scale(20),
+              width: algoWidth - scale(20),
             }}
           />
         )}
@@ -116,9 +124,9 @@ const Bar = ({ isScheduled, type }) => {
                     style={{
                       backgroundColor: backgroundColor,
                       width:
-                        ((Dimensions.get("screen").width - scale(20)) / n) *
+                        ((algoWidth - scale(20)) / n) *
                         item.length,
-                      height: verticalScale(40),
+                      height:algoWidth/30,
                       flexDirection: "row",
                       justifyContent: "center",
                       alignItems: "center",
@@ -129,7 +137,8 @@ const Bar = ({ isScheduled, type }) => {
                       <View
                         style={{
                           width:
-                            ((Dimensions.get("screen").width - scale(20)) / n) *
+                            ((algoWidth - scale(20)) /
+                              n) *
                             item.length,
                           flexDirection: "row",
                           justifyContent: "space-between",
@@ -137,12 +146,12 @@ const Bar = ({ isScheduled, type }) => {
                         }}
                       >
                         <Text
-                          style={{ fontFamily: "Popins", fontSize: scale(10) }}
+                          style={{ fontFamily: "Popins", fontSize:algoWidth/53 }}
                         >
                           0
                         </Text>
                         <Text
-                          style={{ fontFamily: "Popins", fontSize: scale(10) }}
+                          style={{ fontFamily: "Popins", fontSize:algoWidth/53 }}
                         >
                           {state.SJFtimeIndex[index]}
                         </Text>
@@ -152,7 +161,8 @@ const Bar = ({ isScheduled, type }) => {
                     <View
                       style={{
                         width:
-                          ((Dimensions.get("screen").width - scale(20)) / n) *
+                          ((algoWidth - scale(20)) /
+                            n) *
                           item.length,
                         flexDirection: "row",
                         justifyContent: "flex-end",
@@ -160,7 +170,7 @@ const Bar = ({ isScheduled, type }) => {
                       }}
                     >
                       <Text
-                        style={{ fontFamily: "Popins", fontSize: scale(10) }}
+                        style={{ fontFamily: "Popins", fontSize:algoWidth/53 }}
                       >
                         {state.SJFtimeIndex[index]}
                       </Text>
@@ -174,9 +184,9 @@ const Bar = ({ isScheduled, type }) => {
         ) : (
           <View
             style={{
-              height: verticalScale(40),
+              height:algoWidth/30,
               backgroundColor: "white",
-              width: Dimensions.get("screen").width - scale(20),
+              width: algoWidth - scale(20),
             }}
           />
         )}
@@ -203,9 +213,9 @@ const Bar = ({ isScheduled, type }) => {
                     style={{
                       backgroundColor: backgroundColor,
                       width:
-                        ((Dimensions.get("screen").width - scale(20)) / n) *
+                        ((algoWidth - scale(20)) / n) *
                         item.length,
-                      height: verticalScale(40),
+                      height:algoWidth/30,
                       flexDirection: "row",
                       justifyContent: "center",
                       alignItems: "center",
@@ -216,7 +226,8 @@ const Bar = ({ isScheduled, type }) => {
                       <View
                         style={{
                           width:
-                            ((Dimensions.get("screen").width - scale(20)) / n) *
+                            ((algoWidth - scale(20)) /
+                              n) *
                             item.length,
                           flexDirection: "row",
                           justifyContent: "space-between",
@@ -224,12 +235,12 @@ const Bar = ({ isScheduled, type }) => {
                         }}
                       >
                         <Text
-                          style={{ fontFamily: "Popins", fontSize: scale(10) }}
+                          style={{ fontFamily: "Popins", fontSize:algoWidth/53 }}
                         >
                           0
                         </Text>
                         <Text
-                          style={{ fontFamily: "Popins", fontSize: scale(10) }}
+                          style={{ fontFamily: "Popins", fontSize:algoWidth/53 }}
                         >
                           {state.PRtimeIndex[index]}
                         </Text>
@@ -239,7 +250,8 @@ const Bar = ({ isScheduled, type }) => {
                     <View
                       style={{
                         width:
-                          ((Dimensions.get("screen").width - scale(20)) / n) *
+                          ((algoWidth - scale(20)) /
+                            n) *
                           item.length,
                         flexDirection: "row",
                         justifyContent: "flex-end",
@@ -247,7 +259,7 @@ const Bar = ({ isScheduled, type }) => {
                       }}
                     >
                       <Text
-                        style={{ fontFamily: "Popins", fontSize: scale(10) }}
+                        style={{ fontFamily: "Popins", fontSize:algoWidth/53 }}
                       >
                         {state.PRtimeIndex[index]}
                       </Text>
@@ -261,9 +273,9 @@ const Bar = ({ isScheduled, type }) => {
         ) : (
           <View
             style={{
-              height: verticalScale(40),
+              height:algoWidth/30,
               backgroundColor: "white",
-              width: Dimensions.get("screen").width - scale(20),
+              width: algoWidth - scale(20),
             }}
           />
         )}
@@ -290,9 +302,9 @@ const Bar = ({ isScheduled, type }) => {
                     style={{
                       backgroundColor: backgroundColor,
                       width:
-                        ((Dimensions.get("screen").width - scale(20)) / n) *
+                        ((algoWidth - scale(20)) / n) *
                         item.length,
-                      height: verticalScale(40),
+                      height:algoWidth/30,
                       flexDirection: "row",
                       justifyContent: "center",
                       alignItems: "center",
@@ -303,7 +315,8 @@ const Bar = ({ isScheduled, type }) => {
                       <View
                         style={{
                           width:
-                            ((Dimensions.get("screen").width - scale(20)) / n) *
+                            ((algoWidth - scale(20)) /
+                              n) *
                             item.length,
                           flexDirection: "row",
                           justifyContent: "space-between",
@@ -311,12 +324,12 @@ const Bar = ({ isScheduled, type }) => {
                         }}
                       >
                         <Text
-                          style={{ fontFamily: "Popins", fontSize: scale(10) }}
+                          style={{ fontFamily: "Popins", fontSize:algoWidth/53 }}
                         >
                           0
                         </Text>
                         <Text
-                          style={{ fontFamily: "Popins", fontSize: scale(10) }}
+                          style={{ fontFamily: "Popins", fontSize:algoWidth/53 }}
                         >
                           {state.SRTFtimeIndex[index]}
                         </Text>
@@ -326,7 +339,8 @@ const Bar = ({ isScheduled, type }) => {
                     <View
                       style={{
                         width:
-                          ((Dimensions.get("screen").width - scale(20)) / n) *
+                          ((algoWidth - scale(20)) /
+                            n) *
                           item.length,
                         flexDirection: "row",
                         justifyContent: "flex-end",
@@ -334,7 +348,7 @@ const Bar = ({ isScheduled, type }) => {
                       }}
                     >
                       <Text
-                        style={{ fontFamily: "Popins", fontSize: scale(10) }}
+                        style={{ fontFamily: "Popins", fontSize:algoWidth/53 }}
                       >
                         {state.SRTFtimeIndex[index]}
                       </Text>
@@ -348,9 +362,9 @@ const Bar = ({ isScheduled, type }) => {
         ) : (
           <View
             style={{
-              height: verticalScale(40),
+              height:algoWidth/30,
               backgroundColor: "white",
-              width: Dimensions.get("screen").width - scale(20),
+              width: algoWidth - scale(20),
             }}
           />
         )}
@@ -377,9 +391,9 @@ const Bar = ({ isScheduled, type }) => {
                     style={{
                       backgroundColor: backgroundColor,
                       width:
-                        ((Dimensions.get("screen").width - scale(20)) / n) *
+                        ((algoWidth - scale(20)) / n) *
                         item.length,
-                      height: verticalScale(40),
+                      height:algoWidth/30,
                       flexDirection: "row",
                       justifyContent: "center",
                       alignItems: "center",
@@ -390,7 +404,8 @@ const Bar = ({ isScheduled, type }) => {
                       <View
                         style={{
                           width:
-                            ((Dimensions.get("screen").width - scale(20)) / n) *
+                            ((algoWidth - scale(20)) /
+                              n) *
                             item.length,
                           flexDirection: "row",
                           justifyContent: "space-between",
@@ -398,12 +413,12 @@ const Bar = ({ isScheduled, type }) => {
                         }}
                       >
                         <Text
-                          style={{ fontFamily: "Popins", fontSize: scale(10) }}
+                          style={{ fontFamily: "Popins", fontSize:algoWidth/53 }}
                         >
                           0
                         </Text>
                         <Text
-                          style={{ fontFamily: "Popins", fontSize: scale(10) }}
+                          style={{ fontFamily: "Popins", fontSize:algoWidth/53 }}
                         >
                           {state.PrePRtimeIndex[index]}
                         </Text>
@@ -413,7 +428,8 @@ const Bar = ({ isScheduled, type }) => {
                     <View
                       style={{
                         width:
-                          ((Dimensions.get("screen").width - scale(20)) / n) *
+                          ((algoWidth - scale(20)) /
+                            n) *
                           item.length,
                         flexDirection: "row",
                         justifyContent: "flex-end",
@@ -421,7 +437,7 @@ const Bar = ({ isScheduled, type }) => {
                       }}
                     >
                       <Text
-                        style={{ fontFamily: "Popins", fontSize: scale(10) }}
+                        style={{ fontFamily: "Popins", fontSize:algoWidth/53 }}
                       >
                         {state.PrePRtimeIndex[index]}
                       </Text>
@@ -435,9 +451,9 @@ const Bar = ({ isScheduled, type }) => {
         ) : (
           <View
             style={{
-              height: verticalScale(40),
+              height:algoWidth/30,
               backgroundColor: "white",
-              width: Dimensions.get("screen").width - scale(20),
+              width: algoWidth - scale(20),
             }}
           />
         )}

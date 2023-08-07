@@ -58,7 +58,7 @@ const FCFSAlgoScreen = () => {
     },
     tableBox: {
       flex: 1,
-      borderWidth: scale(1),
+      borderWidth: StyleSheet.hairlineWidth,
       borderColor: primary,
       alignContent: "center",
       paddingLeft: scale(1),
@@ -68,6 +68,7 @@ const FCFSAlgoScreen = () => {
     text: {
       color: text,
       fontFamily: "Popins",
+      fontSize: algoWidth / 53,
     },
     buttonText: {
       color: "#6930C3",
@@ -299,8 +300,6 @@ const FCFSAlgoScreen = () => {
               <Text style={styles.buttonText}>Add</Text>
             </View>
           </TouchableOpacity>
-
-         
         </View>
       </View>
 
@@ -309,7 +308,7 @@ const FCFSAlgoScreen = () => {
           <Text
             style={{
               ...styles.text,
-              fontSize: scale(18),
+              fontSize: algoWidth / 53,
               padding: scale(10),
               paddingTop: verticalScale(5),
               alignSelf: "center",
@@ -320,9 +319,7 @@ const FCFSAlgoScreen = () => {
           <View
             style={{
               ...styles.line,
-              alignSelf: "center",
-              width: width,
-              paddingHorizontal: scale(10),
+              alignSelf: "stretch",
             }}
           >
             <View style={styles.tableBox}>
@@ -336,15 +333,16 @@ const FCFSAlgoScreen = () => {
             </View>
           </View>
           <FlatList
-            style={{ alignSelf: "center", flex: 1 }}
+            style={{ alignSelf: "strech", flex: 1 }}
             data={state.FCFSprocess}
             renderItem={({ item }) => {
               return (
                 <View
                   style={{
                     ...styles.line,
-                    width: width,
-                    paddingHorizontal: scale(10),
+                    // width: width,
+                    alignSelf: "stretch",
+                    // paddingHorizontal: scale(10),
                   }}
                 >
                   <View style={styles.tableBox}>
@@ -358,8 +356,8 @@ const FCFSAlgoScreen = () => {
                       <View
                         style={{
                           backgroundColor: processColor[item.id],
-                          width: scale(17),
-                          height: verticalScale(17),
+                          width: algoWidth / 53,
+                          height: algoWidth / 53,
                           borderRadius: scale(7),
                           marginHorizontal: scale(5),
                           alignSelf: "center",
@@ -386,7 +384,7 @@ const FCFSAlgoScreen = () => {
           <Text
             style={{
               ...styles.text,
-              fontSize: scale(18),
+              fontSize: algoWidth / 53,
               alignSelf: "center",
               marginTop: verticalScale(10),
             }}
@@ -406,7 +404,7 @@ const FCFSAlgoScreen = () => {
           <Text
             style={{
               ...styles.text,
-              fontSize: scale(18),
+              fontSize: algoWidth / 53,
               padding: scale(10),
               marginTop: verticalScale(5),
               alignSelf: "center",
@@ -417,8 +415,7 @@ const FCFSAlgoScreen = () => {
           <View
             style={{
               ...styles.line,
-              alignSelf: "center",
-              width: Dimensions.get("window").width * 0.95,
+              alignSelf: "stretch",
             }}
           >
             <View style={styles.tableBox}>
@@ -443,17 +440,34 @@ const FCFSAlgoScreen = () => {
           {state.FCFSisScheduled ? (
             <FlatList
               data={state.FCFSscheduledProcess}
-              style={{ alignSelf: "center", flex: 1 }}
+              style={{ alignSelf: "stretch", flex: 1 }}
               renderItem={({ item }) => {
                 return (
                   <View
                     style={{
                       ...styles.line,
-                      width: Dimensions.get("window").width * 0.95,
                     }}
                   >
                     <View style={styles.tableBox}>
-                      <Text style={styles.text}>{`P${item.id}`}</Text>
+                      <View
+                        style={{
+                          flexDirection: "row",
+                          flex: 1,
+                          alignContent: "space-around",
+                        }}
+                      >
+                        <View
+                          style={{
+                            backgroundColor: processColor[item.id],
+                            width: algoWidth / 53,
+                            height: algoWidth / 53,
+                            borderRadius: scale(7),
+                            marginHorizontal: scale(5),
+                            alignSelf: "center",
+                          }}
+                        ></View>
+                        <Text style={styles.text}>{`P${item.id}`}</Text>
+                      </View>
                     </View>
                     <View style={styles.tableBox}>
                       <Text style={styles.text}>{item.arrTime}</Text>
@@ -483,24 +497,22 @@ const FCFSAlgoScreen = () => {
           <Text
             style={{
               ...styles.text,
-              fontSize: scale(18),
-              padding: scale(10),
-              marginTop: verticalScale(5),
+              fontSize: algoWidth / 40,
+              padding: algoWidth / 100,
+              marginTop: algoWidth / 53,
               alignSelf: "center",
             }}
           >
             Steps Visualizer
           </Text>
-          <View style={{ borderWidth: scale(1), borderColor: primary }}>
+
+          <View style={{ borderWidth: algoWidth / 400, borderColor: primary }}>
             <View
               style={{
                 flexDirection: "row",
                 flex: 1,
                 alignItems: "center",
                 justifyContent: "center",
-                paddingVertical: verticalScale(10),
-                // borderWidth: scale(1),
-                // borderColor: primary,
               }}
             >
               <TouchableOpacity
@@ -514,7 +526,7 @@ const FCFSAlgoScreen = () => {
               >
                 <Ionicons
                   name="chevron-back-outline"
-                  size={scale(40)}
+                  size={algoWidth / 20}
                   color={main}
                 />
               </TouchableOpacity>
@@ -523,7 +535,6 @@ const FCFSAlgoScreen = () => {
                   style={{
                     alignItems: "center",
                     flex: 1,
-                    // justifyContent:'center'
                     borderWidth: scale(1),
                     borderColor: background,
                   }}
@@ -533,7 +544,8 @@ const FCFSAlgoScreen = () => {
                       borderColor: background,
                       borderWidth: scale(1),
                       flex: 1,
-                      justifyContent: "center",
+                      // justifyContent: "center",
+                      alignContent: "center",
                     }}
                   >
                     <Text
@@ -546,130 +558,144 @@ const FCFSAlgoScreen = () => {
                       Time = {curTime}
                     </Text>
 
-                    <View style={{ marginTop: verticalScale(5) }}>
-                      <Text style={{ ...styles.text, alignSelf: "center" }}>
-                        CPU
-                      </Text>
-                      {timeLine[curTime] == -1 ? (
-                        <View
-                          style={{
-                            width: Dimensions.get("screen").width * 0.08,
-                            height: Dimensions.get("screen").width * 0.08,
-                            backgroundColor: "#CAE9FF",
-                            alignSelf: "center",
-                            marginBottom: verticalScale(10),
-                            justifyContent: "center",
-                          }}
-                        >
-                          <Text
+                    <View
+                      style={{
+                        marginTop: verticalScale(5),
+                        flexDirection: "row",
+                        // flex: 1,
+                        width: (algoWidth * 4) / 5,
+                        alignSelf: "stretch",
+                      }}
+                    >
+                      <View style={{ flex: 1, alignSelf: "center" }}>
+                        <Text style={{ ...styles.text, alignSelf: "center" }}>
+                          CPU
+                        </Text>
+                        {timeLine[curTime] == -1 ? (
+                          <View
                             style={{
-                              ...styles.text,
+                              width: algoWidth * 0.05,
+                              height: algoWidth * 0.05,
+                              backgroundColor: "#CAE9FF",
                               alignSelf: "center",
-                              alignContent: "center",
+                              marginBottom: algoWidth / 53,
+                              justifyContent: "center",
                             }}
                           >
-                            {" "}
-                          </Text>
-                        </View>
-                      ) : (
-                        <View
-                          style={{
-                            width: Dimensions.get("screen").width * 0.08,
-                            height: Dimensions.get("screen").width * 0.08,
-                            backgroundColor: "#CAE9FF",
-                            alignSelf: "center",
-                            marginBottom: verticalScale(10),
-                            justifyContent: "center",
-                          }}
-                        >
-                          <Text
+                            <Text
+                              style={{
+                                ...styles.text,
+                                alignSelf: "center",
+                                alignContent: "center",
+                              }}
+                            >
+                              {" "}
+                            </Text>
+                          </View>
+                        ) : (
+                          <View
                             style={{
-                              ...styles.text,
+                              width: algoWidth * 0.05,
+                              height: algoWidth * 0.05,
+                              backgroundColor: "#CAE9FF",
+                              marginBottom: algoWidth / 53,
                               alignSelf: "center",
-                              alignContent: "center",
+                              justifyContent: "center",
                             }}
                           >
-                            {`P${timeLine[curTime]}`}
-                          </Text>
-                        </View>
-                      )}
-
-                      <Text style={{ ...styles.text, alignSelf: "center" }}>
-                        Ready Queue
-                      </Text>
-                      {waitingTimeLine[curTime][0] != -1 ? (
-                        <FlatList
-                          style={{
-                            height: Dimensions.get("screen").width * 0.08,
-                            alignSelf: "center",
-                            // borderWidth: 2,
-                            // borderColor: "red",
-                          }}
-                          horizontal
-                          data={waitingTimeLine[curTime]}
-                          renderItem={({ item }) => {
-                            return (
-                              <View
-                                style={{
-                                  width: Dimensions.get("screen").width * 0.08,
-                                  height: Dimensions.get("screen").width * 0.08,
-                                  backgroundColor: "#CAE9FF",
-                                  justifyContent: "center",
-                                  marginRight: scale(1),
-
-                                  // borderWidth: scale(1),
-                                  // borderColor: "#000",
-                                }}
-                              >
-                                <Text
+                            <Text
+                              style={{
+                                ...styles.text,
+                                alignSelf: "center",
+                                alignContent: "center",
+                              }}
+                            >
+                              {`P${timeLine[curTime]}`}
+                            </Text>
+                          </View>
+                        )}
+                      </View>
+                      <View
+                        style={{
+                          flex: 1,
+                          alignSelf: "center",
+                        }}
+                      >
+                        <Text style={{ ...styles.text, alignSelf: "center" }}>
+                          Ready Queue
+                        </Text>
+                        {waitingTimeLine[curTime][0] != -1 ? (
+                          <FlatList
+                            style={{
+                              height: algoWidth * 0.05,
+                              alignSelf: "center",
+                              // borderWidth: 2,
+                              // borderColor: "red",
+                            }}
+                            horizontal
+                            data={waitingTimeLine[curTime]}
+                            renderItem={({ item }) => {
+                              return (
+                                <View
                                   style={{
-                                    ...styles.text,
-                                    alignSelf: "center",
-                                    alignContent: "center",
+                                    width: algoWidth * 0.05,
+                                    height: algoWidth * 0.05,
+                                    backgroundColor: "#CAE9FF",
+                                    justifyContent: "center",
+                                    marginRight: scale(1),
+
+                                    // borderWidth: scale(1),
+                                    // borderColor: "#000",
                                   }}
                                 >
-                                  P{item}
-                                </Text>
-                              </View>
-                            );
-                          }}
-                        />
-                      ) : (
-                        <FlatList
-                          style={{
-                            height: Dimensions.get("screen").width * 0.08,
+                                  <Text
+                                    style={{
+                                      ...styles.text,
+                                      alignSelf: "center",
+                                      alignContent: "center",
+                                    }}
+                                  >
+                                    P{item}
+                                  </Text>
+                                </View>
+                              );
+                            }}
+                          />
+                        ) : (
+                          <FlatList
+                            style={{
+                              height: algoWidth * 0.05,
 
-                            alignSelf: "center",
-                            // borderWidth: 2,
-                            // borderColor: "red",
-                          }}
-                          horizontal
-                          data={waitingTimeLine[curTime]}
-                          renderItem={({ item }) => {
-                            return (
-                              <View
-                                style={{
-                                  width: Dimensions.get("screen").width * 0.08,
-                                  height: Dimensions.get("screen").width * 0.08,
-                                  backgroundColor: "#CAE9FF",
-                                  justifyContent: "center",
-                                  marginRight: scale(1),
-                                }}
-                              >
-                                <Text
+                              alignSelf: "center",
+                            }}
+                            horizontal
+                            data={waitingTimeLine[curTime]}
+                            renderItem={({ item }) => {
+                              return (
+                                <View
                                   style={{
-                                    ...styles.text,
-                                    alignSelf: "center",
-                                    alignContent: "center",
+                                    width: algoWidth * 0.05,
+                                    height: algoWidth * 0.05,
+                                    backgroundColor: "#CAE9FF",
+                                    justifyContent: "center",
+                                    marginRight: scale(1),
                                   }}
                                 >
-                                  {" "}
-                                </Text>
-                              </View>
-                            );
-                          }}
-                        />
-                      )}
+                                  <Text
+                                    style={{
+                                      ...styles.text,
+                                      alignSelf: "center",
+                                      alignContent: "center",
+                                    }}
+                                  >
+                                    {" "}
+                                  </Text>
+                                </View>
+                              );
+                            }}
+                          />
+                        )}
+                      </View>
                     </View>
                   </View>
                 </View>
@@ -702,7 +728,7 @@ const FCFSAlgoScreen = () => {
               >
                 <Ionicons
                   name="chevron-forward-outline"
-                  size={scale(40)}
+                  size={algoWidth / 20}
                   color={main}
                 />
               </TouchableOpacity>
