@@ -26,7 +26,7 @@ const BankersAlgorithmScreen = () => {
   const { state, Solve } = useContext(BankersContext);
   const [refresh, setRefresh] = useState(true);
   const [loaded] = useFonts({
-    Popins: require("../../assets/fonts/Poppins-Light.ttf"),
+    Popins: require("../../public/assets/fonts/Poppins-Light.ttf"),
   });
   const [allocation, setAllocation] = useState(state.allocation || [[]]);
   const [maxNeed, setMaxNeed] = useState(state.maxNeed || [[]]);

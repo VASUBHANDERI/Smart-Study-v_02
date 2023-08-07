@@ -46,8 +46,8 @@ const BankersAlgorithmScreen = () => {
     },
     buttonContainer: {
       marginTop: algoHeight / 100,
-      marginHorizontal:algoWidth/60,
-      width:algoWidth
+      marginHorizontal: algoWidth / 60,
+      width: algoWidth,
     },
     row: {
       flexDirection: "row",
@@ -99,7 +99,7 @@ const BankersAlgorithmScreen = () => {
     container: {
       flex: 1,
       padding: algoWidth / 100,
-      marginHorizontal:algoHeight/50,
+      marginHorizontal: algoHeight / 50,
     },
 
     instructions: {
@@ -659,54 +659,54 @@ const BankersAlgorithmScreen = () => {
                     {renderWork()}
                   </View>
                 </View>
-                <View style={{width:algoWidth}}>
-                {state.isSafe ? (
-                  <View
-                    style={{
-                      margin: scale(5),
-                      borderColor: "#81f51b90",
-                      backgroundColor: "#81f51b30",
-                      borderWidth: scale(2),
-                      borderRadius: scale(10),
-                    }}
-                  >
-                    <Text
+                <View style={{ width: algoWidth }}>
+                  {state.isSafe ? (
+                    <View
                       style={{
-                        alignSelf: "center",
-                        fontFamily: "Popins",
-                        fontSize: algoWidth / 40,
-                        color: "#30910a",
-                        fontWeight: "bold",
-                        marginVertical: verticalScale(10),
+                        margin: scale(5),
+                        borderColor: "#81f51b90",
+                        backgroundColor: "#81f51b30",
+                        borderWidth: scale(2),
+                        borderRadius: scale(10),
                       }}
                     >
-                      This is Safe
-                    </Text>
-                  </View>
-                ) : (
-                  <View
-                    style={{
-                      margin: scale(5),
-                      borderColor: "#f2705c",
-                      backgroundColor: "#f2705c30",
-                      borderWidth: scale(2),
-                      borderRadius: scale(10),
-                    }}
-                  >
-                    <Text
+                      <Text
+                        style={{
+                          alignSelf: "center",
+                          fontFamily: "Popins",
+                          fontSize: algoWidth / 40,
+                          color: "#30910a",
+                          fontWeight: "bold",
+                          marginVertical: verticalScale(10),
+                        }}
+                      >
+                        This is Safe
+                      </Text>
+                    </View>
+                  ) : (
+                    <View
                       style={{
-                        alignSelf: "center",
-                        fontFamily: "Popins",
-                        fontSize: algoWidth / 40,
-                        color: "#f2705c",
-                        fontWeight: "bold",
-                        marginVertical: verticalScale(10),
+                        margin: scale(5),
+                        borderColor: "#f2705c",
+                        backgroundColor: "#f2705c30",
+                        borderWidth: scale(2),
+                        borderRadius: scale(10),
                       }}
                     >
-                      This is not safe
-                    </Text>
-                  </View>
-                )}
+                      <Text
+                        style={{
+                          alignSelf: "center",
+                          fontFamily: "Popins",
+                          fontSize: algoWidth / 40,
+                          color: "#f2705c",
+                          fontWeight: "bold",
+                          marginVertical: verticalScale(10),
+                        }}
+                      >
+                        This is not safe
+                      </Text>
+                    </View>
+                  )}
                 </View>
                 <View
                   style={{

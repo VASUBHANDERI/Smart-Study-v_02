@@ -5,7 +5,7 @@ import { Context as AlgoContext } from "../context/schedulingAlgoContext";
 import { scale, verticalScale, moderateScale } from "react-native-size-matters";
 import useWindowSize from "../Hooks/useWindowSize";
 import getMediaQuery from "../Hooks/getMediaQuery";
-const Bar = ({ isScheduled, type}) => {
+const Bar = ({ isScheduled, type }) => {
   const { state } = useContext(AlgoContext);
   const [width, height] = useWindowSize();
 
@@ -17,9 +17,7 @@ const Bar = ({ isScheduled, type}) => {
   if (type == "FCFS") {
     const n = state.FCFStimeLine.length;
     return (
-      <View
-        style={{ marginVertical: verticalScale(5), marginHorizontal: scale(5) }}
-      >
+      <View style={{ alignSelf: "center" }}>
         {isScheduled ? (
           <FlatList
             data={state.FCFSgroupedTimeLine}
@@ -34,10 +32,8 @@ const Bar = ({ isScheduled, type}) => {
                   <View
                     style={{
                       backgroundColor: backgroundColor,
-                      width:
-                        ((algoWidth - scale(20)) / n) *
-                        item.length,
-                      height:algoWidth/30,
+                      width: ((algoWidth*0.9) / n) * item.length,
+                      height: algoWidth / 30,
                       flexDirection: "row",
                       justifyContent: "center",
                       alignItems: "center",
@@ -47,22 +43,25 @@ const Bar = ({ isScheduled, type}) => {
                     <>
                       <View
                         style={{
-                          width:
-                            ((algoWidth - scale(20)) /
-                              n) *
-                            item.length,
+                          width: ((algoWidth*0.9) / n) * item.length,
                           flexDirection: "row",
                           justifyContent: "space-between",
                           alignItems: "center",
                         }}
                       >
                         <Text
-                          style={{ fontFamily: "Popins", fontSize:algoWidth/53 }}
+                          style={{
+                            fontFamily: "Popins",
+                            fontSize: algoWidth / 53,
+                          }}
                         >
                           0
                         </Text>
                         <Text
-                          style={{ fontFamily: "Popins", fontSize:algoWidth/53 }}
+                          style={{
+                            fontFamily: "Popins",
+                            fontSize: algoWidth / 53,
+                          }}
                         >
                           {state.FCFStimeIndex[index]}
                         </Text>
@@ -71,17 +70,17 @@ const Bar = ({ isScheduled, type}) => {
                   ) : (
                     <View
                       style={{
-                        width:
-                          ((algoWidth - scale(20)) /
-                            n) *
-                          item.length,
+                        width: ((algoWidth*0.9) / n) * item.length,
                         flexDirection: "row",
                         justifyContent: "flex-end",
                         alignItems: "center",
                       }}
                     >
                       <Text
-                        style={{ fontFamily: "Popins", fontSize:algoWidth/53 }}
+                        style={{
+                          fontFamily: "Popins",
+                          fontSize: algoWidth / 53,
+                        }}
                       >
                         {state.FCFStimeIndex[index]}
                       </Text>
@@ -95,9 +94,9 @@ const Bar = ({ isScheduled, type}) => {
         ) : (
           <View
             style={{
-              height:algoWidth/30,
+              height: algoWidth / 30,
               backgroundColor: "white",
-              width: algoWidth - scale(20),
+              width: algoWidth*0.9,
             }}
           />
         )}
@@ -107,7 +106,7 @@ const Bar = ({ isScheduled, type}) => {
     const n = state.SJFtimeLine.length;
     return (
       <View
-        style={{ marginVertical: verticalScale(5), marginHorizontal: scale(5) }}
+        style={{ alignSelf:'center' }}
       >
         {isScheduled ? (
           <FlatList
@@ -123,10 +122,8 @@ const Bar = ({ isScheduled, type}) => {
                   <View
                     style={{
                       backgroundColor: backgroundColor,
-                      width:
-                        ((algoWidth - scale(20)) / n) *
-                        item.length,
-                      height:algoWidth/30,
+                      width: ((algoWidth*0.9) / n) * item.length,
+                      height: algoWidth / 30,
                       flexDirection: "row",
                       justifyContent: "center",
                       alignItems: "center",
@@ -136,22 +133,25 @@ const Bar = ({ isScheduled, type}) => {
                     <>
                       <View
                         style={{
-                          width:
-                            ((algoWidth - scale(20)) /
-                              n) *
-                            item.length,
+                          width: ((algoWidth*0.9) / n) * item.length,
                           flexDirection: "row",
                           justifyContent: "space-between",
                           alignItems: "center",
                         }}
                       >
                         <Text
-                          style={{ fontFamily: "Popins", fontSize:algoWidth/53 }}
+                          style={{
+                            fontFamily: "Popins",
+                            fontSize: algoWidth / 53,
+                          }}
                         >
                           0
                         </Text>
                         <Text
-                          style={{ fontFamily: "Popins", fontSize:algoWidth/53 }}
+                          style={{
+                            fontFamily: "Popins",
+                            fontSize: algoWidth / 53,
+                          }}
                         >
                           {state.SJFtimeIndex[index]}
                         </Text>
@@ -160,17 +160,17 @@ const Bar = ({ isScheduled, type}) => {
                   ) : (
                     <View
                       style={{
-                        width:
-                          ((algoWidth - scale(20)) /
-                            n) *
-                          item.length,
+                        width: ((algoWidth*0.9) / n) * item.length,
                         flexDirection: "row",
                         justifyContent: "flex-end",
                         alignItems: "center",
                       }}
                     >
                       <Text
-                        style={{ fontFamily: "Popins", fontSize:algoWidth/53 }}
+                        style={{
+                          fontFamily: "Popins",
+                          fontSize: algoWidth / 53,
+                        }}
                       >
                         {state.SJFtimeIndex[index]}
                       </Text>
@@ -184,9 +184,9 @@ const Bar = ({ isScheduled, type}) => {
         ) : (
           <View
             style={{
-              height:algoWidth/30,
+              height: algoWidth / 30,
               backgroundColor: "white",
-              width: algoWidth - scale(20),
+              width: algoWidth*0.9,
             }}
           />
         )}
@@ -196,7 +196,7 @@ const Bar = ({ isScheduled, type}) => {
     const n = state.PRtimeLine.length;
     return (
       <View
-        style={{ marginVertical: verticalScale(5), marginHorizontal: scale(5) }}
+        style={{ alignSelf:'center' }}
       >
         {isScheduled ? (
           <FlatList
@@ -212,10 +212,8 @@ const Bar = ({ isScheduled, type}) => {
                   <View
                     style={{
                       backgroundColor: backgroundColor,
-                      width:
-                        ((algoWidth - scale(20)) / n) *
-                        item.length,
-                      height:algoWidth/30,
+                      width: ((algoWidth*0.9) / n) * item.length,
+                      height: algoWidth / 30,
                       flexDirection: "row",
                       justifyContent: "center",
                       alignItems: "center",
@@ -225,22 +223,25 @@ const Bar = ({ isScheduled, type}) => {
                     <>
                       <View
                         style={{
-                          width:
-                            ((algoWidth - scale(20)) /
-                              n) *
-                            item.length,
+                          width: ((algoWidth*0.9) / n) * item.length,
                           flexDirection: "row",
                           justifyContent: "space-between",
                           alignItems: "center",
                         }}
                       >
                         <Text
-                          style={{ fontFamily: "Popins", fontSize:algoWidth/53 }}
+                          style={{
+                            fontFamily: "Popins",
+                            fontSize: algoWidth / 53,
+                          }}
                         >
                           0
                         </Text>
                         <Text
-                          style={{ fontFamily: "Popins", fontSize:algoWidth/53 }}
+                          style={{
+                            fontFamily: "Popins",
+                            fontSize: algoWidth / 53,
+                          }}
                         >
                           {state.PRtimeIndex[index]}
                         </Text>
@@ -249,17 +250,17 @@ const Bar = ({ isScheduled, type}) => {
                   ) : (
                     <View
                       style={{
-                        width:
-                          ((algoWidth - scale(20)) /
-                            n) *
-                          item.length,
+                        width: ((algoWidth*0.9) / n) * item.length,
                         flexDirection: "row",
                         justifyContent: "flex-end",
                         alignItems: "center",
                       }}
                     >
                       <Text
-                        style={{ fontFamily: "Popins", fontSize:algoWidth/53 }}
+                        style={{
+                          fontFamily: "Popins",
+                          fontSize: algoWidth / 53,
+                        }}
                       >
                         {state.PRtimeIndex[index]}
                       </Text>
@@ -273,9 +274,9 @@ const Bar = ({ isScheduled, type}) => {
         ) : (
           <View
             style={{
-              height:algoWidth/30,
+              height: algoWidth / 30,
               backgroundColor: "white",
-              width: algoWidth - scale(20),
+              width: algoWidth*0.9,
             }}
           />
         )}
@@ -285,7 +286,7 @@ const Bar = ({ isScheduled, type}) => {
     const n = state.SRTFtimeLine.length;
     return (
       <View
-        style={{ marginVertical: verticalScale(5), marginHorizontal: scale(5) }}
+        style={{ alignSelf:'center' }}
       >
         {isScheduled ? (
           <FlatList
@@ -301,10 +302,8 @@ const Bar = ({ isScheduled, type}) => {
                   <View
                     style={{
                       backgroundColor: backgroundColor,
-                      width:
-                        ((algoWidth - scale(20)) / n) *
-                        item.length,
-                      height:algoWidth/30,
+                      width: ((algoWidth*0.9) / n) * item.length,
+                      height: algoWidth / 30,
                       flexDirection: "row",
                       justifyContent: "center",
                       alignItems: "center",
@@ -314,22 +313,25 @@ const Bar = ({ isScheduled, type}) => {
                     <>
                       <View
                         style={{
-                          width:
-                            ((algoWidth - scale(20)) /
-                              n) *
-                            item.length,
+                          width: ((algoWidth*0.9) / n) * item.length,
                           flexDirection: "row",
                           justifyContent: "space-between",
                           alignItems: "center",
                         }}
                       >
                         <Text
-                          style={{ fontFamily: "Popins", fontSize:algoWidth/53 }}
+                          style={{
+                            fontFamily: "Popins",
+                            fontSize: algoWidth / 53,
+                          }}
                         >
                           0
                         </Text>
                         <Text
-                          style={{ fontFamily: "Popins", fontSize:algoWidth/53 }}
+                          style={{
+                            fontFamily: "Popins",
+                            fontSize: algoWidth / 53,
+                          }}
                         >
                           {state.SRTFtimeIndex[index]}
                         </Text>
@@ -338,17 +340,17 @@ const Bar = ({ isScheduled, type}) => {
                   ) : (
                     <View
                       style={{
-                        width:
-                          ((algoWidth - scale(20)) /
-                            n) *
-                          item.length,
+                        width: ((algoWidth*0.9) / n) * item.length,
                         flexDirection: "row",
                         justifyContent: "flex-end",
                         alignItems: "center",
                       }}
                     >
                       <Text
-                        style={{ fontFamily: "Popins", fontSize:algoWidth/53 }}
+                        style={{
+                          fontFamily: "Popins",
+                          fontSize: algoWidth / 53,
+                        }}
                       >
                         {state.SRTFtimeIndex[index]}
                       </Text>
@@ -362,9 +364,9 @@ const Bar = ({ isScheduled, type}) => {
         ) : (
           <View
             style={{
-              height:algoWidth/30,
+              height: algoWidth / 30,
               backgroundColor: "white",
-              width: algoWidth - scale(20),
+              width: algoWidth*0.9,
             }}
           />
         )}
@@ -374,7 +376,7 @@ const Bar = ({ isScheduled, type}) => {
     const n = state.PrePRtimeLine.length;
     return (
       <View
-        style={{ marginVertical: verticalScale(5), marginHorizontal: scale(5) }}
+        style={{ alignSelf:'center' }}
       >
         {isScheduled ? (
           <FlatList
@@ -390,10 +392,8 @@ const Bar = ({ isScheduled, type}) => {
                   <View
                     style={{
                       backgroundColor: backgroundColor,
-                      width:
-                        ((algoWidth - scale(20)) / n) *
-                        item.length,
-                      height:algoWidth/30,
+                      width: ((algoWidth*0.9) / n) * item.length,
+                      height: algoWidth / 30,
                       flexDirection: "row",
                       justifyContent: "center",
                       alignItems: "center",
@@ -403,22 +403,25 @@ const Bar = ({ isScheduled, type}) => {
                     <>
                       <View
                         style={{
-                          width:
-                            ((algoWidth - scale(20)) /
-                              n) *
-                            item.length,
+                          width: ((algoWidth*0.9) / n) * item.length,
                           flexDirection: "row",
                           justifyContent: "space-between",
                           alignItems: "center",
                         }}
                       >
                         <Text
-                          style={{ fontFamily: "Popins", fontSize:algoWidth/53 }}
+                          style={{
+                            fontFamily: "Popins",
+                            fontSize: algoWidth / 53,
+                          }}
                         >
                           0
                         </Text>
                         <Text
-                          style={{ fontFamily: "Popins", fontSize:algoWidth/53 }}
+                          style={{
+                            fontFamily: "Popins",
+                            fontSize: algoWidth / 53,
+                          }}
                         >
                           {state.PrePRtimeIndex[index]}
                         </Text>
@@ -427,17 +430,17 @@ const Bar = ({ isScheduled, type}) => {
                   ) : (
                     <View
                       style={{
-                        width:
-                          ((algoWidth - scale(20)) /
-                            n) *
-                          item.length,
+                        width: ((algoWidth*0.9) / n) * item.length,
                         flexDirection: "row",
                         justifyContent: "flex-end",
                         alignItems: "center",
                       }}
                     >
                       <Text
-                        style={{ fontFamily: "Popins", fontSize:algoWidth/53 }}
+                        style={{
+                          fontFamily: "Popins",
+                          fontSize: algoWidth / 53,
+                        }}
                       >
                         {state.PrePRtimeIndex[index]}
                       </Text>
@@ -451,9 +454,9 @@ const Bar = ({ isScheduled, type}) => {
         ) : (
           <View
             style={{
-              height:algoWidth/30,
+              height: algoWidth / 30,
               backgroundColor: "white",
-              width: algoWidth - scale(20),
+              width: algoWidth*0.9,
             }}
           />
         )}

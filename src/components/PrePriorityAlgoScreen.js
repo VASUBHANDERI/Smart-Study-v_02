@@ -1,3 +1,774 @@
+// import {
+//   StyleSheet,
+//   Text,
+//   View,
+//   TouchableOpacity,
+//   FlatList,
+//   Dimensions,
+//   ScrollView,
+//   Vibration,
+//   ToastAndroid,
+// } from "react-native";
+// import { scale, verticalScale, moderateScale } from "react-native-size-matters";
+
+// import React, { useState, useContext } from "react";
+// import { Context as AlgoContext } from "../context/schedulingAlgoContext";
+// import { Feather, Ionicons } from "@expo/vector-icons";
+// import Bar from "./Bar";
+// import { useFonts } from "expo-font";
+// import { main, primary, text, background } from "./Colors";
+// import Button from "./Button";
+// import { processColor } from "./Colors";
+// import ProgressiveBar from "./ProgressiveBar";
+// import useWindowSize from "../Hooks/useWindowSize";
+
+// const PrePriorityAlgoScreen = () => {
+//   const [arrTime, setArrTime] = useState(0);
+//   const [Bursttime, setBursttime] = useState(0);
+//   const [curTime, setCurTime] = useState(0);
+//   const [priority, setPriority] = useState(0);
+
+//   const [refresh, setRefresh] = useState(false);
+//   const { addProcessWithPR, state, clear, schedule } = useContext(AlgoContext);
+
+//   const timeLine = [...state.PrePRtimeLine, -1];
+//   const waitingTimeLine = [...state.PrePRwaitingTimeLine, [-1]];
+//   const [width, height] = useWindowSize();
+
+//   const [loaded] = useFonts({
+//     Popins: require("../../public/assets/fonts/Poppins-Light.ttf"),
+//   });
+
+//   if (!loaded) {
+//     return null;
+//   }
+
+//   return (
+//     <ScrollView
+//       style={{ flex: 1, backgroundColor: background, width: "100%" }}
+//       nestedScrollEnabled={true}
+//       showsVerticalScrollIndicator={false}
+//     >
+//       <View style={{ width: width }}>
+//         <View
+//           style={{
+//             justifyContent: "space-evenly",
+//             // borderColor: "red",
+//             // borderWidth: scale(1),
+//             flex: 1,
+//             padding: scale(10),
+//             paddingRight: scale(15),
+//             paddingLeft: scale(20),
+//           }}
+//         >
+//           <View
+//             style={{
+//               flexDirection: "row",
+//               alignItems: "stretch",
+//               alignContent: "flex-start",
+//               justifyContent: "space-around",
+//             }}
+//           >
+//             <View>
+//               <Text
+//                 style={{
+//                   alignSelf: "center",
+//                   color: text,
+//                   fontSize: scale(16),
+//                   fontFamily: "Popins",
+//                 }}
+//               >
+//                 Arrival Time
+//               </Text>
+//               <View
+//                 style={{
+//                   flexDirection: "row",
+//                   alignSelf: "center",
+//                   margin: scale(5),
+//                   padding: scale(5),
+//                   justifyContent: "center",
+//                   alignContent: "center",
+//                 }}
+//               >
+//                 <TouchableOpacity
+//                   onPress={() => {
+//                     if (arrTime > 0) {
+//                       setArrTime(arrTime - 1);
+//                       Vibration.vibrate(80);
+//                     } else {
+//                       alert("Sorry! Can't decrease Arrival Time anymore!");
+//                     }
+//                   }}
+//                 >
+//                   <Feather name="minus-circle" size={scale(30)} color={text} />
+//                 </TouchableOpacity>
+//                 <Text
+//                   style={{
+//                     paddingHorizontal: scale(15),
+//                     color: text,
+//                     fontSize: scale(16),
+//                     alignSelf: "center",
+//                     fontFamily: "Popins",
+//                     width: Dimensions.get("window").width * 0.14,
+//                   }}
+//                 >
+//                   {arrTime}
+//                 </Text>
+//                 <TouchableOpacity
+//                   onPress={() => {
+//                     if (arrTime < 5) {
+//                       setArrTime(arrTime + 1);
+//                       Vibration.vibrate(80);
+//                     } else {
+//                       alert("Sorry! Can't increase Arrival Time anymore!");
+//                     }
+//                   }}
+//                 >
+//                   <Feather name="plus-circle" size={scale(30)} color={text} />
+//                 </TouchableOpacity>
+//               </View>
+//             </View>
+//             <View>
+//               <Text
+//                 style={{
+//                   alignSelf: "center",
+//                   color: text,
+//                   fontSize: scale(16),
+//                   fontFamily: "Popins",
+//                 }}
+//               >
+//                 Burst Time
+//               </Text>
+//               <View
+//                 style={{
+//                   flexDirection: "row",
+//                   alignSelf: "center",
+//                   margin: scale(10),
+//                   padding: scale(5),
+//                   justifyContent: "center",
+//                   alignContent: "center",
+//                 }}
+//               >
+//                 <TouchableOpacity
+//                   onPress={() => {
+//                     if (Bursttime > 0) {
+//                       setBursttime(Bursttime - 1);
+//                       Vibration.vibrate(80);
+//                     } else {
+//                       alert("Sorry! Can't decrease Burst Time anymore!");
+//                     }
+//                   }}
+//                 >
+//                   <Feather name="minus-circle" size={scale(30)} color={text} />
+//                 </TouchableOpacity>
+//                 <Text
+//                   style={{
+//                     paddingHorizontal: scale(15),
+//                     color: text,
+//                     fontSize: scale(16),
+//                     alignSelf: "center",
+//                     fontFamily: "Popins",
+//                     width: Dimensions.get("window").width * 0.14,
+//                   }}
+//                 >
+//                   {Bursttime}
+//                 </Text>
+//                 <TouchableOpacity
+//                   onPress={() => {
+//                     if (Bursttime < 5) {
+//                       setBursttime(Bursttime + 1);
+//                       Vibration.vibrate(80);
+//                     } else {
+//                       alert("Sorry! Can't increase Burst Time anymore!");
+//                     }
+//                   }}
+//                 >
+//                   <Feather name="plus-circle" size={scale(30)} color={text} />
+//                 </TouchableOpacity>
+//               </View>
+//             </View>
+//           </View>
+//           <View>
+//             <Text
+//               style={{
+//                 alignSelf: "center",
+//                 color: text,
+//                 fontSize: scale(16),
+//                 fontFamily: "Popins",
+//               }}
+//             >
+//               Priority
+//             </Text>
+//             <View
+//               style={{
+//                 flexDirection: "row",
+//                 alignSelf: "center",
+//                 margin: scale(5),
+//                 padding: scale(5),
+//                 justifyContent: "center",
+//                 alignContent: "center",
+//               }}
+//             >
+//               <TouchableOpacity
+//                 onPress={() => {
+//                   if (priority > 0) {
+//                     setPriority(priority - 1);
+//                     Vibration.vibrate(80);
+//                   } else {
+//                     alert("Sorry! Can't decrease Arrival Time anymore!");
+//                   }
+//                 }}
+//               >
+//                 <Feather name="minus-circle" size={scale(30)} color={text} />
+//               </TouchableOpacity>
+//               <Text
+//                 style={{
+//                   paddingHorizontal: scale(15),
+//                   color: text,
+//                   fontSize: scale(16),
+//                   alignSelf: "center",
+//                   fontFamily: "Popins",
+//                   width: Dimensions.get("window").width * 0.14,
+//                 }}
+//               >
+//                 {priority}
+//               </Text>
+//               <TouchableOpacity
+//                 onPress={() => {
+//                   if (priority < 9) {
+//                     setPriority(priority + 1);
+//                     Vibration.vibrate(80);
+//                   } else {
+//                     alert("Sorry! Can't increase Arrival Time anymore!");
+//                   }
+//                 }}
+//               >
+//                 <Feather name="plus-circle" size={scale(30)} color={text} />
+//               </TouchableOpacity>
+//             </View>
+//           </View>
+//         </View>
+//         <View
+//           style={{
+//             flexDirection: "row",
+//             marginVertical: verticalScale(10),
+//             alignItems: "stretch",
+//             alignContent: "flex-start",
+//             justifyContent: "space-around",
+//           }}
+//         >
+//           <Button
+//             title="Clear"
+//             onPress={() => {
+//               clear("PrePR");
+//               setArrTime(0);
+//               setBursttime(0);
+//               setPriority(0);
+//               setRefresh(!refresh);
+//               setCurTime(0);
+//             }}
+//           />
+
+//           <Button
+//             title="Schedule"
+//             onPress={() => {
+//               if (state.PrePRprocess.length > 0) {
+//                 schedule("PrePR");
+//                 setRefresh(!refresh);
+//                 setCurTime(0);
+//               } else {
+//                 alert("Please add the processes ");
+//               }
+//             }}
+//           />
+
+//           <Button
+//             title="Add"
+//             onPress={() => {
+//               {
+//                 if (
+//                   arrTime >= 0 &&
+//                   Bursttime > 0 &&
+//                   state.PrePRprocess.length < 4
+//                 ) {
+//                   setArrTime(arrTime);
+//                   setBursttime(Bursttime);
+//                   addProcessWithPR(arrTime, Bursttime, priority, "PrePR");
+//                   setArrTime(0);
+//                   setBursttime(0);
+//                   setPriority(0);
+//                   setRefresh(!refresh);
+//                 } else if (Bursttime <= 0) {
+//                   alert("Invalid Burst Time!");
+//                 } else {
+//                   alert("You Can't add more processes. ");
+//                 }
+//               }
+//             }}
+//           />
+//         </View>
+//       </View>
+
+//       {state.PrePRshowProcess ? (
+//         <>
+//           <Text
+//             style={{
+//               ...styles.text,
+//               fontSize: scale(18),
+//               padding: scale(10),
+//               paddingTop: verticalScale(5),
+//               alignSelf: "center",
+//             }}
+//           >
+//             Processes
+//           </Text>
+//           <View
+//             style={{
+//               ...styles.line,
+//               alignSelf: "center",
+//               width: width,
+//               paddingHorizontal: scale(10),
+//             }}
+//           >
+//             <View style={styles.tableBox1}>
+//               <Text style={styles.text}>Id</Text>
+//             </View>
+//             <View style={styles.tableBox}>
+//               <Text style={styles.text}>Arrival Time</Text>
+//             </View>
+//             <View style={styles.tableBox}>
+//               <Text style={styles.text}>Burst Time</Text>
+//             </View>
+//             <View style={styles.tableBox}>
+//               <Text style={styles.text}>Priority</Text>
+//             </View>
+//           </View>
+//           <FlatList
+//             style={{ alignSelf: "center", flex: 1 }}
+//             data={state.PrePRprocess}
+//             renderItem={({ item }) => {
+//               return (
+//                 <View
+//                   style={{
+//                     ...styles.line,
+//                     width: width,
+//                     paddingHorizontal: scale(10),
+//                   }}
+//                 >
+//                   <View style={styles.tableBox1}>
+//                     <View
+//                       style={{
+//                         flexDirection: "row",
+//                         flex: 1,
+//                         alignContent: "space-around",
+//                       }}
+//                     >
+//                       <View
+//                         style={{
+//                           backgroundColor: processColor[item.id],
+//                           width: scale(17),
+//                           height: verticalScale(17),
+//                           borderRadius: scale(7),
+//                           marginHorizontal: scale(5),
+//                           alignSelf: "center",
+//                         }}
+//                       ></View>
+//                       <Text style={styles.text}>{`P${item.id}`}</Text>
+//                     </View>
+//                   </View>
+//                   <View style={styles.tableBox}>
+//                     <Text style={styles.text}>{item.arrTime}</Text>
+//                   </View>
+//                   <View style={styles.tableBox}>
+//                     <Text style={styles.text}>{item.burstTime}</Text>
+//                   </View>
+//                   <View style={styles.tableBox}>
+//                     <Text style={styles.text}>{item.Pr}</Text>
+//                   </View>
+//                 </View>
+//               );
+//             }}
+//           />
+//         </>
+//       ) : null}
+
+//       {state.PrePRshowScheduled ? (
+//         <View>
+//           <Text
+//             style={{
+//               ...styles.text,
+//               fontSize: scale(18),
+//               alignSelf: "center",
+//               marginTop: verticalScale(10),
+//             }}
+//           >
+//             Gantt Chart
+//           </Text>
+//           <View
+//             style={{ marginBottom: verticalScale(5), marginLeft: scale(10) }}
+//           >
+//             <Bar isScheduled={state.PrePRisScheduled} type={"PrePR"} />
+//           </View>
+//         </View>
+//       ) : null}
+
+//       {state.PrePRshowScheduled ? (
+//         <View style={{ marginBottom: verticalScale(20) }}>
+//           <Text
+//             style={{
+//               ...styles.text,
+//               fontSize: scale(18),
+//               padding: scale(10),
+//               marginTop: verticalScale(5),
+//               alignSelf: "center",
+//             }}
+//           >
+//             Time Analysis
+//           </Text>
+//           <View
+//             style={{
+//               ...styles.line,
+//               alignSelf: "center",
+//               width: Dimensions.get("window").width * 0.95,
+//             }}
+//           >
+//             <View style={styles.tableBox}>
+//               <Text style={styles.text}>Id</Text>
+//             </View>
+//             <View style={styles.tableBox}>
+//               <Text style={styles.text}>PR</Text>
+//             </View>
+//             <View style={styles.tableBox}>
+//               <Text style={styles.text}>AT</Text>
+//             </View>
+//             <View style={styles.tableBox}>
+//               <Text style={styles.text}>BT</Text>
+//             </View>
+//             <View style={styles.tableBox}>
+//               <Text style={styles.text}>CT</Text>
+//             </View>
+//             <View style={styles.tableBox}>
+//               <Text style={styles.text}>TAT</Text>
+//             </View>
+//             <View style={styles.tableBox}>
+//               <Text style={styles.text}>WT</Text>
+//             </View>
+//           </View>
+//           {state.PrePRisScheduled ? (
+//             <FlatList
+//               data={state.PrePRscheduledProcess}
+//               style={{ alignSelf: "center", flex: 1 }}
+//               renderItem={({ item }) => {
+//                 return (
+//                   <View
+//                     style={{
+//                       ...styles.line,
+//                       width: Dimensions.get("window").width * 0.95,
+//                     }}
+//                   >
+//                     <View style={styles.tableBox}>
+//                       <Text style={styles.text}>{`P${item.id}`}</Text>
+//                     </View>
+//                     <View style={styles.tableBox}>
+//                       <Text style={styles.text}>{item.Pr}</Text>
+//                     </View>
+//                     <View style={styles.tableBox}>
+//                       <Text style={styles.text}>{item.arrTime}</Text>
+//                     </View>
+//                     <View style={styles.tableBox}>
+//                       <Text style={styles.text}>{item.burstTime}</Text>
+//                     </View>
+//                     <View style={styles.tableBox}>
+//                       <Text style={styles.text}>{item.ct}</Text>
+//                     </View>
+//                     <View style={styles.tableBox}>
+//                       <Text style={styles.text}>{item.tat}</Text>
+//                     </View>
+//                     <View style={styles.tableBox}>
+//                       <Text style={styles.text}>{item.wt}</Text>
+//                     </View>
+//                   </View>
+//                 );
+//               }}
+//             />
+//           ) : null}
+//         </View>
+//       ) : null}
+
+//       {state.PrePRshowScheduled ? (
+//         <>
+//           <Text
+//             style={{
+//               ...styles.text,
+//               fontSize: scale(18),
+//               padding: scale(10),
+//               marginTop: verticalScale(5),
+//               alignSelf: "center",
+//             }}
+//           >
+//             Steps Visualizer
+//           </Text>
+//           <View style={{ borderWidth: scale(1), borderColor: primary }}>
+//             <View
+//               style={{
+//                 flexDirection: "row",
+//                 flex: 1,
+//                 alignItems: "center",
+//                 justifyContent: "center",
+//                 paddingVertical: verticalScale(10),
+//                 // borderWidth: scale(1),
+//                 // borderColor: primary,
+//               }}
+//             >
+//               <TouchableOpacity
+//                 onPress={() => {
+//                   if (curTime > 0) {
+//                     setCurTime(curTime - 1);
+//                     console.log(curTime);
+//                   }
+//                   setRefresh(!refresh);
+//                 }}
+//               >
+//                 <Ionicons
+//                   name="chevron-back-outline"
+//                   size={scale(40)}
+//                   color={main}
+//                 />
+//               </TouchableOpacity>
+//               {state.PrePRisScheduled ? (
+//                 <View
+//                   style={{
+//                     alignItems: "center",
+//                     flex: 1,
+//                     // justifyContent:'center'
+//                     borderWidth: scale(1),
+//                     borderColor: background,
+//                   }}
+//                 >
+//                   <View
+//                     style={{
+//                       borderColor: background,
+//                       borderWidth: scale(1),
+//                       flex: 1,
+//                       justifyContent: "center",
+//                     }}
+//                   >
+//                     <Text
+//                       style={{
+//                         ...styles.text,
+//                         marginBottom: 5,
+//                         alignSelf: "center",
+//                       }}
+//                     >
+//                       Time = {curTime}
+//                     </Text>
+
+//                     <View style={{ marginTop: verticalScale(5) }}>
+//                       <Text style={{ ...styles.text, alignSelf: "center" }}>
+//                         CPU
+//                       </Text>
+//                       {timeLine[curTime] == -1 ? (
+//                         <View
+//                           style={{
+//                             width: Dimensions.get("screen").width * 0.08,
+//                             height: Dimensions.get("screen").width * 0.08,
+//                             backgroundColor: "#CAE9FF",
+//                             alignSelf: "center",
+//                             marginBottom: verticalScale(10),
+//                             justifyContent: "center",
+//                           }}
+//                         >
+//                           <Text
+//                             style={{
+//                               ...styles.text,
+//                               alignSelf: "center",
+//                               alignContent: "center",
+//                             }}
+//                           >
+//                             {" "}
+//                           </Text>
+//                         </View>
+//                       ) : (
+//                         <View
+//                           style={{
+//                             width: Dimensions.get("screen").width * 0.08,
+//                             height: Dimensions.get("screen").width * 0.08,
+//                             backgroundColor: "#CAE9FF",
+//                             alignSelf: "center",
+//                             marginBottom: verticalScale(10),
+//                             justifyContent: "center",
+//                           }}
+//                         >
+//                           <Text
+//                             style={{
+//                               ...styles.text,
+//                               alignSelf: "center",
+//                               alignContent: "center",
+//                             }}
+//                           >
+//                             {`P${timeLine[curTime]}`}
+//                           </Text>
+//                         </View>
+//                       )}
+
+//                       <Text style={{ ...styles.text, alignSelf: "center" }}>
+//                         Ready Queue
+//                       </Text>
+//                       {waitingTimeLine[curTime][0] != -1 ? (
+//                         <FlatList
+//                           style={{
+//                             height: Dimensions.get("screen").width * 0.08,
+//                             alignSelf: "center",
+//                             // borderWidth: 2,
+//                             // borderColor: "red",
+//                           }}
+//                           horizontal
+//                           data={waitingTimeLine[curTime]}
+//                           renderItem={({ item }) => {
+//                             return (
+//                               <View
+//                                 style={{
+//                                   width: Dimensions.get("screen").width * 0.08,
+//                                   height: Dimensions.get("screen").width * 0.08,
+//                                   backgroundColor: "#CAE9FF",
+//                                   justifyContent: "center",
+//                                   marginRight: scale(1),
+
+//                                   // borderWidth: scale(1),
+//                                   // borderColor: "#000",
+//                                 }}
+//                               >
+//                                 <Text
+//                                   style={{
+//                                     ...styles.text,
+//                                     alignSelf: "center",
+//                                     alignContent: "center",
+//                                   }}
+//                                 >
+//                                   P{item}
+//                                 </Text>
+//                               </View>
+//                             );
+//                           }}
+//                         />
+//                       ) : (
+//                         <FlatList
+//                           style={{
+//                             height: Dimensions.get("screen").width * 0.08,
+
+//                             alignSelf: "center",
+//                             // borderWidth: 2,
+//                             // borderColor: "red",
+//                           }}
+//                           horizontal
+//                           data={waitingTimeLine[curTime]}
+//                           renderItem={({ item }) => {
+//                             return (
+//                               <View
+//                                 style={{
+//                                   width: Dimensions.get("screen").width * 0.08,
+//                                   height: Dimensions.get("screen").width * 0.08,
+//                                   backgroundColor: "#CAE9FF",
+//                                   justifyContent: "center",
+//                                   marginRight: scale(1),
+//                                 }}
+//                               >
+//                                 <Text
+//                                   style={{
+//                                     ...styles.text,
+//                                     alignSelf: "center",
+//                                     alignContent: "center",
+//                                   }}
+//                                 >
+//                                   {" "}
+//                                 </Text>
+//                               </View>
+//                             );
+//                           }}
+//                         />
+//                       )}
+//                     </View>
+//                   </View>
+//                 </View>
+//               ) : (
+//                 <View
+//                   style={{
+//                     alignItems: "center",
+//                     flex: 1,
+//                   }}
+//                 >
+//                   <Text style={styles.text}>
+//                     Please click on the Schedule Button
+//                   </Text>
+
+//                   <View></View>
+//                 </View>
+//               )}
+
+//               <TouchableOpacity
+//                 onPress={() => {
+//                   if (curTime < state.PrePRwaitingTimeLine.length - 1) {
+//                     setCurTime(curTime + 1);
+//                     console.log(curTime);
+//                   } else if (curTime == state.PrePRtimeLine.length - 1) {
+//                     setCurTime(curTime + 1);
+//                     // setEnded(true);
+//                   }
+//                   setRefresh(!refresh);
+//                 }}
+//               >
+//                 <Ionicons
+//                   name="chevron-forward-outline"
+//                   size={scale(40)}
+//                   color={main}
+//                 />
+//               </TouchableOpacity>
+//             </View>
+//             {state.PrePRshowScheduled && state.PrePRisScheduled ? (
+//               <ProgressiveBar
+//                 isScheduled={state.PrePRisScheduled}
+//                 curTime={curTime}
+//                 type={"PrePR"}
+//               />
+//             ) : null}
+//           </View>
+//         </>
+//       ) : null}
+//     </ScrollView>
+//   );
+// };
+
+// export default PrePriorityAlgoScreen;
+
+// const styles = StyleSheet.create({
+//   line: {
+//     flexDirection: "row",
+//     alignItems: "center",
+//   },
+//   tableBox: {
+//     flex: 3,
+//     borderWidth: scale(1),
+//     borderColor: primary,
+//     alignContent: "center",
+//     paddingLeft: scale(1),
+//     backgroundColor: background,
+//     alignItems: "center",
+//   },
+//   tableBox1: {
+//     flex: 2,
+//     borderWidth: scale(1),
+//     borderColor: primary,
+//     alignContent: "center",
+//     paddingLeft: scale(1),
+//     backgroundColor: background,
+//     alignItems: "center",
+//   },
+//   text: {
+//     color: text,
+//     fontFamily: "Popins",
+//     fontSize: scale(14),
+//   },
+// });
 import {
   StyleSheet,
   Text,
@@ -21,13 +792,13 @@ import Button from "./Button";
 import { processColor } from "./Colors";
 import ProgressiveBar from "./ProgressiveBar";
 import useWindowSize from "../Hooks/useWindowSize";
+import getMediaQuery from "../Hooks/getMediaQuery";
 
 const PrePriorityAlgoScreen = () => {
   const [arrTime, setArrTime] = useState(0);
   const [Bursttime, setBursttime] = useState(0);
   const [curTime, setCurTime] = useState(0);
   const [priority, setPriority] = useState(0);
-
   const [refresh, setRefresh] = useState(false);
   const { addProcessWithPR, state, clear, schedule } = useContext(AlgoContext);
 
@@ -35,6 +806,50 @@ const PrePriorityAlgoScreen = () => {
   const waitingTimeLine = [...state.PrePRwaitingTimeLine, [-1]];
   const [width, height] = useWindowSize();
 
+  const [isMobileWidth, isTabletWidth, isDesktopWidth, isWide] =
+    getMediaQuery();
+  const algoWidth = isWide ? width * 0.6 : width;
+  const algoHeight = isWide ? height : height * 0.6;
+  const styles = StyleSheet.create({
+    button: {
+      shadowColor: "#00000040", // IOS
+      shadowOffset: { height: scale(1), width: scale(1) }, // IOS
+      shadowOpacity: scale(1), // IOS
+      shadowRadius: scale(1), //IOS
+      backgroundColor: "#CAE9FF",
+      elevation: algoHeight / 100, // Android
+      justifyContent: "center",
+      alignItems: "center",
+      paddingHorizontal: algoWidth / 53,
+      paddingVertical: algoWidth / 100,
+      borderRadius: algoWidth / 100,
+      marginHorizontal: algoWidth / 100,
+    },
+    line: {
+      flexDirection: "row",
+      alignItems: "center",
+    },
+    tableBox: {
+      flex: 1,
+      borderWidth: StyleSheet.hairlineWidth,
+      borderColor: primary,
+      alignContent: "center",
+      paddingLeft: scale(1),
+      backgroundColor: background,
+      alignItems: "center",
+    },
+    text: {
+      color: text,
+      fontFamily: "Popins",
+      fontSize: algoWidth / 53,
+    },
+    buttonText: {
+      color: "#6930C3",
+      fontSize: algoWidth / 53,
+      alignSelf: "center",
+      fontFamily: "Popins",
+    },
+  });
   const [loaded] = useFonts({
     Popins: require("../../public/assets/fonts/Poppins-Light.ttf"),
   });
@@ -44,148 +859,87 @@ const PrePriorityAlgoScreen = () => {
   }
 
   return (
+ 
     <ScrollView
-      style={{ flex: 1, backgroundColor: background, width: "100%" }}
+      style={{ flex: 1, backgroundColor: background }}
       nestedScrollEnabled={true}
       showsVerticalScrollIndicator={false}
     >
-      <View style={{ width: width }}>
+      <View>
         <View
           style={{
             justifyContent: "space-evenly",
-            // borderColor: "red",
-            // borderWidth: scale(1),
             flex: 1,
             padding: scale(10),
             paddingRight: scale(15),
             paddingLeft: scale(20),
+            flexDirection: "row",
           }}
         >
-          <View
-            style={{
-              flexDirection: "row",
-              alignItems: "stretch",
-              alignContent: "flex-start",
-              justifyContent: "space-around",
-            }}
-          >
-            <View>
+          <View>
+            <Text
+              style={{
+                alignSelf: "center",
+                color: text,
+                fontSize: algoWidth / 53,
+                fontFamily: "Popins",
+              }}
+            >
+              Arrival Time
+            </Text>
+            <View
+              style={{
+                flexDirection: "row",
+                alignSelf: "center",
+                margin: scale(5),
+                padding: algoWidth / 100,
+                justifyContent: "center",
+                alignContent: "center",
+              }}
+            >
+              <TouchableOpacity
+                onPress={() => {
+                  if (arrTime > 0) {
+                    setArrTime(arrTime - 1);
+                    Vibration.vibrate(80);
+                  } else {
+                    alert("Sorry! Can't decrease Arrival Time anymore!");
+                  }
+                }}
+              >
+                <Feather
+                  name="minus-circle"
+                  size={algoWidth / 30}
+                  color={text}
+                />
+              </TouchableOpacity>
               <Text
                 style={{
-                  alignSelf: "center",
+                  paddingHorizontal: algoWidth / 30,
                   color: text,
-                  fontSize: scale(16),
+                  fontSize: algoWidth / 53,
+                  alignSelf: "center",
                   fontFamily: "Popins",
                 }}
               >
-                Arrival Time
+                {arrTime}
               </Text>
-              <View
-                style={{
-                  flexDirection: "row",
-                  alignSelf: "center",
-                  margin: scale(5),
-                  padding: scale(5),
-                  justifyContent: "center",
-                  alignContent: "center",
+              <TouchableOpacity
+                onPress={() => {
+                  if (arrTime < 5) {
+                    setArrTime(arrTime + 1);
+                    Vibration.vibrate(80);
+                  } else {
+                    alert("Sorry! Can't increase Arrival Time anymore!");
+                  }
                 }}
               >
-                <TouchableOpacity
-                  onPress={() => {
-                    if (arrTime > 0) {
-                      setArrTime(arrTime - 1);
-                      Vibration.vibrate(80);
-                    } else {
-                      alert("Sorry! Can't decrease Arrival Time anymore!");
-                    }
-                  }}
-                >
-                  <Feather name="minus-circle" size={scale(30)} color={text} />
-                </TouchableOpacity>
-                <Text
-                  style={{
-                    paddingHorizontal: scale(15),
-                    color: text,
-                    fontSize: scale(16),
-                    alignSelf: "center",
-                    fontFamily: "Popins",
-                    width: Dimensions.get("window").width * 0.14,
-                  }}
-                >
-                  {arrTime}
-                </Text>
-                <TouchableOpacity
-                  onPress={() => {
-                    if (arrTime < 5) {
-                      setArrTime(arrTime + 1);
-                      Vibration.vibrate(80);
-                    } else {
-                      alert("Sorry! Can't increase Arrival Time anymore!");
-                    }
-                  }}
-                >
-                  <Feather name="plus-circle" size={scale(30)} color={text} />
-                </TouchableOpacity>
-              </View>
-            </View>
-            <View>
-              <Text
-                style={{
-                  alignSelf: "center",
-                  color: text,
-                  fontSize: scale(16),
-                  fontFamily: "Popins",
-                }}
-              >
-                Burst Time
-              </Text>
-              <View
-                style={{
-                  flexDirection: "row",
-                  alignSelf: "center",
-                  margin: scale(10),
-                  padding: scale(5),
-                  justifyContent: "center",
-                  alignContent: "center",
-                }}
-              >
-                <TouchableOpacity
-                  onPress={() => {
-                    if (Bursttime > 0) {
-                      setBursttime(Bursttime - 1);
-                      Vibration.vibrate(80);
-                    } else {
-                      alert("Sorry! Can't decrease Burst Time anymore!");
-                    }
-                  }}
-                >
-                  <Feather name="minus-circle" size={scale(30)} color={text} />
-                </TouchableOpacity>
-                <Text
-                  style={{
-                    paddingHorizontal: scale(15),
-                    color: text,
-                    fontSize: scale(16),
-                    alignSelf: "center",
-                    fontFamily: "Popins",
-                    width: Dimensions.get("window").width * 0.14,
-                  }}
-                >
-                  {Bursttime}
-                </Text>
-                <TouchableOpacity
-                  onPress={() => {
-                    if (Bursttime < 5) {
-                      setBursttime(Bursttime + 1);
-                      Vibration.vibrate(80);
-                    } else {
-                      alert("Sorry! Can't increase Burst Time anymore!");
-                    }
-                  }}
-                >
-                  <Feather name="plus-circle" size={scale(30)} color={text} />
-                </TouchableOpacity>
-              </View>
+                <Feather
+                  name="plus-circle"
+                  size={algoWidth / 30}
+                  color={text}
+                />
+              </TouchableOpacity>
             </View>
           </View>
           <View>
@@ -193,7 +947,7 @@ const PrePriorityAlgoScreen = () => {
               style={{
                 alignSelf: "center",
                 color: text,
-                fontSize: scale(16),
+                fontSize: algoWidth / 53,
                 fontFamily: "Popins",
               }}
             >
@@ -204,7 +958,7 @@ const PrePriorityAlgoScreen = () => {
                 flexDirection: "row",
                 alignSelf: "center",
                 margin: scale(5),
-                padding: scale(5),
+                padding: algoWidth / 100,
                 justifyContent: "center",
                 alignContent: "center",
               }}
@@ -215,20 +969,23 @@ const PrePriorityAlgoScreen = () => {
                     setPriority(priority - 1);
                     Vibration.vibrate(80);
                   } else {
-                    alert("Sorry! Can't decrease Arrival Time anymore!");
+                    alert("Sorry! Can't decrease Priority anymore!");
                   }
                 }}
               >
-                <Feather name="minus-circle" size={scale(30)} color={text} />
+                <Feather
+                  name="minus-circle"
+                  size={algoWidth / 30}
+                  color={text}
+                />
               </TouchableOpacity>
               <Text
                 style={{
-                  paddingHorizontal: scale(15),
+                  paddingHorizontal: algoWidth / 30,
                   color: text,
-                  fontSize: scale(16),
+                  fontSize: algoWidth / 53,
                   alignSelf: "center",
                   fontFamily: "Popins",
-                  width: Dimensions.get("window").width * 0.14,
                 }}
               >
                 {priority}
@@ -239,26 +996,96 @@ const PrePriorityAlgoScreen = () => {
                     setPriority(priority + 1);
                     Vibration.vibrate(80);
                   } else {
-                    alert("Sorry! Can't increase Arrival Time anymore!");
+                    alert("Sorry! Can't increase priority anymore!");
                   }
                 }}
               >
-                <Feather name="plus-circle" size={scale(30)} color={text} />
+                <Feather
+                  name="plus-circle"
+                  size={algoWidth / 30}
+                  color={text}
+                />
+              </TouchableOpacity>
+            </View>
+          </View>
+          <View>
+            <Text
+              style={{
+                alignSelf: "center",
+                color: text,
+                fontSize: algoWidth / 53,
+                fontFamily: "Popins",
+              }}
+            >
+              Burst Time
+            </Text>
+            <View
+              style={{
+                flexDirection: "row",
+                alignSelf: "center",
+                margin: scale(5),
+                padding: algoWidth / 100,
+                justifyContent: "center",
+                alignContent: "center",
+              }}
+            >
+              <TouchableOpacity
+                onPress={() => {
+                  if (Bursttime > 0) {
+                    setBursttime(Bursttime - 1);
+                    Vibration.vibrate(80);
+                  } else {
+                    alert("Sorry! Can't decrease Burst Time anymore!");
+                  }
+                }}
+              >
+                <Feather
+                  name="minus-circle"
+                  size={algoWidth / 30}
+                  color={text}
+                />
+              </TouchableOpacity>
+              <Text
+                style={{
+                  paddingHorizontal: scale(15),
+                  color: text,
+                  fontSize: algoWidth / 53,
+                  alignSelf: "center",
+                  fontFamily: "Popins",
+                }}
+              >
+                {Bursttime}
+              </Text>
+              <TouchableOpacity
+                onPress={() => {
+                  if (Bursttime < 5) {
+                    setBursttime(Bursttime + 1);
+                    Vibration.vibrate(80);
+                  } else {
+                    alert("Sorry! Can't increase Burst Time anymore!");
+                  }
+                }}
+              >
+                <Feather
+                  name="plus-circle"
+                  size={algoWidth / 30}
+                  color={text}
+                />
               </TouchableOpacity>
             </View>
           </View>
         </View>
+
         <View
           style={{
             flexDirection: "row",
-            marginVertical: verticalScale(10),
+            marginVertical: algoWidth / 53,
             alignItems: "stretch",
             alignContent: "flex-start",
             justifyContent: "space-around",
           }}
         >
-          <Button
-            title="Clear"
+          <TouchableOpacity
             onPress={() => {
               clear("PrePR");
               setArrTime(0);
@@ -267,10 +1094,12 @@ const PrePriorityAlgoScreen = () => {
               setRefresh(!refresh);
               setCurTime(0);
             }}
-          />
-
-          <Button
-            title="Schedule"
+          >
+            <View style={styles.button}>
+              <Text style={styles.buttonText}>Clear</Text>
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity
             onPress={() => {
               if (state.PrePRprocess.length > 0) {
                 schedule("PrePR");
@@ -280,10 +1109,12 @@ const PrePriorityAlgoScreen = () => {
                 alert("Please add the processes ");
               }
             }}
-          />
-
-          <Button
-            title="Add"
+          >
+            <View style={styles.button}>
+              <Text style={styles.buttonText}>Schedule</Text>
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity
             onPress={() => {
               {
                 if (
@@ -305,7 +1136,11 @@ const PrePriorityAlgoScreen = () => {
                 }
               }
             }}
-          />
+          >
+            <View style={styles.button}>
+              <Text style={styles.buttonText}>Add</Text>
+            </View>
+          </TouchableOpacity>
         </View>
       </View>
 
@@ -314,7 +1149,7 @@ const PrePriorityAlgoScreen = () => {
           <Text
             style={{
               ...styles.text,
-              fontSize: scale(18),
+              fontSize: algoWidth / 53,
               padding: scale(10),
               paddingTop: verticalScale(5),
               alignSelf: "center",
@@ -325,12 +1160,10 @@ const PrePriorityAlgoScreen = () => {
           <View
             style={{
               ...styles.line,
-              alignSelf: "center",
-              width: width,
-              paddingHorizontal: scale(10),
+              alignSelf: "stretch",
             }}
           >
-            <View style={styles.tableBox1}>
+            <View style={styles.tableBox}>
               <Text style={styles.text}>Id</Text>
             </View>
             <View style={styles.tableBox}>
@@ -344,18 +1177,19 @@ const PrePriorityAlgoScreen = () => {
             </View>
           </View>
           <FlatList
-            style={{ alignSelf: "center", flex: 1 }}
+            style={{ alignSelf: "strech", flex: 1 }}
             data={state.PrePRprocess}
             renderItem={({ item }) => {
               return (
                 <View
                   style={{
                     ...styles.line,
-                    width: width,
-                    paddingHorizontal: scale(10),
+                    // width: width,
+                    alignSelf: "stretch",
+                    // paddingHorizontal: scale(10),
                   }}
                 >
-                  <View style={styles.tableBox1}>
+                  <View style={styles.tableBox}>
                     <View
                       style={{
                         flexDirection: "row",
@@ -366,8 +1200,8 @@ const PrePriorityAlgoScreen = () => {
                       <View
                         style={{
                           backgroundColor: processColor[item.id],
-                          width: scale(17),
-                          height: verticalScale(17),
+                          width: algoWidth / 53,
+                          height: algoWidth / 53,
                           borderRadius: scale(7),
                           marginHorizontal: scale(5),
                           alignSelf: "center",
@@ -397,7 +1231,7 @@ const PrePriorityAlgoScreen = () => {
           <Text
             style={{
               ...styles.text,
-              fontSize: scale(18),
+              fontSize: algoWidth / 53,
               alignSelf: "center",
               marginTop: verticalScale(10),
             }}
@@ -417,7 +1251,7 @@ const PrePriorityAlgoScreen = () => {
           <Text
             style={{
               ...styles.text,
-              fontSize: scale(18),
+              fontSize: algoWidth / 53,
               padding: scale(10),
               marginTop: verticalScale(5),
               alignSelf: "center",
@@ -428,8 +1262,7 @@ const PrePriorityAlgoScreen = () => {
           <View
             style={{
               ...styles.line,
-              alignSelf: "center",
-              width: Dimensions.get("window").width * 0.95,
+              alignSelf: "stretch",
             }}
           >
             <View style={styles.tableBox}>
@@ -457,17 +1290,34 @@ const PrePriorityAlgoScreen = () => {
           {state.PrePRisScheduled ? (
             <FlatList
               data={state.PrePRscheduledProcess}
-              style={{ alignSelf: "center", flex: 1 }}
+              style={{ alignSelf: "stretch", flex: 1 }}
               renderItem={({ item }) => {
                 return (
                   <View
                     style={{
                       ...styles.line,
-                      width: Dimensions.get("window").width * 0.95,
                     }}
                   >
                     <View style={styles.tableBox}>
-                      <Text style={styles.text}>{`P${item.id}`}</Text>
+                      <View
+                        style={{
+                          flexDirection: "row",
+                          flex: 1,
+                          alignContent: "space-around",
+                        }}
+                      >
+                        <View
+                          style={{
+                            backgroundColor: processColor[item.id],
+                            width: algoWidth / 53,
+                            height: algoWidth / 53,
+                            borderRadius: scale(7),
+                            marginHorizontal: scale(5),
+                            alignSelf: "center",
+                          }}
+                        ></View>
+                        <Text style={styles.text}>{`P${item.id}`}</Text>
+                      </View>
                     </View>
                     <View style={styles.tableBox}>
                       <Text style={styles.text}>{item.Pr}</Text>
@@ -500,24 +1350,22 @@ const PrePriorityAlgoScreen = () => {
           <Text
             style={{
               ...styles.text,
-              fontSize: scale(18),
-              padding: scale(10),
-              marginTop: verticalScale(5),
+              fontSize: algoWidth / 40,
+              padding: algoWidth / 100,
+              marginTop: algoWidth / 53,
               alignSelf: "center",
             }}
           >
             Steps Visualizer
           </Text>
-          <View style={{ borderWidth: scale(1), borderColor: primary }}>
+
+          <View style={{ borderWidth: algoWidth / 400, borderColor: primary }}>
             <View
               style={{
                 flexDirection: "row",
                 flex: 1,
                 alignItems: "center",
                 justifyContent: "center",
-                paddingVertical: verticalScale(10),
-                // borderWidth: scale(1),
-                // borderColor: primary,
               }}
             >
               <TouchableOpacity
@@ -531,7 +1379,7 @@ const PrePriorityAlgoScreen = () => {
               >
                 <Ionicons
                   name="chevron-back-outline"
-                  size={scale(40)}
+                  size={algoWidth / 20}
                   color={main}
                 />
               </TouchableOpacity>
@@ -540,7 +1388,6 @@ const PrePriorityAlgoScreen = () => {
                   style={{
                     alignItems: "center",
                     flex: 1,
-                    // justifyContent:'center'
                     borderWidth: scale(1),
                     borderColor: background,
                   }}
@@ -550,143 +1397,158 @@ const PrePriorityAlgoScreen = () => {
                       borderColor: background,
                       borderWidth: scale(1),
                       flex: 1,
-                      justifyContent: "center",
+                      // justifyContent: "center",
+                      alignContent: "center",
                     }}
                   >
                     <Text
                       style={{
                         ...styles.text,
-                        marginBottom: 5,
+                        marginBottom: verticalScale(5),
                         alignSelf: "center",
                       }}
                     >
                       Time = {curTime}
                     </Text>
 
-                    <View style={{ marginTop: verticalScale(5) }}>
-                      <Text style={{ ...styles.text, alignSelf: "center" }}>
-                        CPU
-                      </Text>
-                      {timeLine[curTime] == -1 ? (
-                        <View
-                          style={{
-                            width: Dimensions.get("screen").width * 0.08,
-                            height: Dimensions.get("screen").width * 0.08,
-                            backgroundColor: "#CAE9FF",
-                            alignSelf: "center",
-                            marginBottom: verticalScale(10),
-                            justifyContent: "center",
-                          }}
-                        >
-                          <Text
+                    <View
+                      style={{
+                        marginTop: verticalScale(5),
+                        flexDirection: "row",
+                        // flex: 1,
+                        width: (algoWidth * 4) / 5,
+                        alignSelf: "stretch",
+                      }}
+                    >
+                      <View style={{ flex: 1, alignSelf: "center" }}>
+                        <Text style={{ ...styles.text, alignSelf: "center" }}>
+                          CPU
+                        </Text>
+                        {timeLine[curTime] == -1 ? (
+                          <View
                             style={{
-                              ...styles.text,
+                              width: algoWidth * 0.05,
+                              height: algoWidth * 0.05,
+                              backgroundColor: "#CAE9FF",
                               alignSelf: "center",
-                              alignContent: "center",
+                              marginBottom: algoWidth / 53,
+                              justifyContent: "center",
                             }}
                           >
-                            {" "}
-                          </Text>
-                        </View>
-                      ) : (
-                        <View
-                          style={{
-                            width: Dimensions.get("screen").width * 0.08,
-                            height: Dimensions.get("screen").width * 0.08,
-                            backgroundColor: "#CAE9FF",
-                            alignSelf: "center",
-                            marginBottom: verticalScale(10),
-                            justifyContent: "center",
-                          }}
-                        >
-                          <Text
+                            <Text
+                              style={{
+                                ...styles.text,
+                                alignSelf: "center",
+                                alignContent: "center",
+                              }}
+                            >
+                              {" "}
+                            </Text>
+                          </View>
+                        ) : (
+                          <View
                             style={{
-                              ...styles.text,
+                              width: algoWidth * 0.05,
+                              height: algoWidth * 0.05,
+                              backgroundColor: "#CAE9FF",
+                              marginBottom: algoWidth / 53,
                               alignSelf: "center",
-                              alignContent: "center",
+                              justifyContent: "center",
                             }}
                           >
-                            {`P${timeLine[curTime]}`}
-                          </Text>
-                        </View>
-                      )}
-
-                      <Text style={{ ...styles.text, alignSelf: "center" }}>
-                        Ready Queue
-                      </Text>
-                      {waitingTimeLine[curTime][0] != -1 ? (
-                        <FlatList
-                          style={{
-                            height: Dimensions.get("screen").width * 0.08,
-                            alignSelf: "center",
-                            // borderWidth: 2,
-                            // borderColor: "red",
-                          }}
-                          horizontal
-                          data={waitingTimeLine[curTime]}
-                          renderItem={({ item }) => {
-                            return (
-                              <View
-                                style={{
-                                  width: Dimensions.get("screen").width * 0.08,
-                                  height: Dimensions.get("screen").width * 0.08,
-                                  backgroundColor: "#CAE9FF",
-                                  justifyContent: "center",
-                                  marginRight: scale(1),
-
-                                  // borderWidth: scale(1),
-                                  // borderColor: "#000",
-                                }}
-                              >
-                                <Text
+                            <Text
+                              style={{
+                                ...styles.text,
+                                alignSelf: "center",
+                                alignContent: "center",
+                              }}
+                            >
+                              {`P${timeLine[curTime]}`}
+                            </Text>
+                          </View>
+                        )}
+                      </View>
+                      <View
+                        style={{
+                          flex: 1,
+                          alignSelf: "center",
+                        }}
+                      >
+                        <Text style={{ ...styles.text, alignSelf: "center" }}>
+                          Ready Queue
+                        </Text>
+                        {waitingTimeLine[curTime][0] != -1 ? (
+                          <FlatList
+                            style={{
+                              height: algoWidth * 0.05,
+                              alignSelf: "center",
+                              // borderWidth: 2,
+                              // borderColor: "red",
+                            }}
+                            horizontal
+                            data={waitingTimeLine[curTime]}
+                            renderItem={({ item }) => {
+                              return (
+                                <View
                                   style={{
-                                    ...styles.text,
-                                    alignSelf: "center",
-                                    alignContent: "center",
+                                    width: algoWidth * 0.05,
+                                    height: algoWidth * 0.05,
+                                    backgroundColor: "#CAE9FF",
+                                    justifyContent: "center",
+                                    marginRight: scale(1),
+
+                                    // borderWidth: scale(1),
+                                    // borderColor: "#000",
                                   }}
                                 >
-                                  P{item}
-                                </Text>
-                              </View>
-                            );
-                          }}
-                        />
-                      ) : (
-                        <FlatList
-                          style={{
-                            height: Dimensions.get("screen").width * 0.08,
+                                  <Text
+                                    style={{
+                                      ...styles.text,
+                                      alignSelf: "center",
+                                      alignContent: "center",
+                                    }}
+                                  >
+                                    P{item}
+                                  </Text>
+                                </View>
+                              );
+                            }}
+                          />
+                        ) : (
+                          <FlatList
+                            style={{
+                              height: algoWidth * 0.05,
 
-                            alignSelf: "center",
-                            // borderWidth: 2,
-                            // borderColor: "red",
-                          }}
-                          horizontal
-                          data={waitingTimeLine[curTime]}
-                          renderItem={({ item }) => {
-                            return (
-                              <View
-                                style={{
-                                  width: Dimensions.get("screen").width * 0.08,
-                                  height: Dimensions.get("screen").width * 0.08,
-                                  backgroundColor: "#CAE9FF",
-                                  justifyContent: "center",
-                                  marginRight: scale(1),
-                                }}
-                              >
-                                <Text
+                              alignSelf: "center",
+                            }}
+                            horizontal
+                            data={waitingTimeLine[curTime]}
+                            renderItem={({ item }) => {
+                              return (
+                                <View
                                   style={{
-                                    ...styles.text,
-                                    alignSelf: "center",
-                                    alignContent: "center",
+                                    width: algoWidth * 0.05,
+                                    height: algoWidth * 0.05,
+                                    backgroundColor: "#CAE9FF",
+                                    justifyContent: "center",
+                                    marginRight: scale(1),
                                   }}
                                 >
-                                  {" "}
-                                </Text>
-                              </View>
-                            );
-                          }}
-                        />
-                      )}
+                                  <Text
+                                    style={{
+                                      ...styles.text,
+                                      alignSelf: "center",
+                                      alignContent: "center",
+                                    }}
+                                  >
+                                    {" "}
+                                  </Text>
+                                </View>
+                              );
+                            }}
+                          />
+                        )}
+                      </View>
                     </View>
                   </View>
                 </View>
@@ -719,7 +1581,7 @@ const PrePriorityAlgoScreen = () => {
               >
                 <Ionicons
                   name="chevron-forward-outline"
-                  size={scale(40)}
+                  size={algoWidth / 20}
                   color={main}
                 />
               </TouchableOpacity>
@@ -739,33 +1601,3 @@ const PrePriorityAlgoScreen = () => {
 };
 
 export default PrePriorityAlgoScreen;
-
-const styles = StyleSheet.create({
-  line: {
-    flexDirection: "row",
-    alignItems: "center",
-  },
-  tableBox: {
-    flex: 3,
-    borderWidth: scale(1),
-    borderColor: primary,
-    alignContent: "center",
-    paddingLeft: scale(1),
-    backgroundColor: background,
-    alignItems: "center",
-  },
-  tableBox1: {
-    flex: 2,
-    borderWidth: scale(1),
-    borderColor: primary,
-    alignContent: "center",
-    paddingLeft: scale(1),
-    backgroundColor: background,
-    alignItems: "center",
-  },
-  text: {
-    color: text,
-    fontFamily: "Popins",
-    fontSize: scale(14),
-  },
-});

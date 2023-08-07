@@ -17,7 +17,7 @@ const ProgressiveBar = ({ isScheduled, curTime, type }) => {
   if (type == "FCFS") {
     const n = state.FCFStimeLine.length;
     return (
-      <View style={{ marginVertical: verticalScale(5), marginHorizontal: scale(5) }}>
+      <View style={{ alignSelf:'center' }}>
         {isScheduled ? (
           <FlatList
             data={state.FCFStimeLine}
@@ -36,7 +36,7 @@ const ProgressiveBar = ({ isScheduled, curTime, type }) => {
                   <View
                     style={{
                       backgroundColor: backgroundColor,
-                      width: (algoWidth - scale(20)) / n,
+                      width: (algoWidth*0.9) / n,
                       height:algoWidth/30,
                       flexDirection: "row",
                       justifyContent: "center",
@@ -47,7 +47,7 @@ const ProgressiveBar = ({ isScheduled, curTime, type }) => {
                     <>
                       <View
                         style={{
-                          width: (algoWidth - scale(20)) / n,
+                          width: (algoWidth*0.9) / n,
                           flexDirection: "row",
                           justifyContent: "space-between",
                           alignItems: "center",
@@ -64,7 +64,7 @@ const ProgressiveBar = ({ isScheduled, curTime, type }) => {
                   ) : (
                     <View
                       style={{
-                        width: (algoWidth - scale(20)) / n,
+                        width: (algoWidth*0.9) / n,
                         flexDirection: "row",
                         justifyContent: "flex-end",
                         alignItems: "center",
@@ -85,7 +85,7 @@ const ProgressiveBar = ({ isScheduled, curTime, type }) => {
             style={{
               height:algoWidth/30,
               backgroundColor: "white",
-              width: algoWidth - scale(20),
+              width: algoWidth*0.9,
             }}
           />
         )}
@@ -94,7 +94,7 @@ const ProgressiveBar = ({ isScheduled, curTime, type }) => {
   } else if (type === "SJF") {
     const n = state.SJFtimeLine.length;
     return (
-      <View style={{ marginVertical: verticalScale(5), marginHorizontal: scale(5) }}>
+      <View style={{ alignSelf:'center' }}>
         {isScheduled ? (
           <FlatList
             data={state.SJFtimeLine}
@@ -113,7 +113,7 @@ const ProgressiveBar = ({ isScheduled, curTime, type }) => {
                   <View
                     style={{
                       backgroundColor: backgroundColor,
-                      width: (algoWidth - scale(20)) / n,
+                      width: (algoWidth*0.9) / n,
                       height:algoWidth/30,
                       flexDirection: "row",
                       justifyContent: "center",
@@ -124,7 +124,7 @@ const ProgressiveBar = ({ isScheduled, curTime, type }) => {
                     <>
                       <View
                         style={{
-                          width: (algoWidth - scale(20)) / n,
+                          width: (algoWidth*0.9) / n,
                           flexDirection: "row",
                           justifyContent: "space-between",
                           alignItems: "center",
@@ -141,7 +141,7 @@ const ProgressiveBar = ({ isScheduled, curTime, type }) => {
                   ) : (
                     <View
                       style={{
-                        width: (algoWidth - scale(20)) / n,
+                        width: (algoWidth*0.9) / n,
                         flexDirection: "row",
                         justifyContent: "flex-end",
                         alignItems: "center",
@@ -162,7 +162,7 @@ const ProgressiveBar = ({ isScheduled, curTime, type }) => {
             style={{
               height:algoWidth/30,
               backgroundColor: "white",
-              width: algoWidth - scale(20),
+              width: algoWidth*0.9,
             }}
           />
         )}
@@ -171,7 +171,7 @@ const ProgressiveBar = ({ isScheduled, curTime, type }) => {
   } else if (type === "PR") {
     const n = state.PRtimeLine.length;
     return (
-      <View style={{ marginVertical: verticalScale(5), marginHorizontal: scale(5) }}>
+      <View style={{ alignSelf:'center' }}>
         {isScheduled ? (
           <FlatList
             data={state.PRtimeLine}
@@ -190,7 +190,7 @@ const ProgressiveBar = ({ isScheduled, curTime, type }) => {
                   <View
                     style={{
                       backgroundColor: backgroundColor,
-                      width: (algoWidth - scale(20)) / n,
+                      width: (algoWidth*0.9) / n,
                       height:algoWidth/30,
                       flexDirection: "row",
                       justifyContent: "center",
@@ -201,7 +201,7 @@ const ProgressiveBar = ({ isScheduled, curTime, type }) => {
                     <>
                       <View
                         style={{
-                          width: (algoWidth - scale(20)) / n,
+                          width: (algoWidth*0.9) / n,
                           flexDirection: "row",
                           justifyContent: "space-between",
                           alignItems: "center",
@@ -218,7 +218,7 @@ const ProgressiveBar = ({ isScheduled, curTime, type }) => {
                   ) : (
                     <View
                       style={{
-                        width: (algoWidth - scale(20)) / n,
+                        width: (algoWidth*0.9) / n,
                         flexDirection: "row",
                         justifyContent: "flex-end",
                         alignItems: "center",
@@ -239,7 +239,7 @@ const ProgressiveBar = ({ isScheduled, curTime, type }) => {
             style={{
               height:algoWidth/30,
               backgroundColor: "white",
-              width: algoWidth - scale(20),
+              width: algoWidth*0.9,
             }}
           />
         )}
@@ -248,7 +248,7 @@ const ProgressiveBar = ({ isScheduled, curTime, type }) => {
   } else if (type === "SRTF") {
     const n = state.SRTFtimeLine.length;
     return (
-      <View style={{ marginVertical: verticalScale(5), marginHorizontal: scale(5) }}>
+      <View style={{ alignSelf:'center' }}>
         {isScheduled ? (
           <FlatList
             data={state.SRTFtimeLine}
@@ -267,7 +267,7 @@ const ProgressiveBar = ({ isScheduled, curTime, type }) => {
                   <View
                     style={{
                       backgroundColor: backgroundColor,
-                      width: (algoWidth - scale(20)) / n,
+                      width: (algoWidth*0.9) / n,
                       height:algoWidth/30,
                       flexDirection: "row",
                       justifyContent: "center",
@@ -278,7 +278,7 @@ const ProgressiveBar = ({ isScheduled, curTime, type }) => {
                     <>
                       <View
                         style={{
-                          width: (algoWidth - scale(20)) / n,
+                          width: (algoWidth*0.9) / n,
                           flexDirection: "row",
                           justifyContent: "space-between",
                           alignItems: "center",
@@ -295,7 +295,7 @@ const ProgressiveBar = ({ isScheduled, curTime, type }) => {
                   ) : (
                     <View
                       style={{
-                        width: (algoWidth - scale(20)) / n,
+                        width: (algoWidth*0.9) / n,
                         flexDirection: "row",
                         justifyContent: "flex-end",
                         alignItems: "center",
@@ -316,7 +316,7 @@ const ProgressiveBar = ({ isScheduled, curTime, type }) => {
             style={{
               height:algoWidth/30,
               backgroundColor: "white",
-              width: algoWidth - scale(20),
+              width: algoWidth*0.9,
             }}
           />
         )}
@@ -325,7 +325,7 @@ const ProgressiveBar = ({ isScheduled, curTime, type }) => {
   } else if (type === "PrePR") {
     const n = state.PrePRtimeLine.length;
     return (
-      <View style={{ marginVertical: verticalScale(5), marginHorizontal: scale(5) }}>
+      <View style={{ alignSelf:'center' }}>
         {isScheduled ? (
           <FlatList
             data={state.PrePRtimeLine}
@@ -344,7 +344,7 @@ const ProgressiveBar = ({ isScheduled, curTime, type }) => {
                   <View
                     style={{
                       backgroundColor: backgroundColor,
-                      width: (algoWidth - scale(20)) / n,
+                      width: (algoWidth*0.9) / n,
                       height:algoWidth/30,
                       flexDirection: "row",
                       justifyContent: "center",
@@ -355,7 +355,7 @@ const ProgressiveBar = ({ isScheduled, curTime, type }) => {
                     <>
                       <View
                         style={{
-                          width: (algoWidth - scale(20)) / n,
+                          width: (algoWidth*0.9) / n,
                           flexDirection: "row",
                           justifyContent: "space-between",
                           alignItems: "center",
@@ -372,7 +372,7 @@ const ProgressiveBar = ({ isScheduled, curTime, type }) => {
                   ) : (
                     <View
                       style={{
-                        width: (algoWidth - scale(20)) / n,
+                        width: (algoWidth*0.9) / n,
                         flexDirection: "row",
                         justifyContent: "flex-end",
                         alignItems: "center",
@@ -393,7 +393,7 @@ const ProgressiveBar = ({ isScheduled, curTime, type }) => {
             style={{
               height:algoWidth/30,
               backgroundColor: "white",
-              width: algoWidth - scale(20),
+              width: algoWidth*0.9,
             }}
           />
         )}
