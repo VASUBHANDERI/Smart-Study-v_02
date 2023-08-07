@@ -47,7 +47,7 @@ const BankersAlgorithmScreen = () => {
     buttonContainer: {
       marginTop: algoHeight / 100,
       marginHorizontal: algoWidth / 60,
-      width: algoWidth,
+      alignSelf: "center",
     },
     row: {
       flexDirection: "row",
@@ -660,13 +660,14 @@ const BankersAlgorithmScreen = () => {
                     {renderWork()}
                   </View>
                 </View>
-                {CurStep != state.steps.length - 1 ? <View style={{ width: algoWidth, alignSelf:'center' }}>
-                <View
+                {CurStep != state.steps.length - 1 ? (
+                  <View style={{ width: algoWidth, alignSelf: "center" }}>
+                    <View
                       style={{
-                        margin: algoWidth/100,
+                        margin: algoWidth / 100,
                         borderColor: "#f5e642",
                         backgroundColor: "#f7fa5f50",
-                        borderWidth: algoWidth/300,
+                        borderWidth: algoWidth / 300,
                         borderRadius: scale(10),
                       }}
                     >
@@ -683,66 +684,67 @@ const BankersAlgorithmScreen = () => {
                         Calculating...
                       </Text>
                     </View>
-                </View>: 
-                <View style={{ width: algoWidth, alignSelf:'center' }}>
-                  {state.isSafe ? (
-                    <View
-                      style={{
-                        margin: algoWidth/100,
-                        borderColor: "#81f51b90",
-                        backgroundColor: "#81f51b30",
-                        borderWidth: algoWidth/300,
-                        borderRadius: scale(10),
-                      }}
-                    >
-                      <Text
+                  </View>
+                ) : (
+                  <View style={{ width: algoWidth, alignSelf: "center" }}>
+                    {state.isSafe ? (
+                      <View
                         style={{
-                          alignSelf: "center",
-                          fontFamily: "Popins",
-                          fontSize: algoWidth / 40,
-                          color: "#30910a",
-                          fontWeight: "bold",
-                          marginVertical: verticalScale(10),
+                          margin: algoWidth / 100,
+                          borderColor: "#81f51b90",
+                          backgroundColor: "#81f51b30",
+                          borderWidth: algoWidth / 300,
+                          borderRadius: scale(10),
                         }}
                       >
-                        This is Safe
-                      </Text>
-                    </View>
-                  ) : (
-                    <View
-                      style={{
-                        margin: algoWidth/100,
-                        borderColor: "#f2705c",
-                        backgroundColor: "#f2705c30",
-                        borderWidth: algoWidth/300,
-                        borderRadius: scale(10),
-                      }}
-                    >
-                      <Text
+                        <Text
+                          style={{
+                            alignSelf: "center",
+                            fontFamily: "Popins",
+                            fontSize: algoWidth / 40,
+                            color: "#30910a",
+                            fontWeight: "bold",
+                            marginVertical: verticalScale(10),
+                          }}
+                        >
+                          This is Safe
+                        </Text>
+                      </View>
+                    ) : (
+                      <View
                         style={{
-                          alignSelf: "center",
-                          fontFamily: "Popins",
-                          fontSize: algoWidth / 40,
-                          color: "#f2705c",
-                          fontWeight: "bold",
-                          marginVertical: verticalScale(10),
+                          margin: algoWidth / 100,
+                          borderColor: "#f2705c",
+                          backgroundColor: "#f2705c30",
+                          borderWidth: algoWidth / 300,
+                          borderRadius: scale(10),
                         }}
                       >
-                        This is not safe
-                      </Text>
-                    </View>
-                  )}
-                </View>}
+                        <Text
+                          style={{
+                            alignSelf: "center",
+                            fontFamily: "Popins",
+                            fontSize: algoWidth / 40,
+                            color: "#f2705c",
+                            fontWeight: "bold",
+                            marginVertical: verticalScale(10),
+                          }}
+                        >
+                          This is not safe
+                        </Text>
+                      </View>
+                    )}
+                  </View>
+                )}
                 <View
                   style={{
                     flexDirection: "row",
                     borderColor: primary,
-                    borderWidth: algoWidth/500,
+                    borderWidth: algoWidth / 500,
                     alignItems: "center",
-                    marginHorizontal: algoWidth/40,
-                    borderRadius: algoWidth/60,
-                    paddingVertical: algoHeight/100,
-                    
+                    marginHorizontal: algoWidth / 40,
+                    borderRadius: algoWidth / 60,
+                    paddingVertical: algoHeight / 100,
                   }}
                 >
                   {CurStep != 0 ? (
