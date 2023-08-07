@@ -164,7 +164,8 @@ const BankersAlgorithmScreen = () => {
                   handleCellChange(rowIndex, colIndex, text)
                 }
                 keyboardType="numeric"
-                placeholder="?"
+                placeholder="_"
+                placeholderTextColor = "#80808070"
                 editable={!state.isSubmitted}
                 selectTextOnFocus={!state.isSubmitted}
               />
@@ -541,7 +542,7 @@ const BankersAlgorithmScreen = () => {
                 <Text style={styles.instructions}>Available:</Text>
                 {renderWork()}
               </View>
-              {state.isSafe ? (
+              {state.isSafe && CurStep == state.steps.length - 1 ? (
                 <View
                   style={{
                     margin: scale(5),
@@ -564,7 +565,7 @@ const BankersAlgorithmScreen = () => {
                     This is Safe
                   </Text>
                 </View>
-              ) : (
+              ) : state.isSafe == false && CurStep == state.steps.length - 1 ? (
                 <View
                   style={{
                     margin: scale(5),
@@ -587,7 +588,28 @@ const BankersAlgorithmScreen = () => {
                     This is not safe
                   </Text>
                 </View>
-              )}
+              ): CurStep != state.steps.length - 1? (<View
+                style={{
+                  margin: scale(5),
+                  borderColor: "#f5e642",
+                  backgroundColor: "#f7fa5f50",
+                  borderWidth: scale(2),
+                  borderRadius: scale(10),
+                }}
+              >
+                <Text
+                  style={{
+                    alignSelf: "center",
+                    fontFamily: "Popins",
+                    fontSize: scale(14),
+                    color: "#f2af13",
+                    fontWeight: "bold",
+                    marginVertical: verticalScale(10),
+                  }}
+                >
+                  Calculating...
+                </Text>
+              </View>):null}
               <View
                 style={{
                   flexDirection: "row",

@@ -258,7 +258,8 @@ const BankersAlgorithmScreen = () => {
                   handleCellChange(rowIndex, colIndex, text)
                 }
                 keyboardType="numeric"
-                placeholder="?"
+                placeholder="__"
+                placeholderTextColor="#80808080"
                 editable={!state.isSubmitted}
                 selectTextOnFocus={!state.isSubmitted}
               />
@@ -610,7 +611,7 @@ const BankersAlgorithmScreen = () => {
           </View>
           <View style={{ paddingVertical: algoHeight / 100 }}>
             {state.numResources > 0 ? (
-              <View style={styles.container}>
+              <View style={[styles.container, { width: algoWidth }]}>
                 <Text style={styles.instructions}>Total Resources:</Text>
                 {renderMatrixInputs(state.totalResources, handleTotalResources)}
               </View>
@@ -659,14 +660,38 @@ const BankersAlgorithmScreen = () => {
                     {renderWork()}
                   </View>
                 </View>
-                <View style={{ width: algoWidth }}>
+                {CurStep != state.steps.length - 1 ? <View style={{ width: algoWidth, alignSelf:'center' }}>
+                <View
+                      style={{
+                        margin: algoWidth/100,
+                        borderColor: "#f5e642",
+                        backgroundColor: "#f7fa5f50",
+                        borderWidth: algoWidth/300,
+                        borderRadius: scale(10),
+                      }}
+                    >
+                      <Text
+                        style={{
+                          alignSelf: "center",
+                          fontFamily: "Popins",
+                          fontSize: algoWidth / 40,
+                          color: "#f2af13",
+                          fontWeight: "bold",
+                          marginVertical: verticalScale(10),
+                        }}
+                      >
+                        Calculating...
+                      </Text>
+                    </View>
+                </View>: 
+                <View style={{ width: algoWidth, alignSelf:'center' }}>
                   {state.isSafe ? (
                     <View
                       style={{
-                        margin: scale(5),
+                        margin: algoWidth/100,
                         borderColor: "#81f51b90",
                         backgroundColor: "#81f51b30",
-                        borderWidth: scale(2),
+                        borderWidth: algoWidth/300,
                         borderRadius: scale(10),
                       }}
                     >
@@ -686,10 +711,10 @@ const BankersAlgorithmScreen = () => {
                   ) : (
                     <View
                       style={{
-                        margin: scale(5),
+                        margin: algoWidth/100,
                         borderColor: "#f2705c",
                         backgroundColor: "#f2705c30",
-                        borderWidth: scale(2),
+                        borderWidth: algoWidth/300,
                         borderRadius: scale(10),
                       }}
                     >
@@ -707,17 +732,17 @@ const BankersAlgorithmScreen = () => {
                       </Text>
                     </View>
                   )}
-                </View>
+                </View>}
                 <View
                   style={{
                     flexDirection: "row",
                     borderColor: primary,
-                    borderWidth: scale(1),
+                    borderWidth: algoWidth/500,
                     alignItems: "center",
-                    marginHorizontal: scale(3),
-                    borderRadius: scale(5),
-                    paddingVertical: verticalScale(10),
-                    marginVertical: verticalScale(15),
+                    marginHorizontal: algoWidth/40,
+                    borderRadius: algoWidth/60,
+                    paddingVertical: algoHeight/100,
+                    
                   }}
                 >
                   {CurStep != 0 ? (
