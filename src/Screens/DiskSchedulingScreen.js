@@ -14,9 +14,9 @@ import { useFonts } from "expo-font";
 import { scale, verticalScale } from "react-native-size-matters";
 import Button from "../components/Button";
 import { Context as DiskContext } from "../context/diskManagementAlgoContext";
-import Graph from "../components/Graph";
 import useWindowSize from "../Hooks/useWindowSize";
 import getMediaQuery from "../Hooks/getMediaQuery";
+import GraphForWeb from "../components/GraphForWeb";
 
 Text.defaultProps = {
   ...(Text.defaultProps || {}),
@@ -1008,7 +1008,7 @@ const DiskManagementScreen = () => {
             ) : null}
             {state.showScheduledGraph && state.requestSequence.length > 0 ? (
               <View style={{ alignSelf: "flex-start" }}>
-                <Graph />
+                <GraphForWeb />
               </View>
             ) : null}
           </View>
