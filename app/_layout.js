@@ -136,6 +136,26 @@ export default function Layout() {
                   headerTintColor: background,
                   headerTitleStyle: styles.headerTitleStyle,
                   headerStyle: styles.headerStyle,
+                  headerLeft: () => {
+                    const navigation = useNavigation();
+                    return (
+                      <TouchableOpacity
+                        onPress={() => {
+                          navigation.openDrawer();
+                        }}
+                      >
+                        <Entypo
+                          name="network"
+                          size={isWeb ? scale(30) : scale(50)}
+                          color={background}
+                          style={{
+                            marginRight: scale(5),
+                            marginLeft: isWeb ? scale(10) : scale(20),
+                          }}
+                        />
+                      </TouchableOpacity>
+                    );
+                  },
                 }}
               />
               <Drawer.Screen
@@ -153,6 +173,26 @@ export default function Layout() {
                   headerTintColor: background,
                   headerTitleStyle: styles.headerTitleStyle,
                   headerStyle: styles.headerStyle,
+                  headerLeft: () => {
+                    const navigation = useNavigation();
+                    return (
+                      <TouchableOpacity
+                        onPress={() => {
+                          navigation.openDrawer();
+                        }}
+                      >
+                        <Entypo
+                          name="network"
+                          size={isWeb ? scale(30) : scale(50)}
+                          color={background}
+                          style={{
+                            marginRight: scale(5),
+                            marginLeft: isWeb ? scale(10) : scale(20),
+                          }}
+                        />
+                      </TouchableOpacity>
+                    );
+                  },
                 }}
               />
               <Drawer.Screen
@@ -170,6 +210,26 @@ export default function Layout() {
                   headerTintColor: background,
                   headerTitleStyle: styles.headerTitleStyle,
                   headerStyle: styles.headerStyle,
+                  headerLeft: () => {
+                    const navigation = useNavigation();
+                    return (
+                      <TouchableOpacity
+                        onPress={() => {
+                          navigation.openDrawer();
+                        }}
+                      >
+                        <Entypo
+                          name="network"
+                          size={isWeb ? scale(30) : scale(50)}
+                          color={background}
+                          style={{
+                            marginRight: scale(5),
+                            marginLeft: isWeb ? scale(10) : scale(20),
+                          }}
+                        />
+                      </TouchableOpacity>
+                    );
+                  },
                 }}
               />
               <Drawer.Screen
@@ -187,6 +247,26 @@ export default function Layout() {
                   headerTintColor: background,
                   headerTitleStyle: styles.headerTitleStyle,
                   headerStyle: styles.headerStyle,
+                  headerLeft: () => {
+                    const navigation = useNavigation();
+                    return (
+                      <TouchableOpacity
+                        onPress={() => {
+                          navigation.openDrawer();
+                        }}
+                      >
+                        <Entypo
+                          name="network"
+                          size={isWeb ? scale(30) : scale(50)}
+                          color={background}
+                          style={{
+                            marginRight: scale(5),
+                            marginLeft: isWeb ? scale(10) : scale(20),
+                          }}
+                        />
+                      </TouchableOpacity>
+                    );
+                  },
                 }}
               />
               <Drawer.Screen
@@ -204,6 +284,26 @@ export default function Layout() {
                   headerTintColor: background,
                   headerTitleStyle: styles.headerTitleStyle,
                   headerStyle: styles.headerStyle,
+                  headerLeft: () => {
+                    const navigation = useNavigation();
+                    return (
+                      <TouchableOpacity
+                        onPress={() => {
+                          navigation.openDrawer();
+                        }}
+                      >
+                        <Entypo
+                          name="network"
+                          size={isWeb ? scale(30) : scale(50)}
+                          color={background}
+                          style={{
+                            marginRight: scale(5),
+                            marginLeft: isWeb ? scale(10) : scale(20),
+                          }}
+                        />
+                      </TouchableOpacity>
+                    );
+                  },
                 }}
               />
             </Drawer>
