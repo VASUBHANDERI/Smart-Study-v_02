@@ -17,6 +17,7 @@ import { Context as DiskContext } from "../context/diskManagementAlgoContext";
 import useWindowSize from "../Hooks/useWindowSize";
 import getMediaQuery from "../Hooks/getMediaQuery";
 import GraphForWeb from "../components/GraphForWeb";
+import GraphForWeb2 from "../components/GraphForWeb2";
 
 Text.defaultProps = {
   ...(Text.defaultProps || {}),
@@ -288,7 +289,7 @@ const DiskManagementScreen = () => {
                     style={{
                       alignItems: "center",
                       marginTop: algoWidth / 70,
-                      marginBottom:algoWidth/70
+                      marginBottom: algoWidth / 70,
                     }}
                   >
                     {state.basicInfoCollected ? (
@@ -1007,9 +1008,20 @@ const DiskManagementScreen = () => {
               </>
             ) : null}
             {state.showScheduledGraph && state.requestSequence.length > 0 ? (
-              <View style={{ alignSelf: "flex-start" }}>
+              <>
+              {/* <View
+                style={{
+                  alignSelf: "flex-start",
+                  borderColor: "black",
+                  borderWidth: 2,
+                }}
+              >
+                <GraphForWeb2 />
+              </View> */}
+             
                 <GraphForWeb />
-              </View>
+              
+              </>
             ) : null}
           </View>
         </ScrollView>
