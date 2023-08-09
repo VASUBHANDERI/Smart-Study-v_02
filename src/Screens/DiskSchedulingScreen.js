@@ -17,7 +17,6 @@ import { Context as DiskContext } from "../context/diskManagementAlgoContext";
 import useWindowSize from "../Hooks/useWindowSize";
 import getMediaQuery from "../Hooks/getMediaQuery";
 import GraphForWeb from "../components/GraphForWeb";
-import GraphForWeb2 from "../components/GraphForWeb2";
 
 Text.defaultProps = {
   ...(Text.defaultProps || {}),
