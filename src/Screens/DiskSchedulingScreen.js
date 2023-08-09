@@ -154,10 +154,10 @@ const DiskManagementScreen = () => {
           }}
           showsVerticalScrollIndicator={true}
         >
-          <View style={{ justifyContent: "center", alignItems: "center" }}>
+          <View
+            style={{ justifyContent: "center", alignItems: "center", flex: 1 }}
+          >
             <Text>Content will be available soon!</Text>
-            <Text>{width}</Text>
-            <Text>{algoWidth}</Text>
           </View>
         </ScrollView>
       </View>
@@ -1008,7 +1008,7 @@ const DiskManagementScreen = () => {
             ) : null}
             {state.showScheduledGraph && state.requestSequence.length > 0 ? (
               <>
-              {/* <View
+                {/* <View
                 style={{
                   alignSelf: "flex-start",
                   borderColor: "black",
@@ -1017,9 +1017,8 @@ const DiskManagementScreen = () => {
               >
                 <GraphForWeb2 />
               </View> */}
-             
+
                 <GraphForWeb />
-              
               </>
             ) : null}
           </View>

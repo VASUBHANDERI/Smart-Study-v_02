@@ -7,8 +7,19 @@ export default function getMediaQuery() {
   const isMobileWidth = useMediaQuery({ maxWidth: 600 });
   const isTabletWidth = useMediaQuery({ minWidth: 600, maxWidth: 1224 });
   const isDesktopWidth = useMediaQuery({ minWidth: 1225 });
-  const isWide = useMediaQuery({ minWidth: width * 0.6 });
-  if (width < 500 && isWide) {
+  let isWide = useMediaQuery({ minWidth: width * 0.6 });
+  let details = navigator.userAgent;
+
+  /* Creating a regular expression 
+containing some mobile devices keywords 
+to search it in details string*/
+  let regexp = /android|iphone|kindle|ipad/i;
+
+  /* Using test() method to search regexp in details
+it returns boolean value*/
+  let isMobileDevice = regexp.test(details);
+
+  if (isMobileDevice) {
     isWide = false;
   }
 

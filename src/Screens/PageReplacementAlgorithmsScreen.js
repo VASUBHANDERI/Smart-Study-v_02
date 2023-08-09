@@ -154,14 +154,14 @@ const PageReplacementAlgorithmsScreen = () => {
             borderBottomColor: "grey",
             borderRightWidth: isWide ? algoWidth / 100 : 0,
             borderBottomWidth: isWide ? 0 : algoWidth / 100,
-            flex:1
+            flex: 1,
           }}
           showsVerticalScrollIndicator={true}
         >
-          <View style={{ justifyContent: "center", alignItems: "center" }}>
+          <View
+            style={{ justifyContent: "center", alignItems: "center", flex: 1 }}
+          >
             <Text>Content will be available soon!</Text>
-            <Text>{width}</Text>
-            <Text>{algoWidth}</Text>
           </View>
         </ScrollView>
       </View>

@@ -370,10 +370,8 @@ const BankersAlgorithmScreen = () => {
           }}
           showsVerticalScrollIndicator={true}
         >
-          <View style={{ justifyContent: "center", alignItems: "center" }}>
+          <View style={{ justifyContent: "center", alignItems: "center",flex:1}}>
             <Text>Content will be available soon!</Text>
-            <Text>{width}</Text>
-            <Text>{algoWidth}</Text>
           </View>
         </ScrollView>
       </View>
