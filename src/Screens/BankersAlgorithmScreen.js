@@ -665,20 +665,21 @@ const BankersAlgorithmScreen = () => {
                     <View
                       style={{
                         margin: algoWidth / 100,
+                        marginHorizontal: algoWidth / 5,
                         borderColor: "#f5e642",
                         backgroundColor: "#f7fa5f50",
                         borderWidth: algoWidth / 300,
-                        borderRadius: scale(10),
+                        borderRadius: algoWidth / 80,
                       }}
                     >
                       <Text
                         style={{
                           alignSelf: "center",
                           fontFamily: "Popins",
-                          fontSize: algoWidth / 40,
+                          fontSize: algoWidth / 70,
                           color: "#f2af13",
                           fontWeight: "bold",
-                          marginVertical: verticalScale(10),
+                          marginVertical: algoHeight / 80,
                         }}
                       >
                         Calculating...
@@ -691,20 +692,21 @@ const BankersAlgorithmScreen = () => {
                       <View
                         style={{
                           margin: algoWidth / 100,
+                          marginHorizontal: algoWidth / 5,
                           borderColor: "#81f51b90",
                           backgroundColor: "#81f51b30",
                           borderWidth: algoWidth / 300,
-                          borderRadius: scale(10),
+                          borderRadius: algoWidth / 80,
                         }}
                       >
                         <Text
                           style={{
                             alignSelf: "center",
                             fontFamily: "Popins",
-                            fontSize: algoWidth / 40,
+                            fontSize: algoWidth / 70,
                             color: "#30910a",
                             fontWeight: "bold",
-                            marginVertical: verticalScale(10),
+                            marginVertical: algoHeight / 80,
                           }}
                         >
                           This is Safe
@@ -714,20 +716,22 @@ const BankersAlgorithmScreen = () => {
                       <View
                         style={{
                           margin: algoWidth / 100,
+                          marginHorizontal: algoWidth / 5,
+                          marginHorizontal: algoWidth / 5,
                           borderColor: "#f2705c",
                           backgroundColor: "#f2705c30",
                           borderWidth: algoWidth / 300,
-                          borderRadius: scale(10),
+                          borderRadius: algoWidth / 80,
                         }}
                       >
                         <Text
                           style={{
                             alignSelf: "center",
                             fontFamily: "Popins",
-                            fontSize: algoWidth / 40,
+                            fontSize: algoWidth / 70,
                             color: "#f2705c",
                             fontWeight: "bold",
-                            marginVertical: verticalScale(10),
+                            marginVertical: algoHeight / 80,
                           }}
                         >
                           This is not safe
