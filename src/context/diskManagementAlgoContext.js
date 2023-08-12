@@ -13,10 +13,10 @@ const algoReducer = (state, action) => {
 
     case "addRequest":
       if (
-        action.payload.request != state.currentPosition &&
+        // action.payload.request != state.currentPosition &&
         action.payload.request > 0 &&
-        action.payload.request <= state.totalTracks &&
-        !state.requestSequence.includes(action.payload.request)
+        action.payload.request <= state.totalTracks 
+        // !state.requestSequence.includes(action.payload.request)
       ) {
         state.requestSequence = [
           ...state.requestSequence,

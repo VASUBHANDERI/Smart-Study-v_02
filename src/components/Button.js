@@ -17,7 +17,7 @@ import {
 import useWindowSize from "../Hooks/useWindowSize";
 
 const isWeb = Platform.OS === "web";
-const Button = ({ title, onPress }) => {
+const Button = ({ title, onPress,customStyle }) => {
   const [width, height] = useWindowSize();
 
   const [loaded] = useFonts({
@@ -31,7 +31,7 @@ const Button = ({ title, onPress }) => {
   return (
     <TouchableOpacity onPress={onPress}>
       <View style={styles.button}>
-        <Text style={styles.text}>{title}</Text>
+        <Text style={[styles.text,customStyle]}>{title}</Text>
       </View>
     </TouchableOpacity>
   );

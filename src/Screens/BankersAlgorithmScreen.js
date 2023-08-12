@@ -19,6 +19,7 @@ import { Context as BankersContext } from "../context/bankersContext";
 import { Vibration } from "react-native";
 import useWindowSize from "../Hooks/useWindowSize";
 import getMediaQuery from "../Hooks/getMediaQuery";
+import BankersAlgoTheory from "../components/TheoryComponents/BankersAlgoTheory";
 
 const BankersAlgorithmScreen = () => {
   const [width, height] = useWindowSize();
@@ -33,6 +34,9 @@ const BankersAlgorithmScreen = () => {
     getMediaQuery();
   const algoWidth = isWide ? width * 0.6 : width;
   const algoHeight = isWide ? height : height * 0.6;
+
+  const contentWidth = isWide ? width * 0.4 : width;
+  const contentHeight = isWide ? height : height * 0.4;
 
   const styles = StyleSheet.create({
     table: {
@@ -51,40 +55,42 @@ const BankersAlgorithmScreen = () => {
     },
     row: {
       flexDirection: "row",
-      marginBottom: algoHeight / 120,
+      marginBottom: algoHeight / 600,
     },
     rowGreen: {
       flexDirection: "row",
       backgroundColor: "#81f51b50",
-      marginBottom: algoHeight / 120,
+      marginBottom: algoHeight / 600,
     },
     rowYellow: {
       flexDirection: "row",
       backgroundColor: "#f7fa5f50",
-      marginBottom: algoHeight / 120,
+      marginBottom: algoHeight / 600,
     },
     rowRed: {
       flexDirection: "row",
       backgroundColor: "#f2705c",
-      marginBottom: algoHeight / 120,
+      marginBottom: algoHeight / 600,
     },
     headerRow: {
       backgroundColor: "#e3e3e3",
-      marginBottom: algoHeight / 120,
+      marginBottom: algoHeight / 600,
     },
     cell: {
       borderWidth: StyleSheet.hairlineWidth,
-      padding: algoWidth / 100,
-      width: algoWidth / 13,
+      padding: algoWidth / 500,
+      width: algoWidth / 200,
       flex: 1,
+      fontSize: algoWidth / 60,
       justifyContent: "center",
       alignItems: "center",
       textAlign: "center",
     },
     enabledInput: {
       borderWidth: StyleSheet.hairlineWidth,
-      padding: algoWidth / 100,
-      width: algoWidth / 13,
+      padding: algoWidth / 500,
+      width: algoWidth / 200,
+      fontSize: algoWidth / 60,
       flex: 1,
       justifyContent: "center",
       alignItems: "center",
@@ -95,10 +101,15 @@ const BankersAlgorithmScreen = () => {
     headerText: {
       fontWeight: "bold",
       alignSelf: "center",
+      fontSize: algoWidth / 60,
+    },
+    TableText: {
+      alignSelf: "center",
+      fontSize: algoWidth / 60,
     },
     container: {
       flex: 1,
-      padding: algoWidth / 100,
+      paddingHorizontal: algoWidth / 100,
       marginHorizontal: algoHeight / 50,
     },
 
@@ -119,7 +130,7 @@ const BankersAlgorithmScreen = () => {
     StepText: {
       alignSelf: "flex-start",
       fontFamily: "Popins",
-      marginVertical: algoHeight / 100,
+      marginVertical: algoHeight / 600,
     },
   });
   const [allocation, setAllocation] = useState(state.allocation || [[]]);
@@ -148,10 +159,11 @@ const BankersAlgorithmScreen = () => {
   const renderButtonOrText = () => {
     if (isInputValid()) {
       return (
-        <>
+        <View style={{ marginTop: algoHeight / 100 }}>
           {state.isSubmitted ? (
             <Button
               title="Edit"
+              customStyle={{ fontSize: algoWidth / 60 }}
               onPress={() => {
                 state.isSubmitted = false;
                 setCurStep(0);
@@ -161,6 +173,7 @@ const BankersAlgorithmScreen = () => {
           ) : (
             <Button
               title="Submit"
+              customStyle={{ fontSize: algoWidth / 60 }}
               onPress={() => {
                 if (state.isValidMatrix) {
                   Solve();
@@ -170,7 +183,7 @@ const BankersAlgorithmScreen = () => {
               }}
             />
           )}
-        </>
+        </View>
       );
     } else {
       return (
@@ -336,7 +349,7 @@ const BankersAlgorithmScreen = () => {
         <View style={styles.row}>
           {stepMatrix.map((cell, colIndex) => (
             <View style={styles.cell}>
-              <Text style={styles.headerText}>{cell}</Text>
+              <Text style={styles.TableText}>{cell}</Text>
             </View>
           ))}
         </View>
@@ -357,21 +370,32 @@ const BankersAlgorithmScreen = () => {
         flexDirection: isWide ? "row" : "column",
       }}
     >
-      <View style={{ flex: 4 }}>
+      <View
+        style={{
+          flex: 4,
+          borderRightColor: "grey",
+          borderBottomColor: "grey",
+          borderRightWidth: isWide ? algoWidth / 300 : 0,
+          borderBottomWidth: isWide ? 0 : algoWidth / 300,
+        }}
+      >
         <ScrollView
           contentContainerStyle={{
             alignItems: "center",
             backgroundColor: background,
-            borderRightColor: "grey",
-            borderBottomColor: "grey",
-            borderRightWidth: isWide ? algoWidth / 100 : 0,
-            borderBottomWidth: isWide ? 0 : algoWidth / 100,
+
             flex: 1,
           }}
-          showsVerticalScrollIndicator={true}
+          showsVerticalScrollIndicator={false}
         >
-          <View style={{ justifyContent: "center", alignItems: "center",flex:1}}>
-            <Text>Content will be available soon!</Text>
+          <View
+            style={{
+              padding: algoWidth / 80,
+              margin: algoWidth / 50,
+              width: contentWidth,
+            }}
+          >
+            <BankersAlgoTheory />
           </View>
         </ScrollView>
       </View>
@@ -388,6 +412,8 @@ const BankersAlgorithmScreen = () => {
             style={{
               flexDirection: "row",
               marginTop: algoHeight / 50,
+              width: algoWidth - algoWidth / 100,
+              alignItems: "center",
             }}
           >
             <View
@@ -402,7 +428,7 @@ const BankersAlgorithmScreen = () => {
                   style={{
                     alignSelf: "center",
                     color: text,
-                    fontSize: algoWidth / 40,
+                    fontSize: algoWidth / 60,
                     fontFamily: "Popins",
                   }}
                 >
@@ -445,7 +471,7 @@ const BankersAlgorithmScreen = () => {
                   >
                     <Feather
                       name="minus-circle"
-                      size={algoWidth / 20}
+                      size={algoWidth / 40}
                       color={text}
                     />
                   </TouchableOpacity>
@@ -453,7 +479,7 @@ const BankersAlgorithmScreen = () => {
                     style={{
                       paddingHorizontal: algoWidth / 50,
                       color: text,
-                      fontSize: algoWidth / 40,
+                      fontSize: algoWidth / 60,
                       alignSelf: "center",
                       fontFamily: "Popins",
                     }}
@@ -491,7 +517,7 @@ const BankersAlgorithmScreen = () => {
                   >
                     <Feather
                       name="plus-circle"
-                      size={algoWidth / 20}
+                      size={algoWidth / 40}
                       color={text}
                     />
                   </TouchableOpacity>
@@ -501,8 +527,6 @@ const BankersAlgorithmScreen = () => {
             <View
               style={{
                 backgroundColor: background,
-                marginHorizontal: algoWidth / 50,
-                paddingHorizontal: algoWidth / 20,
               }}
             >
               <View>
@@ -510,7 +534,7 @@ const BankersAlgorithmScreen = () => {
                   style={{
                     alignSelf: "center",
                     color: text,
-                    fontSize: algoWidth / 40,
+                    fontSize: algoWidth / 60,
                     fontFamily: "Popins",
                   }}
                 >
@@ -553,7 +577,7 @@ const BankersAlgorithmScreen = () => {
                   >
                     <Feather
                       name="minus-circle"
-                      size={algoWidth / 20}
+                      size={algoWidth / 40}
                       color={text}
                     />
                   </TouchableOpacity>
@@ -561,7 +585,7 @@ const BankersAlgorithmScreen = () => {
                     style={{
                       paddingHorizontal: algoWidth / 50,
                       color: text,
-                      fontSize: algoWidth / 40,
+                      fontSize: algoWidth / 60,
                       alignSelf: "center",
                       fontFamily: "Popins",
                     }}
@@ -599,21 +623,21 @@ const BankersAlgorithmScreen = () => {
                   >
                     <Feather
                       name="plus-circle"
-                      size={algoWidth / 20}
+                      size={algoWidth / 40}
                       color={text}
                     />
                   </TouchableOpacity>
                 </View>
               </View>
             </View>
-          </View>
-          <View style={{ paddingVertical: algoHeight / 100 }}>
             {state.numResources > 0 ? (
               <View style={[styles.container, { width: algoWidth }]}>
                 <Text style={styles.instructions}>Total Resources:</Text>
                 {renderMatrixInputs(state.totalResources, handleTotalResources)}
               </View>
             ) : null}
+          </View>
+          <View>
             {state.numProcesses > 0 && state.numResources > 0 ? (
               <>
                 <View
@@ -622,6 +646,7 @@ const BankersAlgorithmScreen = () => {
                     alignItems: "stretch",
                     alignContent: "flex-start",
                     justifyContent: "space-between",
+                    width: algoWidth - algoWidth / 100,
                   }}
                 >
                   <View style={styles.container}>
@@ -635,6 +660,14 @@ const BankersAlgorithmScreen = () => {
                     <Text style={styles.instructions}>Max Need:</Text>
                     {renderMatrixInputs(state.maxNeed, handleMaxNeedChange)}
                   </View>
+                  {state.steps.length > 0 &&
+                  state.isSubmitted &&
+                  state.isValidMatrix ? (
+                    <View style={styles.container}>
+                      <Text style={styles.instructions}>Need:</Text>
+                      {renderMatrix(state.need, styles.TableText)}
+                    </View>
+                  ) : null}
                 </View>
                 <View style={styles.buttonContainer}>
                   {renderButtonOrText()}
@@ -646,12 +679,6 @@ const BankersAlgorithmScreen = () => {
             state.isSubmitted &&
             state.isValidMatrix ? (
               <>
-                <View>
-                  <View style={styles.container}>
-                    <Text style={styles.instructions}>Need:</Text>
-                    {renderMatrix(state.need, styles.headerText)}
-                  </View>
-                </View>
                 <View>
                   <View style={styles.container}>
                     <Text style={styles.instructions}>Available:</Text>
@@ -775,99 +802,109 @@ const BankersAlgorithmScreen = () => {
                     style={{
                       flex: 1,
                       alignSelf: "center",
-                      flexWrap: "nowrap",
+                      alignItems: "center",
+                      // flexWrap: "nowrap",
                     }}
                   >
+                    <View>
+                      <Text
+                        style={{
+                          alignSelf: "center",
+                          fontFamily: "Popins",
+                          fontWeight: "bold",
+                        }}
+                      >
+                        Step = {CurStep + 1}
+                      </Text>
+                      <View style={{ flexDirection: "row" }}>
+                        <Text style={styles.StepText}>
+                          {state.steps[CurStep].description}
+                        </Text>
+                        <Text style={styles.StepText}>
+                          {"Check : Need <= Available"}
+                        </Text>
+                      </View>
+
+                      <View style={{ flexDirection: "row" }}>
+                        <Text style={styles.StepText}>
+                          [{state.steps[CurStep].need.join(", ")}]
+                        </Text>
+                        <Text style={styles.StepText}>{" <= "}</Text>
+                        <Text style={styles.StepText}>
+                          [{state.steps[CurStep].work.join(", ")}]
+                        </Text>
+                        <Text style={styles.StepText}> condition is </Text>
+                        <Text
+                          style={styles.StepText}
+                        >{`${state.steps[CurStep].isFinish}`}</Text>
+                      </View>
+                      {state.steps[CurStep].isFinish ? (
+                        <>
+                          <Text style={styles.StepText}>
+                            {state.steps[CurStep].description1}
+                          </Text>
+                          <View style={{ flexDirection: "row" }}>
+                            <Text style={styles.StepText}>
+                              [{state.steps[CurStep].work.join(", ")}]
+                            </Text>
+
+                            <Text style={styles.StepText}>{" + "}</Text>
+
+                            <Text style={styles.StepText}>
+                              [{state.steps[CurStep].allocation.join(", ")}]
+                            </Text>
+
+                            <Text style={styles.StepText}> = </Text>
+
+                            <Text style={styles.StepText}>
+                              [{state.steps[CurStep].total.join(", ")}]
+                            </Text>
+                          </View>
+                        </>
+                      ) : null}
+                      {CurStep != state.steps.length - 1 ? (
+                        <Text style={styles.StepText}>
+                          {state.steps[CurStep].lastStatement}
+                        </Text>
+                      ) : CurStep == state.steps.length - 1 && state.isSafe ? (
+                        <Text style={styles.StepText}>
+                          Now, All Processes are Finished
+                        </Text>
+                      ) : CurStep == state.steps.length - 1 && !state.isSafe ? (
+                        <Text style={styles.StepText}>
+                          Now, We can not move further. Hence it is Unsafe
+                        </Text>
+                      ) : (
+                        <Text style={styles.StepText}></Text>
+                      )}
+                      {!state.steps[CurStep].isFinish ? (
+                        <>
+                          <Text style={styles.StepText}> </Text>
+                          <View style={{ flexDirection: "row" }}>
+                            <Text style={styles.StepText}> </Text>
+                            <Text style={styles.StepText}> </Text>
+                          </View>
+                        </>
+                      ) : null}
+                    </View>
                     <Text
                       style={{
                         alignSelf: "center",
                         fontFamily: "Popins",
-                        marginBottom: verticalScale(5),
+                        fontWeight: "bold",
                       }}
                     >
-                      Step = {CurStep + 1}
+                      Safe Sequence:
                     </Text>
-                    <Text style={styles.StepText}>
-                      {state.steps[CurStep].description}
-                    </Text>
-                    <Text style={styles.StepText}>
-                      {"Check : Need <= Available"}
-                    </Text>
-                    <View style={{ flexDirection: "row" }}>
-                      <Text style={styles.StepText}>
-                        [{state.steps[CurStep].need.join(", ")}]
-                      </Text>
-                      <Text style={styles.StepText}>{" <= "}</Text>
-                      <Text style={styles.StepText}>
-                        [{state.steps[CurStep].work.join(", ")}]
-                      </Text>
-                      <Text style={styles.StepText}> condition is </Text>
-                      <Text
-                        style={styles.StepText}
-                      >{`${state.steps[CurStep].isFinish}`}</Text>
-                    </View>
-                    {state.steps[CurStep].isFinish ? (
-                      <>
-                        <Text style={styles.StepText}>
-                          {state.steps[CurStep].description1}
-                        </Text>
-                        <View style={{ flexDirection: "row" }}>
-                          <Text style={styles.StepText}>
-                            [{state.steps[CurStep].work.join(", ")}]
-                          </Text>
 
-                          <Text style={styles.StepText}>{" + "}</Text>
-
-                          <Text style={styles.StepText}>
-                            [{state.steps[CurStep].allocation.join(", ")}]
-                          </Text>
-
-                          <Text style={styles.StepText}> = </Text>
-
-                          <Text style={styles.StepText}>
-                            [{state.steps[CurStep].total.join(", ")}]
-                          </Text>
-                        </View>
-                        <Text style={styles.StepText}>
-                          Hence, This process is Finished
-                        </Text>
-                      </>
-                    ) : null}
-                    {CurStep != state.steps.length - 1 ? (
-                      <Text style={styles.StepText}>
-                        {state.steps[CurStep].lastStatement}
-                      </Text>
-                    ) : CurStep == state.steps.length - 1 && state.isSafe ? (
-                      <Text style={styles.StepText}>
-                        Now, All Processes are Finished
-                      </Text>
-                    ) : CurStep == state.steps.length - 1 && !state.isSafe ? (
-                      <Text style={styles.StepText}>
-                        Now, We can not move further. Hence it is Unsafe
-                      </Text>
-                    ) : (
-                      <Text style={styles.StepText}></Text>
-                    )}
-                    {!state.steps[CurStep].isFinish ? (
-                      <>
-                        <Text style={styles.StepText}> </Text>
-                        <View style={{ flexDirection: "row" }}>
-                          <Text style={styles.StepText}> </Text>
-                          <Text style={styles.StepText}> </Text>
-                        </View>
-                        <Text style={styles.StepText}> </Text>
-                      </>
-                    ) : null}
-                    <Text style={styles.instructions}></Text>
-                    <Text style={styles.instructions}>Safe Sequence:</Text>
                     <View
                       style={{
                         alignSelf: "center",
-                        marginTop: verticalScale(10),
+                        marginTop: algoHeight / 100,
                       }}
                     >
                       <FlatList
-                        style={{ maxHeight: verticalScale(45) }}
+                        style={{ maxHeight: algoHeight / 5 }}
                         data={state.steps[CurStep].safeSequence}
                         renderItem={({ item }) => (
                           <View style={styles.item}>
