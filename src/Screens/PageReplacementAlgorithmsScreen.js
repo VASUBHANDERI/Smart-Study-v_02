@@ -19,6 +19,7 @@ import { Ionicons } from "@expo/vector-icons";
 import useWindowSize from "../Hooks/useWindowSize";
 import getMediaQuery from "../Hooks/getMediaQuery";
 import { back } from "react-native/Libraries/Animated/Easing";
+import PageReplacementAlgoTheory from "../components/TheoryComponents/PageReplacementAlgoTheory";
 
 Text.defaultProps = {
   ...(Text.defaultProps || {}),
@@ -37,6 +38,9 @@ const PageReplacementAlgorithmsScreen = () => {
     getMediaQuery();
   const algoWidth = isWide ? width * 0.6 : width;
   const algoHeight = isWide ? height : height * 0.6;
+
+  const contentWidth = isWide ? width * 0.4 : width;
+  const contentHeight = isWide ? height : height * 0.4;
 
   const [loaded] = useFonts({
     Popins: require("../../public/assets/fonts/Poppins-Light.ttf"),
@@ -145,23 +149,32 @@ const PageReplacementAlgorithmsScreen = () => {
         flexDirection: isWide ? "row" : "column",
       }}
     >
-      <View style={{ flex: 4 }}>
+      <View
+        style={{
+          flex: 4,
+          borderRightColor: "grey",
+          borderBottomColor: "grey",
+          borderRightWidth: isWide ? algoWidth / 300 : 0,
+          borderBottomWidth: isWide ? 0 : algoWidth / 300,
+        }}
+      >
         <ScrollView
           contentContainerStyle={{
             alignItems: "center",
             backgroundColor: background,
-            borderRightColor: "grey",
-            borderBottomColor: "grey",
-            borderRightWidth: isWide ? algoWidth / 100 : 0,
-            borderBottomWidth: isWide ? 0 : algoWidth / 100,
+
             flex: 1,
           }}
-          showsVerticalScrollIndicator={true}
+          showsVerticalScrollIndicator={false}
         >
           <View
-            style={{ justifyContent: "center", alignItems: "center", flex: 1 }}
+            style={{
+              padding: algoWidth / 80,
+              margin: algoWidth / 50,
+              width: contentWidth,
+            }}
           >
-            <Text>Content will be available soon!</Text>
+            <PageReplacementAlgoTheory />
           </View>
         </ScrollView>
       </View>

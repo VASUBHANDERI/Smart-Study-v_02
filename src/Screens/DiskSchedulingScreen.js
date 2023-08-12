@@ -17,6 +17,7 @@ import { Context as DiskContext } from "../context/diskManagementAlgoContext";
 import useWindowSize from "../Hooks/useWindowSize";
 import getMediaQuery from "../Hooks/getMediaQuery";
 import GraphForWeb from "../components/GraphForWeb";
+import DiskSchedulingTheory from "../components/TheoryComponents/DiskSchedulingTheory";
 
 Text.defaultProps = {
   ...(Text.defaultProps || {}),
@@ -30,6 +31,9 @@ const DiskManagementScreen = () => {
     getMediaQuery();
   const algoWidth = isWide ? width * 0.6 : width;
   const algoHeight = isWide ? height : height * 0.6;
+
+  const contentWidth = isWide ? width * 0.4 : width;
+  const contentHeight = isWide ? height : height * 0.4;
 
   const styles = StyleSheet.create({
     button: {
@@ -141,23 +145,32 @@ const DiskManagementScreen = () => {
         flexDirection: isWide ? "row" : "column",
       }}
     >
-      <View style={{ flex: 4 }}>
+      <View
+        style={{
+          flex: 4,
+          borderRightColor: "grey",
+          borderBottomColor: "grey",
+          borderRightWidth: isWide ? algoWidth / 300 : 0,
+          borderBottomWidth: isWide ? 0 : algoWidth / 300,
+        }}
+      >
         <ScrollView
           contentContainerStyle={{
             alignItems: "center",
             backgroundColor: background,
-            borderRightColor: "grey",
-            borderBottomColor: "grey",
-            borderRightWidth: isWide ? algoWidth / 100 : 0,
-            borderBottomWidth: isWide ? 0 : algoWidth / 100,
+
             flex: 1,
           }}
-          showsVerticalScrollIndicator={true}
+          showsVerticalScrollIndicator={false}
         >
           <View
-            style={{ justifyContent: "center", alignItems: "center", flex: 1 }}
+            style={{
+              padding: algoWidth / 80,
+              margin: algoWidth / 50,
+              width: contentWidth,
+            }}
           >
-            <Text>Content will be available soon!</Text>
+            <DiskSchedulingTheory />
           </View>
         </ScrollView>
       </View>
@@ -376,7 +389,7 @@ const DiskManagementScreen = () => {
                                 { marginTop: -1 * (algoWidth / 53) },
                               ]}
                             >
-                              Enter Request Sequence:{" "}
+                              Enter Request Sequence:
                             </Text>
 
                             <TextInput
@@ -400,11 +413,11 @@ const DiskManagementScreen = () => {
                                 if (isNaN(inputValue)) {
                                   setInputValue("");
                                 } else if (
-                                  state.requestSequence.includes(
-                                    parseInt(inputValue)
-                                  ) ||
-                                  state.currentPosition ===
-                                    parseInt(inputValue) ||
+                                  // state.requestSequence.includes(
+                                  //   parseInt(inputValue)
+                                  // ) ||
+                                  // state.currentPosition ===
+                                  //   parseInt(inputValue) ||
                                   parseInt(inputValue) > state.totalTracks ||
                                   parseInt(inputValue) < 0
                                 ) {

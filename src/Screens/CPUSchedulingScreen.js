@@ -18,6 +18,7 @@ import PriorityAlgoScreen from "../components/PriorityAlgoScreen";
 import PrePriorityAlgoScreen from "../components/PrePriorityAlgoScreen";
 import useWindowSize from "../Hooks/useWindowSize";
 import getMediaQuery from "../Hooks/getMediaQuery";
+import CPUSchedulingTheory from "../components/TheoryComponents/CPUSchedulingTheory";
 
 const CPUSchedulingScreen = () => {
   const [width, height] = useWindowSize();
@@ -32,6 +33,9 @@ const CPUSchedulingScreen = () => {
     getMediaQuery();
   const algoWidth = isWide ? width * 0.6 : width;
   const algoHeight = isWide ? height : height * 0.6;
+
+  const contentWidth = isWide ? width * 0.4 : width;
+  const contentHeight = isWide ? height : height * 0.4;
 
   const styles = StyleSheet.create({
     selectAlgoButton: {
@@ -87,23 +91,32 @@ const CPUSchedulingScreen = () => {
         flexDirection: isWide ? "row" : "column",
       }}
     >
-      <View style={{ flex: 4 }}>
+      <View
+        style={{
+          flex: 4,
+          borderRightColor: "grey",
+          borderBottomColor: "grey",
+          borderRightWidth: isWide ? algoWidth / 300 : 0,
+          borderBottomWidth: isWide ? 0 : algoWidth / 300,
+        }}
+      >
         <ScrollView
           contentContainerStyle={{
             alignItems: "center",
             backgroundColor: background,
-            borderRightColor: "grey",
-            borderBottomColor: "grey",
-            borderRightWidth: isWide ? algoWidth / 100 : 0,
-            borderBottomWidth: isWide ? 0 : algoWidth / 100,
+
             flex: 1,
           }}
-          showsVerticalScrollIndicator={true}
+          showsVerticalScrollIndicator={false}
         >
           <View
-            style={{ justifyContent: "center", alignItems: "center", flex: 1 }}
+            style={{
+              padding: algoWidth / 80,
+              margin: algoWidth / 50,
+              width: contentWidth,
+            }}
           >
-            <Text>Content will be available soon!</Text>
+            <CPUSchedulingTheory />
           </View>
         </ScrollView>
       </View>
