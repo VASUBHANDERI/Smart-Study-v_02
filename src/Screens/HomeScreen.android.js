@@ -58,7 +58,7 @@ const HomeScreen = () => {
           </Text>
           <Text style={styles.head2}>Nagpur</Text>
         </View>
-        <Text style={styles.rights}>Copyright © 2023 SmartStudy</Text>
+        <Text style={styles.rights}>Copyright © 2025 SmartStudy</Text>
         <Text style={styles.rights1}>All rights reserved</Text>
       </View>
     </View>
