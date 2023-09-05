@@ -11,7 +11,7 @@ import { Feather } from "@expo/vector-icons";
 import { useFonts } from "expo-font";
 import { background, primary, text } from "../components/Colors";
 import { scale, verticalScale } from "react-native-size-matters";
-
+// try
 Text.defaultProps = {
   ...(Text.defaultProps || {}),
   allowFontScaling: false,
