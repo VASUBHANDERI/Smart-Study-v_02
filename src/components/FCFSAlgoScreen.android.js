@@ -19,7 +19,7 @@ import { main, primary, text, background } from "./Colors";
 import Button from "../components/Button";
 import { processColor } from "./Colors";
 import { back } from "react-native/Libraries/Animated/Easing";
-import ProgressiveBar from "./ProgressiveBar";
+import ProgressiveBar from "./ProgressiveBar.android";
 
 const FCFSAlgoScreen = () => {
   const [arrTime, setArrTime] = useState(0);
@@ -292,54 +292,60 @@ const FCFSAlgoScreen = () => {
               <Text style={styles.text}>Burst Time</Text>
             </View>
           </View>
-          <FlatList
-            style={{ alignSelf: "center", flex: 1 }}
-            data={state.FCFSprocess}
-            renderItem={({ item }) => {
-              return (
-                <View
-                  style={{
-                    ...styles.line,
-                    width: width,
-                    paddingHorizontal: scale(10),
-                  }}
-                >
-                  <View style={styles.tableBox}>
-                    <View
-                      style={{
-                        flexDirection: "row",
-                        flex: 1,
-                        alignContent: "space-around",
-                      }}
-                    >
+          <View>
+            <FlatList
+              style={{ alignSelf: "center", flex: 1 }}
+              data={state.FCFSprocess}
+              renderItem={({ item }) => {
+                return (
+                  <View
+                    style={{
+                      ...styles.line,
+                      width: width,
+                      paddingHorizontal: scale(10),
+                    }}
+                  >
+                    <View style={styles.tableBox}>
                       <View
                         style={{
-                          backgroundColor: processColor[item.id],
-                          width: scale(17),
-                          height: verticalScale(17),
-                          borderRadius: scale(7),
-                          marginHorizontal: scale(5),
-                          alignSelf: "center",
+                          flexDirection: "row",
+                          flex: 1,
+                          alignContent: "space-around",
                         }}
-                      ></View>
-                      <Text style={styles.text}>{`P${item.id}`}</Text>
+                      >
+                        <View
+                          style={{
+                            backgroundColor: processColor[item.id],
+                            width: scale(17),
+                            height: verticalScale(17),
+                            borderRadius: scale(7),
+                            marginHorizontal: scale(5),
+                            alignSelf: "center",
+                          }}
+                        ></View>
+                        <Text style={styles.text}>{`P${item.id}`}</Text>
+                      </View>
+                    </View>
+                    <View style={styles.tableBox}>
+                      <Text style={styles.text}>{item.arrTime}</Text>
+                    </View>
+                    <View style={styles.tableBox}>
+                      <Text style={styles.text}>{item.burstTime}</Text>
                     </View>
                   </View>
-                  <View style={styles.tableBox}>
-                    <Text style={styles.text}>{item.arrTime}</Text>
-                  </View>
-                  <View style={styles.tableBox}>
-                    <Text style={styles.text}>{item.burstTime}</Text>
-                  </View>
-                </View>
-              );
-            }}
-          />
+                );
+              }}
+            />
+          </View>
         </>
       ) : null}
 
       {state.FCFSshowScheduled ? (
-        <View>
+        <View
+          styles={{
+            flex: 1,
+          }}
+        >
           <Text
             style={{
               ...styles.text,
@@ -398,39 +404,41 @@ const FCFSAlgoScreen = () => {
             </View>
           </View>
           {state.FCFSisScheduled ? (
-            <FlatList
-              data={state.FCFSscheduledProcess}
-              style={{ alignSelf: "center", flex: 1 }}
-              renderItem={({ item }) => {
-                return (
-                  <View
-                    style={{
-                      ...styles.line,
-                      width: Dimensions.get("window").width * 0.95,
-                    }}
-                  >
-                    <View style={styles.tableBox}>
-                      <Text style={styles.text}>{`P${item.id}`}</Text>
+            <View>
+              <FlatList
+                data={state.FCFSscheduledProcess}
+                style={{ alignSelf: "center", flex: 1 }}
+                renderItem={({ item }) => {
+                  return (
+                    <View
+                      style={{
+                        ...styles.line,
+                        width: Dimensions.get("window").width * 0.95,
+                      }}
+                    >
+                      <View style={styles.tableBox}>
+                        <Text style={styles.text}>{`P${item.id}`}</Text>
+                      </View>
+                      <View style={styles.tableBox}>
+                        <Text style={styles.text}>{item.arrTime}</Text>
+                      </View>
+                      <View style={styles.tableBox}>
+                        <Text style={styles.text}>{item.burstTime}</Text>
+                      </View>
+                      <View style={styles.tableBox}>
+                        <Text style={styles.text}>{item.ct}</Text>
+                      </View>
+                      <View style={styles.tableBox}>
+                        <Text style={styles.text}>{item.tat}</Text>
+                      </View>
+                      <View style={styles.tableBox}>
+                        <Text style={styles.text}>{item.wt}</Text>
+                      </View>
                     </View>
-                    <View style={styles.tableBox}>
-                      <Text style={styles.text}>{item.arrTime}</Text>
-                    </View>
-                    <View style={styles.tableBox}>
-                      <Text style={styles.text}>{item.burstTime}</Text>
-                    </View>
-                    <View style={styles.tableBox}>
-                      <Text style={styles.text}>{item.ct}</Text>
-                    </View>
-                    <View style={styles.tableBox}>
-                      <Text style={styles.text}>{item.tat}</Text>
-                    </View>
-                    <View style={styles.tableBox}>
-                      <Text style={styles.text}>{item.wt}</Text>
-                    </View>
-                  </View>
-                );
-              }}
-            />
+                  );
+                }}
+              />
+            </View>
           ) : null}
         </View>
       ) : null}

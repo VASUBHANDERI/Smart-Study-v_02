@@ -16,7 +16,7 @@ import Button from "../components/Button";
 import { Context as DiskContext } from "../context/diskManagementAlgoContext";
 import useWindowSize from "../Hooks/useWindowSize";
 import getMediaQuery from "../Hooks/getMediaQuery";
-import GraphForWeb from "../components/GraphForWeb";
+import Graph from "../components/Graph";
 import DiskSchedulingTheory from "../components/TheoryComponents/DiskSchedulingTheory";
 
 Text.defaultProps = {
@@ -83,7 +83,7 @@ const DiskManagementScreen = () => {
       marginHorizontal: algoWidth / 100,
       marginVertical: algoWidth / 100,
       borderRadius: algoWidth / 100,
-      borderColor: main,
+      borderColor: background,
       borderWidth: algoWidth / 300,
       paddingVertical: algoWidth / 100,
       paddingHorizontal: algoWidth / 53,
@@ -1028,10 +1028,10 @@ const DiskManagementScreen = () => {
                   borderWidth: 2,
                 }}
               >
-                <GraphForWeb2 />
+                <Graph2 />
               </View> */}
 
-                <GraphForWeb />
+                <Graph />
               </>
             ) : null}
           </View>

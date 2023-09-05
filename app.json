@@ -21,11 +21,17 @@
       "adaptiveIcon": {
         "foregroundImage": "./public/assets/adaptive-icon.png",
         "backgroundColor": "#F4F1DE"
-      }
+      },
+      "package": "com.vasu_002.SmartStudy"
     },
     "web": {
       "bundler": "metro",
       "favicon": "./public/assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "7e8e0abb-9b16-4416-8d1e-02c8a204c9b7"
+      }
     }
   }
 }

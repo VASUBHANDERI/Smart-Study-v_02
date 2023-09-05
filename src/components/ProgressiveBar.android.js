@@ -5,8 +5,7 @@ import { Context as AlgoContext } from "../context/schedulingAlgoContext";
 import { scale, verticalScale, moderateScale } from "react-native-size-matters";
 import useWindowSize from "../Hooks/useWindowSize";
 import getMediaQuery from "../Hooks/getMediaQuery";
-const Bar = ({ isScheduled, type }) => {
-  const { state } = useContext(AlgoContext);
+const ProgressiveBar = ({ isScheduled, curTime, type }) => {
   const [width, height] = useWindowSize();
 
   const [isMobileWidth, isTabletWidth, isDesktopWidth, isWide] =
@@ -14,25 +13,30 @@ const Bar = ({ isScheduled, type }) => {
   const algoWidth = isWide ? width * 0.6 : width;
   const algoHeight = isWide ? height : height * 0.6;
 
+  const { state } = useContext(AlgoContext);
   if (type == "FCFS") {
     const n = state.FCFStimeLine.length;
     return (
       <View style={{ alignSelf: "center", height: algoWidth / 6 }}>
         {isScheduled ? (
           <FlatList
-            data={state.FCFSgroupedTimeLine}
+            data={state.FCFStimeLine}
             horizontal
             showsHorizontalScrollIndicator={false}
             renderItem={({ item, index }) => {
-              const backgroundColor =
-                item[0] === -1 ? "#ffffff" : processColor[item[0]];
+              if (index <= curTime) {
+                var backgroundColor =
+                  item === -1 ? "#ffffff" : processColor[item];
+              } else {
+                var backgroundColor = "grey";
+              }
 
               return (
                 <View>
                   <View
                     style={{
                       backgroundColor: backgroundColor,
-                      width: ((algoWidth * 0.9) / n) * item.length,
+                      width: (algoWidth * 0.9) / n,
                       height: algoWidth / 10,
                       flexDirection: "row",
                       justifyContent: "center",
@@ -43,7 +47,7 @@ const Bar = ({ isScheduled, type }) => {
                     <>
                       <View
                         style={{
-                          width: ((algoWidth * 0.9) / n) * item.length,
+                          width: (algoWidth * 0.9) / n,
                           flexDirection: "row",
                           justifyContent: "space-between",
                           alignItems: "center",
@@ -63,14 +67,14 @@ const Bar = ({ isScheduled, type }) => {
                             fontSize: algoWidth / 53,
                           }}
                         >
-                          {state.FCFStimeIndex[index]}
+                          1
                         </Text>
                       </View>
                     </>
                   ) : (
                     <View
                       style={{
-                        width: ((algoWidth * 0.9) / n) * item.length,
+                        width: (algoWidth * 0.9) / n,
                         flexDirection: "row",
                         justifyContent: "flex-end",
                         alignItems: "center",
@@ -82,7 +86,7 @@ const Bar = ({ isScheduled, type }) => {
                           fontSize: algoWidth / 53,
                         }}
                       >
-                        {state.FCFStimeIndex[index]}
+                        {index + 1}
                       </Text>
                     </View>
                   )}
@@ -102,25 +106,29 @@ const Bar = ({ isScheduled, type }) => {
         )}
       </View>
     );
-  } else if (type == "SJF") {
+  } else if (type === "SJF") {
     const n = state.SJFtimeLine.length;
     return (
       <View style={{ alignSelf: "center", height: algoWidth / 6 }}>
         {isScheduled ? (
           <FlatList
-            data={state.SJFgroupedTimeLine}
+            data={state.SJFtimeLine}
             horizontal
             showsHorizontalScrollIndicator={false}
             renderItem={({ item, index }) => {
-              const backgroundColor =
-                item[0] === -1 ? "#ffffff" : processColor[item[0]];
+              if (index <= curTime) {
+                var backgroundColor =
+                  item === -1 ? "#ffffff" : processColor[item];
+              } else {
+                var backgroundColor = "grey";
+              }
 
               return (
                 <View>
                   <View
                     style={{
                       backgroundColor: backgroundColor,
-                      width: ((algoWidth * 0.9) / n) * item.length,
+                      width: (algoWidth * 0.9) / n,
                       height: algoWidth / 10,
                       flexDirection: "row",
                       justifyContent: "center",
@@ -131,7 +139,7 @@ const Bar = ({ isScheduled, type }) => {
                     <>
                       <View
                         style={{
-                          width: ((algoWidth * 0.9) / n) * item.length,
+                          width: (algoWidth * 0.9) / n,
                           flexDirection: "row",
                           justifyContent: "space-between",
                           alignItems: "center",
@@ -151,14 +159,14 @@ const Bar = ({ isScheduled, type }) => {
                             fontSize: algoWidth / 53,
                           }}
                         >
-                          {state.SJFtimeIndex[index]}
+                          1
                         </Text>
                       </View>
                     </>
                   ) : (
                     <View
                       style={{
-                        width: ((algoWidth * 0.9) / n) * item.length,
+                        width: (algoWidth * 0.9) / n,
                         flexDirection: "row",
                         justifyContent: "flex-end",
                         alignItems: "center",
@@ -170,7 +178,7 @@ const Bar = ({ isScheduled, type }) => {
                           fontSize: algoWidth / 53,
                         }}
                       >
-                        {state.SJFtimeIndex[index]}
+                        {index + 1}
                       </Text>
                     </View>
                   )}
@@ -190,25 +198,29 @@ const Bar = ({ isScheduled, type }) => {
         )}
       </View>
     );
-  } else if (type == "PR") {
+  } else if (type === "PR") {
     const n = state.PRtimeLine.length;
     return (
       <View style={{ alignSelf: "center", height: algoWidth / 6 }}>
         {isScheduled ? (
           <FlatList
-            data={state.PRgroupedTimeLine}
+            data={state.PRtimeLine}
             horizontal
             showsHorizontalScrollIndicator={false}
             renderItem={({ item, index }) => {
-              const backgroundColor =
-                item[0] === -1 ? "#ffffff" : processColor[item[0]];
+              if (index <= curTime) {
+                var backgroundColor =
+                  item === -1 ? "#ffffff" : processColor[item];
+              } else {
+                var backgroundColor = "grey";
+              }
 
               return (
                 <View>
                   <View
                     style={{
                       backgroundColor: backgroundColor,
-                      width: ((algoWidth * 0.9) / n) * item.length,
+                      width: (algoWidth * 0.9) / n,
                       height: algoWidth / 10,
                       flexDirection: "row",
                       justifyContent: "center",
@@ -219,7 +231,7 @@ const Bar = ({ isScheduled, type }) => {
                     <>
                       <View
                         style={{
-                          width: ((algoWidth * 0.9) / n) * item.length,
+                          width: (algoWidth * 0.9) / n,
                           flexDirection: "row",
                           justifyContent: "space-between",
                           alignItems: "center",
@@ -239,14 +251,14 @@ const Bar = ({ isScheduled, type }) => {
                             fontSize: algoWidth / 53,
                           }}
                         >
-                          {state.PRtimeIndex[index]}
+                          1
                         </Text>
                       </View>
                     </>
                   ) : (
                     <View
                       style={{
-                        width: ((algoWidth * 0.9) / n) * item.length,
+                        width: (algoWidth * 0.9) / n,
                         flexDirection: "row",
                         justifyContent: "flex-end",
                         alignItems: "center",
@@ -258,7 +270,7 @@ const Bar = ({ isScheduled, type }) => {
                           fontSize: algoWidth / 53,
                         }}
                       >
-                        {state.PRtimeIndex[index]}
+                        {index + 1}
                       </Text>
                     </View>
                   )}
@@ -278,25 +290,29 @@ const Bar = ({ isScheduled, type }) => {
         )}
       </View>
     );
-  } else if (type == "SRTF") {
+  } else if (type === "SRTF") {
     const n = state.SRTFtimeLine.length;
     return (
       <View style={{ alignSelf: "center", height: algoWidth / 6 }}>
         {isScheduled ? (
           <FlatList
-            data={state.SRTFgroupedTimeLine}
+            data={state.SRTFtimeLine}
             horizontal
             showsHorizontalScrollIndicator={false}
             renderItem={({ item, index }) => {
-              const backgroundColor =
-                item[0] === -1 ? "#ffffff" : processColor[item[0]];
+              if (index <= curTime) {
+                var backgroundColor =
+                  item === -1 ? "#ffffff" : processColor[item];
+              } else {
+                var backgroundColor = "grey";
+              }
 
               return (
                 <View>
                   <View
                     style={{
                       backgroundColor: backgroundColor,
-                      width: ((algoWidth * 0.9) / n) * item.length,
+                      width: (algoWidth * 0.9) / n,
                       height: algoWidth / 10,
                       flexDirection: "row",
                       justifyContent: "center",
@@ -307,7 +323,7 @@ const Bar = ({ isScheduled, type }) => {
                     <>
                       <View
                         style={{
-                          width: ((algoWidth * 0.9) / n) * item.length,
+                          width: (algoWidth * 0.9) / n,
                           flexDirection: "row",
                           justifyContent: "space-between",
                           alignItems: "center",
@@ -327,14 +343,14 @@ const Bar = ({ isScheduled, type }) => {
                             fontSize: algoWidth / 53,
                           }}
                         >
-                          {state.SRTFtimeIndex[index]}
+                          1
                         </Text>
                       </View>
                     </>
                   ) : (
                     <View
                       style={{
-                        width: ((algoWidth * 0.9) / n) * item.length,
+                        width: (algoWidth * 0.9) / n,
                         flexDirection: "row",
                         justifyContent: "flex-end",
                         alignItems: "center",
@@ -346,7 +362,7 @@ const Bar = ({ isScheduled, type }) => {
                           fontSize: algoWidth / 53,
                         }}
                       >
-                        {state.SRTFtimeIndex[index]}
+                        {index + 1}
                       </Text>
                     </View>
                   )}
@@ -366,25 +382,29 @@ const Bar = ({ isScheduled, type }) => {
         )}
       </View>
     );
-  } else if (type == "PrePR") {
+  } else if (type === "PrePR") {
     const n = state.PrePRtimeLine.length;
     return (
       <View style={{ alignSelf: "center", height: algoWidth / 6 }}>
         {isScheduled ? (
           <FlatList
-            data={state.PrePRgroupedTimeLine}
+            data={state.PrePRtimeLine}
             horizontal
             showsHorizontalScrollIndicator={false}
             renderItem={({ item, index }) => {
-              const backgroundColor =
-                item[0] === -1 ? "#ffffff" : processColor[item[0]];
+              if (index <= curTime) {
+                var backgroundColor =
+                  item === -1 ? "#ffffff" : processColor[item];
+              } else {
+                var backgroundColor = "grey";
+              }
 
               return (
                 <View>
                   <View
                     style={{
                       backgroundColor: backgroundColor,
-                      width: ((algoWidth * 0.9) / n) * item.length,
+                      width: (algoWidth * 0.9) / n,
                       height: algoWidth / 10,
                       flexDirection: "row",
                       justifyContent: "center",
@@ -395,7 +415,7 @@ const Bar = ({ isScheduled, type }) => {
                     <>
                       <View
                         style={{
-                          width: ((algoWidth * 0.9) / n) * item.length,
+                          width: (algoWidth * 0.9) / n,
                           flexDirection: "row",
                           justifyContent: "space-between",
                           alignItems: "center",
@@ -415,14 +435,14 @@ const Bar = ({ isScheduled, type }) => {
                             fontSize: algoWidth / 53,
                           }}
                         >
-                          {state.PrePRtimeIndex[index]}
+                          1
                         </Text>
                       </View>
                     </>
                   ) : (
                     <View
                       style={{
-                        width: ((algoWidth * 0.9) / n) * item.length,
+                        width: (algoWidth * 0.9) / n,
                         flexDirection: "row",
                         justifyContent: "flex-end",
                         alignItems: "center",
@@ -434,7 +454,7 @@ const Bar = ({ isScheduled, type }) => {
                           fontSize: algoWidth / 53,
                         }}
                       >
-                        {state.PrePRtimeIndex[index]}
+                        {index + 1}
                       </Text>
                     </View>
                   )}
@@ -457,6 +477,6 @@ const Bar = ({ isScheduled, type }) => {
   }
 };
 
-export default Bar;
+export default ProgressiveBar;
 
 const styles = StyleSheet.create({});

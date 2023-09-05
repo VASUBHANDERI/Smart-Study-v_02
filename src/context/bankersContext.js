@@ -30,14 +30,18 @@ const algoReducer = (state, action) => {
       console.log("Need :", need);
 
       // Step 3: Run the Banker's algorithm logic
-
+      var isWorkValid = true;
       const work = [];
       for (let i = 0; i < numResources; i++) {
         let sum = 0;
         for (let j = 0; j < numProcesses; j++) {
           sum = parseInt(sum) + parseInt(allocation[j][i]);
         }
-        work.push(totalResources[0][i] - sum);
+        if (totalResources[0][i] - sum < 0) {
+          isWorkValid = false;
+        } else {
+          work.push(totalResources[0][i] - sum);
+        }
       }
 
       const finish = Array(numProcesses).fill(false);
@@ -121,7 +125,6 @@ const algoReducer = (state, action) => {
             }
           }
         }
-
         return true;
       };
       // Step 4: Update the state with the results
@@ -133,7 +136,7 @@ const algoReducer = (state, action) => {
       // Determine if the system is safe or unsafe
       state.isSafe = count === numProcesses;
       state.isSubmitted = true;
-      state.isValidMatrix = isInputValid();
+      state.isValidMatrix = isInputValid() && isWorkValid;
       console.log("available:", state.available);
       console.log("safesequence:", state.safeSequence);
       console.log("isSafe:", state.isSafe);
@@ -164,6 +167,6 @@ export const { Context, Provider } = createDataContext(
     steps: [],
     isSubmitted: false,
     isValidMatrix: true,
-    need:[]
+    need: [],
   }
 );

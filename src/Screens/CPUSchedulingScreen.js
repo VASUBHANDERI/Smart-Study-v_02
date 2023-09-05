@@ -57,7 +57,7 @@ const CPUSchedulingScreen = () => {
     notSelectAlgoButton: {
       marginHorizontal: scale(2),
       borderRadius: scale(5),
-      borderColor: main,
+      borderColor: background,
       borderWidth: scale(1),
       paddingVertical: algoHeight / 100,
       paddingHorizontal: algoHeight / 53,
