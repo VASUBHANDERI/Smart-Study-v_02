@@ -13,9 +13,9 @@ const authReducer = (state, action) => {
     case "add_error":
       return { ...state, errorMessage: action.payload };
     case "authenticate":
-      return { token: action.payload, errorMessage: "" };
+      return { token: action.payload, errorMessage: "", isLoggedIn: true };
     case "signout":
-      return { token: null, errorMessage: "" };
+      return { token: null, errorMessage: "", isLoggedIn: false };
     default:
       return state;
   }
@@ -26,6 +26,7 @@ const tryLocalAuth = (dispatch) => async () => {
   if (token) {
     dispatch({ type: "authenticate", payload: token });
   } else {
+    dispatch({ type: "signout" });
   }
 };
 const clearErrorMessage = (dispatch) => () => {
@@ -60,9 +61,12 @@ const signin =
         email,
         password,
       });
-      setAuthToken(response.data.accessToken);
-      await AsyncStorage.setItem("token", response.data.accessToken);
-      dispatch({ type: "authenticate", payload: response.data.accessToken });
+      if (response) {
+        setAuthToken(response.data.accessToken);
+        await AsyncStorage.setItem("token", response.data.accessToken);
+        console.log(response.data.accessToken);
+        dispatch({ type: "authenticate", payload: response.data.accessToken });
+      }
     } catch (e) {
       dispatch({
         type: "add_error",
@@ -80,5 +84,5 @@ const signout = (dispatch) => async () => {
 export const { Context, Provider } = createDataContext(
   authReducer,
   { signin, signout, signup, clearErrorMessage, tryLocalAuth },
-  { token: null, errorMessage: "" }
+  { token: null, errorMessage: "", isLoggedIn: false }
 );

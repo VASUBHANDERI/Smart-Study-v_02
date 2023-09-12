@@ -1,15 +1,11 @@
-import {
-  StyleSheet,
-  Text,
-  View,
-  Image,
-} from "react-native";
-import React from "react";
+import { StyleSheet, Text, View, Image, Button } from "react-native";
+import React, { useContext } from "react";
 import { background, main, main50, primary } from "../components/Colors";
 import { useFonts } from "expo-font";
 import { Entypo } from "@expo/vector-icons";
-import { scale} from "react-native-size-matters";
+import { scale } from "react-native-size-matters";
 import getMediaQuery from "../Hooks/getMediaQuery";
+import { Context as AuthContext } from "../context/authContext";
 
 Text.defaultProps = {
   ...(Text.defaultProps || {}),
@@ -18,6 +14,7 @@ Text.defaultProps = {
 
 const HomeScreen = () => {
   const [isMobileWidth, isTabletWidth, isDesktopWidth] = getMediaQuery();
+  const { signout } = useContext(AuthContext);
 
   const styles = StyleSheet.create({
     heading: {
@@ -122,6 +119,7 @@ const HomeScreen = () => {
           flex: 1,
         }}
       >
+        <Button title="Logout" onPress={signout} />
         <View
           style={{
             justifyContent: "center",
