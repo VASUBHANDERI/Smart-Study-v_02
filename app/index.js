@@ -3,11 +3,13 @@ import HomeScreen from "../src/Screens/HomeScreen";
 import { Context as AuthContext } from "../src/context/authContext";
 import Head from "expo-router/head";
 import LoginScreen from "../src/Screens/LogInScreen";
+import AuthStack from "../src/Screens/AuthFlow";
 
 export default function Page() {
   const {
     state: { isLoggedIn },
-    tryLocalAuth,signout
+    tryLocalAuth,
+    signout,
   } = useContext(AuthContext);
 
   useEffect(() => {
@@ -20,7 +22,7 @@ export default function Page() {
         <title>Smart Study</title>
         <link rel="shortcut icon" href="../public/assets/favicon.png" />
       </Head> */}
-      {isLoggedIn?<HomeScreen />:<LoginScreen/>}
+      {isLoggedIn ? <HomeScreen /> : <AuthStack />}
     </>
   );
 }

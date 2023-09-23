@@ -39,6 +39,7 @@ const Flow = () => {
   const {
     state: { isLoggedIn },
     tryLocalAuth,
+    signout,
   } = useContext(AuthContext);
 
   useEffect(() => {
@@ -137,6 +138,21 @@ const Flow = () => {
                         </TouchableOpacity>
                       );
                     },
+                    headerRight: () => {
+                      return (
+                        <TouchableOpacity onPress={signout}>
+                          <Entypo
+                            name="log-out"
+                            size={isWeb ? scale(15) : scale(50)}
+                            color={background}
+                            style={{
+                              marginRight: scale(10),
+                              marginLeft: isWeb ? scale(10) : scale(20),
+                            }}
+                          />
+                        </TouchableOpacity>
+                      );
+                    },
                   }}
                 />
                 <Drawer.Screen
@@ -168,6 +184,21 @@ const Flow = () => {
                             color={background}
                             style={{
                               marginRight: scale(5),
+                              marginLeft: isWeb ? scale(10) : scale(20),
+                            }}
+                          />
+                        </TouchableOpacity>
+                      );
+                    },
+                    headerRight: () => {
+                      return (
+                        <TouchableOpacity onPress={signout}>
+                          <Entypo
+                            name="log-out"
+                            size={isWeb ? scale(15) : scale(50)}
+                            color={background}
+                            style={{
+                              marginRight: scale(10),
                               marginLeft: isWeb ? scale(10) : scale(20),
                             }}
                           />
@@ -211,6 +242,21 @@ const Flow = () => {
                         </TouchableOpacity>
                       );
                     },
+                    headerRight: () => {
+                      return (
+                        <TouchableOpacity onPress={signout}>
+                          <Entypo
+                            name="log-out"
+                            size={isWeb ? scale(15) : scale(50)}
+                            color={background}
+                            style={{
+                              marginRight: scale(10),
+                              marginLeft: isWeb ? scale(10) : scale(20),
+                            }}
+                          />
+                        </TouchableOpacity>
+                      );
+                    },
                   }}
                 />
                 <Drawer.Screen
@@ -242,6 +288,21 @@ const Flow = () => {
                             color={background}
                             style={{
                               marginRight: scale(5),
+                              marginLeft: isWeb ? scale(10) : scale(20),
+                            }}
+                          />
+                        </TouchableOpacity>
+                      );
+                    },
+                    headerRight: () => {
+                      return (
+                        <TouchableOpacity onPress={signout}>
+                          <Entypo
+                            name="log-out"
+                            size={isWeb ? scale(15) : scale(50)}
+                            color={background}
+                            style={{
+                              marginRight: scale(10),
                               marginLeft: isWeb ? scale(10) : scale(20),
                             }}
                           />
@@ -285,6 +346,21 @@ const Flow = () => {
                         </TouchableOpacity>
                       );
                     },
+                    headerRight: () => {
+                      return (
+                        <TouchableOpacity onPress={signout}>
+                          <Entypo
+                            name="log-out"
+                            size={isWeb ? scale(15) : scale(50)}
+                            color={background}
+                            style={{
+                              marginRight: scale(10),
+                              marginLeft: isWeb ? scale(10) : scale(20),
+                            }}
+                          />
+                        </TouchableOpacity>
+                      );
+                    },
                   }}
                 />
                 <Drawer.Screen
@@ -322,6 +398,21 @@ const Flow = () => {
                         </TouchableOpacity>
                       );
                     },
+                    headerRight: () => {
+                      return (
+                        <TouchableOpacity onPress={signout}>
+                          <Entypo
+                            name="log-out"
+                            size={isWeb ? scale(15) : scale(50)}
+                            color={background}
+                            style={{
+                              marginRight: scale(10),
+                              marginLeft: isWeb ? scale(10) : scale(20),
+                            }}
+                          />
+                        </TouchableOpacity>
+                      );
+                    },
                   }}
                 />
               </Drawer>
@@ -331,7 +422,40 @@ const Flow = () => {
       </PageProvider>
     );
   } else {
-    return <Stack />;
+    return (
+      <Stack>
+        <Stack.Screen
+          name="index"
+          options={{
+            title: "Smart Study",
+            drawerIcon: () => (
+              <Entypo
+                name="home"
+                size={isWeb ? scale(18) : scale(24)}
+                color={main}
+                style={{ marginLeft: isWeb ? scale(10) : scale(15) }}
+              />
+            ),
+            headerTintColor: background,
+            headerTitleStyle: styles.headerTitleStyle,
+            headerStyle: styles.headerStyle,
+            headerLeft: () => {
+              return (
+                <Entypo
+                  name="network"
+                  size={isWeb ? scale(30) : scale(50)}
+                  color={background}
+                  style={{
+                    marginRight: scale(5),
+                    marginLeft: isWeb ? scale(10) : scale(20),
+                  }}
+                />
+              );
+            },
+          }}
+        />
+      </Stack>
+    );
   }
 };
 

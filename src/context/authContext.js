@@ -5,6 +5,7 @@ import {
   setAuthToken,
 } from "../API/spectraStudyAPI";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import getError from "../Hooks/getError";
 
 const authReducer = (state, action) => {
   switch (action.type) {
@@ -46,10 +47,10 @@ const signup =
       await AsyncStorage.setItem("token", response.data.accessToken);
       dispatch({ type: "authenticate", payload: response.data.accessToken });
     } catch (e) {
-      dispatch({
-        type: "add_error",
-        payload: "Something Went Wrong With Sign Up",
-      });
+     dispatch({
+       type: "add_error",
+       payload: getError(e.message),
+     });
     }
   };
 
@@ -68,9 +69,10 @@ const signin =
         dispatch({ type: "authenticate", payload: response.data.accessToken });
       }
     } catch (e) {
+      console.log(e);
       dispatch({
         type: "add_error",
-        payload: "Something Went Wrong With Sign In",
+        payload: getError(e.message),
       });
     }
   };

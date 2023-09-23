@@ -119,7 +119,6 @@ const HomeScreen = () => {
           flex: 1,
         }}
       >
-        <Button title="Logout" onPress={signout} />
         <View
           style={{
             justifyContent: "center",
