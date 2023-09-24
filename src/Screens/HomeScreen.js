@@ -1,11 +1,19 @@
-import { StyleSheet, Text, View, Image, Button } from "react-native";
-import React, { useContext } from "react";
+import {
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  Button,
+  TouchableOpacity,
+} from "react-native";
+import React, { useContext, useState } from "react";
 import { background, main, main50, primary } from "../components/Colors";
 import { useFonts } from "expo-font";
-import { Entypo } from "@expo/vector-icons";
+import { Entypo, FontAwesome5 } from "@expo/vector-icons";
 import { scale } from "react-native-size-matters";
 import getMediaQuery from "../Hooks/getMediaQuery";
 import { Context as AuthContext } from "../context/authContext";
+import InterviewModal from "../components/InterviewModal";
 
 Text.defaultProps = {
   ...(Text.defaultProps || {}),
@@ -14,8 +22,12 @@ Text.defaultProps = {
 
 const HomeScreen = () => {
   const [isMobileWidth, isTabletWidth, isDesktopWidth] = getMediaQuery();
-  const { signout } = useContext(AuthContext);
+  const [isModalVisible, setModalVisible] = useState(false);
 
+  const { signout } = useContext(AuthContext);
+  const toggleModal = () => {
+    setModalVisible(!isModalVisible);
+  };
   const styles = StyleSheet.create({
     heading: {
       fontFamily: "Popins",
@@ -31,7 +43,17 @@ const HomeScreen = () => {
       color: primary,
       marginLeft: scale(5),
     },
-
+    modalButton: {
+      position: "absolute",
+      bottom: 20,
+      right: 20,
+      backgroundColor: main,
+      borderRadius: 50,
+      width: 60,
+      height: 60,
+      justifyContent: "center",
+      alignItems: "center",
+    },
     head1: {
       fontFamily: "Popins",
       fontSize: isMobileWidth
@@ -201,6 +223,13 @@ const HomeScreen = () => {
           </View>
           <Text style={styles.rights}>Copyright © 2023 SmartStudy</Text>
           <Text style={styles.rights1}>All rights reserved</Text>
+          <TouchableOpacity onPress={toggleModal} style={styles.modalButton}>
+          <FontAwesome5 name="chalkboard-teacher" size={24} color={background} />
+          </TouchableOpacity>
+
+          {/* Interview Modal */}
+          
+          <InterviewModal isVisible={isModalVisible} closeModal={toggleModal} />
         </View>
       </View>
     </View>
