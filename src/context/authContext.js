@@ -43,18 +43,13 @@ const authReducer = (state, action) => {
 const tryLocalAuth = (dispatch) => async () => {
   // dispatch({ type: "set_loading", payload: true });
   const token = await AsyncStorage.getItem("token");
+  const username = await AsyncStorage.getItem("username");
   if (token) {
-    try {
-      dispatch({ type: "authenticate", payload: token });
-      const response = await apiInstance.get("/api/users/current"); // Fetch user data
-      dispatch({
-        type: "localAuth",
-        payload: { token, username: response.data.username }, // Include username
-      });
-    } catch (error) {
-      console.log(error);
-      dispatch({ type: "signout" });
-    }
+    // dispatch({ type: "authenticate", payload: token });
+    dispatch({
+      type: "localAuth",
+      payload: { token, username: username }, // Include username
+    });
   } else {
     dispatch({ type: "signout" });
   }
@@ -75,6 +70,12 @@ const signup =
       });
       setAuthToken(response.data.accessToken);
       await AsyncStorage.setItem("token", response.data.accessToken);
+      try {
+        const response1 = await apiInstance.get("/api/users/current"); // Fetch user data
+        await AsyncStorage.setItem("username", response1.data.username);
+      } catch (error) {
+        console.log(error);
+      }
       dispatch({ type: "authenticate", payload: response.data.accessToken });
     } catch (e) {
       dispatch({
@@ -97,6 +98,12 @@ const signin =
       if (response) {
         setAuthToken(response.data.accessToken);
         await AsyncStorage.setItem("token", response.data.accessToken);
+        try {
+          const response1 = await apiInstance.get("/api/users/current"); // Fetch user data
+          await AsyncStorage.setItem("username", response1.data.username);
+        } catch (error) {
+          console.log(error);
+        }
         console.log(response.data.accessToken);
         dispatch({ type: "authenticate", payload: response.data.accessToken });
       }
@@ -113,6 +120,7 @@ const signin =
 const signout = (dispatch) => async () => {
   dispatch({ type: "set_loading", payload: false });
   await AsyncStorage.removeItem("token");
+  await AsyncStorage.removeItem("username");
   resetAuthToken();
   dispatch({ type: "signout" });
 };
