@@ -30,6 +30,7 @@ import {
 } from "../src/context/authContext";
 import { Provider as CommandProvider } from "../src/context/commandsContext";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { StatusBar } from "expo-status-bar";
 
 const isWeb = Platform.OS === "web";
 
@@ -655,6 +656,7 @@ const Flow = () => {
                     }}
                   />
                 </Drawer>
+                <StatusBar style="light" />
               </BankersAlgoProvider>
             </SchedulingAlgoProvider>
           </DiskManagementProvider>
