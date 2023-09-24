@@ -28,6 +28,7 @@ import {
   Provider as AuthProvider,
   Context as AuthContext,
 } from "../src/context/authContext";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const isWeb = Platform.OS === "web";
 
@@ -37,7 +38,7 @@ const Flow = () => {
   });
 
   const {
-    state: { isLoggedIn },
+    state: { isLoggedIn, username },
     tryLocalAuth,
     signout,
   } = useContext(AuthContext);
@@ -45,7 +46,6 @@ const Flow = () => {
   useEffect(() => {
     tryLocalAuth();
   }, []);
-  console.log("is logged in", isLoggedIn);
   if (!loaded) {
     return null;
   }
@@ -140,17 +140,30 @@ const Flow = () => {
                     },
                     headerRight: () => {
                       return (
-                        <TouchableOpacity onPress={signout}>
-                          <Entypo
-                            name="log-out"
-                            size={isWeb ? scale(15) : scale(50)}
-                            color={background}
+                        <View
+                          style={{ flexDirection: "row", alignItems: "center" }}
+                        >
+                          <Text
                             style={{
-                              marginRight: scale(10),
-                              marginLeft: isWeb ? scale(10) : scale(20),
+                              color: background,
+                              fontSize: scale(10),
+                              fontWeight: "bold",
                             }}
-                          />
-                        </TouchableOpacity>
+                          >
+                            {username}
+                          </Text>
+                          <TouchableOpacity onPress={signout}>
+                            <Entypo
+                              name="log-out"
+                              size={isWeb ? scale(15) : scale(20)}
+                              color={background}
+                              style={{
+                                marginRight: scale(10),
+                                marginLeft: isWeb ? scale(10) : scale(5),
+                              }}
+                            />
+                          </TouchableOpacity>
+                        </View>
                       );
                     },
                   }}
@@ -191,19 +204,40 @@ const Flow = () => {
                       );
                     },
                     headerRight: () => {
-                      return (
-                        <TouchableOpacity onPress={signout}>
-                          <Entypo
-                            name="log-out"
-                            size={isWeb ? scale(15) : scale(50)}
-                            color={background}
+                      if (isWeb) {
+                        return (
+                          <View
                             style={{
-                              marginRight: scale(10),
-                              marginLeft: isWeb ? scale(10) : scale(20),
+                              flexDirection: "row",
+                              alignItems: "center",
                             }}
-                          />
-                        </TouchableOpacity>
-                      );
+                          >
+                            <Text
+                              style={{
+                                color: background,
+                                fontSize: scale(10),
+                                fontWeight: "bold",
+                              }}
+                            >
+                              {username}
+                            </Text>
+
+                            <TouchableOpacity onPress={signout}>
+                              <Entypo
+                                name="log-out"
+                                size={isWeb ? scale(15) : scale(20)}
+                                color={background}
+                                style={{
+                                  marginRight: scale(10),
+                                  marginLeft: isWeb ? scale(10) : scale(5),
+                                }}
+                              />
+                            </TouchableOpacity>
+                          </View>
+                        );
+                      } else {
+                        return null;
+                      }
                     },
                   }}
                 />
@@ -243,19 +277,40 @@ const Flow = () => {
                       );
                     },
                     headerRight: () => {
-                      return (
-                        <TouchableOpacity onPress={signout}>
-                          <Entypo
-                            name="log-out"
-                            size={isWeb ? scale(15) : scale(50)}
-                            color={background}
+                      if (isWeb) {
+                        return (
+                          <View
                             style={{
-                              marginRight: scale(10),
-                              marginLeft: isWeb ? scale(10) : scale(20),
+                              flexDirection: "row",
+                              alignItems: "center",
                             }}
-                          />
-                        </TouchableOpacity>
-                      );
+                          >
+                            <Text
+                              style={{
+                                color: background,
+                                fontSize: scale(10),
+                                fontWeight: "bold",
+                              }}
+                            >
+                              {username}
+                            </Text>
+
+                            <TouchableOpacity onPress={signout}>
+                              <Entypo
+                                name="log-out"
+                                size={isWeb ? scale(15) : scale(20)}
+                                color={background}
+                                style={{
+                                  marginRight: scale(10),
+                                  marginLeft: isWeb ? scale(10) : scale(5),
+                                }}
+                              />
+                            </TouchableOpacity>
+                          </View>
+                        );
+                      } else {
+                        return null;
+                      }
                     },
                   }}
                 />
@@ -295,19 +350,40 @@ const Flow = () => {
                       );
                     },
                     headerRight: () => {
-                      return (
-                        <TouchableOpacity onPress={signout}>
-                          <Entypo
-                            name="log-out"
-                            size={isWeb ? scale(15) : scale(50)}
-                            color={background}
+                      if (isWeb) {
+                        return (
+                          <View
                             style={{
-                              marginRight: scale(10),
-                              marginLeft: isWeb ? scale(10) : scale(20),
+                              flexDirection: "row",
+                              alignItems: "center",
                             }}
-                          />
-                        </TouchableOpacity>
-                      );
+                          >
+                            <Text
+                              style={{
+                                color: background,
+                                fontSize: scale(10),
+                                fontWeight: "bold",
+                              }}
+                            >
+                              {username}
+                            </Text>
+
+                            <TouchableOpacity onPress={signout}>
+                              <Entypo
+                                name="log-out"
+                                size={isWeb ? scale(15) : scale(20)}
+                                color={background}
+                                style={{
+                                  marginRight: scale(10),
+                                  marginLeft: isWeb ? scale(10) : scale(5),
+                                }}
+                              />
+                            </TouchableOpacity>
+                          </View>
+                        );
+                      } else {
+                        return null;
+                      }
                     },
                   }}
                 />
@@ -347,19 +423,40 @@ const Flow = () => {
                       );
                     },
                     headerRight: () => {
-                      return (
-                        <TouchableOpacity onPress={signout}>
-                          <Entypo
-                            name="log-out"
-                            size={isWeb ? scale(15) : scale(50)}
-                            color={background}
+                      if (isWeb) {
+                        return (
+                          <View
                             style={{
-                              marginRight: scale(10),
-                              marginLeft: isWeb ? scale(10) : scale(20),
+                              flexDirection: "row",
+                              alignItems: "center",
                             }}
-                          />
-                        </TouchableOpacity>
-                      );
+                          >
+                            <Text
+                              style={{
+                                color: background,
+                                fontSize: scale(10),
+                                fontWeight: "bold",
+                              }}
+                            >
+                              {username}
+                            </Text>
+
+                            <TouchableOpacity onPress={signout}>
+                              <Entypo
+                                name="log-out"
+                                size={isWeb ? scale(15) : scale(20)}
+                                color={background}
+                                style={{
+                                  marginRight: scale(10),
+                                  marginLeft: isWeb ? scale(10) : scale(5),
+                                }}
+                              />
+                            </TouchableOpacity>
+                          </View>
+                        );
+                      } else {
+                        return null;
+                      }
                     },
                   }}
                 />
@@ -399,19 +496,40 @@ const Flow = () => {
                       );
                     },
                     headerRight: () => {
-                      return (
-                        <TouchableOpacity onPress={signout}>
-                          <Entypo
-                            name="log-out"
-                            size={isWeb ? scale(15) : scale(50)}
-                            color={background}
+                      if (isWeb) {
+                        return (
+                          <View
                             style={{
-                              marginRight: scale(10),
-                              marginLeft: isWeb ? scale(10) : scale(20),
+                              flexDirection: "row",
+                              alignItems: "center",
                             }}
-                          />
-                        </TouchableOpacity>
-                      );
+                          >
+                            <Text
+                              style={{
+                                color: background,
+                                fontSize: scale(10),
+                                fontWeight: "bold",
+                              }}
+                            >
+                              {username}
+                            </Text>
+
+                            <TouchableOpacity onPress={signout}>
+                              <Entypo
+                                name="log-out"
+                                size={isWeb ? scale(15) : scale(20)}
+                                color={background}
+                                style={{
+                                  marginRight: scale(10),
+                                  marginLeft: isWeb ? scale(10) : scale(5),
+                                }}
+                              />
+                            </TouchableOpacity>
+                          </View>
+                        );
+                      } else {
+                        return null;
+                      }
                     },
                   }}
                 />

@@ -1,5 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import {
+  ActivityIndicator,
   Button,
   Dimensions,
   StyleSheet,
@@ -43,8 +44,8 @@ export default function RegistrationScreen() {
       justifyContent: "center",
       marginHorizontal: "auto",
       backgroundColor: background,
-      width: "60%",
-      height: "80%",
+      width: width * 0.4,
+      height: width * 0.4,
       borderRadius: width / 50,
       alignSelf: "center",
       shadowColor: "#00000040",
@@ -77,7 +78,7 @@ export default function RegistrationScreen() {
       fontSize: width / 100,
       borderColor: main,
       borderWidth: width / 1000,
-      width: "60%",
+      width: "90%",
     },
 
     error: {
@@ -144,15 +145,19 @@ export default function RegistrationScreen() {
               setPassword("");
             }}
           >
-            <Text
-              style={{
-                color: background,
-                fontWeight: "bold",
-                fontSize: width / 90,
-              }}
-            >
-              Register
-            </Text>
+            {state.isLoading ? (
+              <ActivityIndicator size="large" color={background} />
+            ) : (
+              <Text
+                style={{
+                  color: background,
+                  fontWeight: "bold",
+                  fontSize: width / 90,
+                }}
+              >
+                Register
+              </Text>
+            )}
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() => {
