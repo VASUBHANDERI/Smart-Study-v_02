@@ -146,7 +146,7 @@ export default function RegistrationScreen() {
             }}
           >
             {state.isLoading ? (
-              <ActivityIndicator size="large" color={background} />
+              <ActivityIndicator size="small" color={background} />
             ) : (
               <Text
                 style={{

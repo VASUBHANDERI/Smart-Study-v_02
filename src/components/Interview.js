@@ -23,6 +23,7 @@ import {
   processColor,
   main50,
 } from "../components/Colors"; // Import colors from app/colors.js
+import useWindowSize from "../Hooks/useWindowSize";
 // import  {readFileSync} from "fs";
 
 const Interview = () => {
@@ -37,6 +38,81 @@ const Interview = () => {
   const [playback, setPlayback] = useState(null);
   const [transcriptionInProgress, setTranscriptionInProgress] = useState(false);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+  const [width, height] = useWindowSize();
+
+  const styles = StyleSheet.create({
+    container: {
+      flex: 1,
+      backgroundColor: background,
+      padding: 24,
+      borderRadius: 30,
+    },
+    centeredView: {
+      flex: 1,
+      justifyContent: "center",
+      alignItems: "center",
+    },
+    questionText: {
+      fontWeight: "bold",
+      fontSize: 24,
+      marginBottom: 20,
+    },
+    recordButton: {
+      borderWidth: 3,
+      borderColor: main,
+      padding: 10,
+      borderRadius: 25,
+      marginBottom: 20,
+      alignItems: "center",
+      justifyContent: "center",
+    },
+    answerText: {
+      textAlign: "left",
+    },
+    answerTextBox: {
+      borderWidth: 1,
+      borderColor: main,
+      backgroundColor: background,
+      width: 600, // Set the width to 600
+      padding: 10,
+      borderRadius: 10,
+      marginBottom: 20,
+      // alignItems: "center",
+      justifyContent: "center",
+    },
+    loader: {
+      marginTop: 20,
+    },
+    similarityContainer: {
+      flexDirection: "row",
+      justifyContent: "space-between",
+      alignItems: "center",
+      position: "absolute",
+      marginHorizontal: 20,
+      bottom: 20, // Adjust this value to control the distance from the bottom
+      left: 0,
+      right: 0,
+    },
+    similarityButton: {
+      backgroundColor: main50,
+      alignSelf: "center",
+      padding: 16,
+      borderRadius: 36,
+      alignItems: "center",
+      justifyContent: "center",
+    },
+    navButton: {
+      backgroundColor: main50,
+      padding: 8,
+      borderRadius: 20,
+      alignItems: "center",
+      justifyContent: "center",
+    },
+    similarityText: {
+      fontSize: 18,
+      marginVertical: 10,
+    },
+  });
 
   const API_URL =
     "https://api-inference.huggingface.co/models/sentence-transformers/all-MiniLM-L6-v2";
@@ -233,9 +309,7 @@ const Interview = () => {
   return (
     <View style={styles.container}>
       <SafeAreaView>
-        <ScrollView 
-          showsVerticalScrollIndicator={false}
-        > 
+        <ScrollView showsVerticalScrollIndicator={false}>
           <View style={styles.centeredView}>
             <Text style={styles.questionText}>
               {questionsData[currentQuestionIndex].question}
@@ -298,79 +372,5 @@ const Interview = () => {
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: background,
-    padding: 24,
-    borderRadius: 30,
-  },
-  centeredView: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  questionText: {
-    fontWeight: "bold",
-    fontSize: 24,
-    marginBottom: 20,
-  },
-  recordButton: {
-    borderWidth: 3,
-    borderColor: main,
-    padding: 10,
-    borderRadius: 25,
-    marginBottom: 20,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  answerText: {
-    textAlign: "left",
-  },
-  answerTextBox: {
-    borderWidth: 1,
-    borderColor: main,
-    backgroundColor: background,
-    width: 600, // Set the width to 600
-    padding: 10,
-    borderRadius: 10,
-    marginBottom: 20,
-    // alignItems: "center",
-    justifyContent: "center",
-  },
-  loader: {
-    marginTop: 20,
-  },
-  similarityContainer: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    position: "absolute",
-    marginHorizontal: 20,
-    bottom: 20, // Adjust this value to control the distance from the bottom
-    left: 0,
-    right: 0,
-  },
-  similarityButton: {
-    backgroundColor: main50,
-    alignSelf: "center",
-    padding: 16,
-    borderRadius: 36,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  navButton: {
-    backgroundColor: main50,
-    padding: 8,
-    borderRadius: 20,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  similarityText: {
-    fontSize: 18,
-    marginVertical: 10,
-  },
-});
 
 export default Interview;

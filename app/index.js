@@ -2,7 +2,6 @@ import { useContext, useEffect } from "react";
 import HomeScreen from "../src/Screens/HomeScreen";
 import { Context as AuthContext } from "../src/context/authContext";
 import Head from "expo-router/head";
-import LoginScreen from "../src/Screens/LogInScreen";
 import AuthStack from "../src/Screens/AuthFlow";
 
 export default function Page() {
@@ -16,12 +15,13 @@ export default function Page() {
     tryLocalAuth();
   }, []);
   console.log("is logged in", isLoggedIn);
+
   return (
     <>
-      {/* <Head>
+      <Head>
         <title>Smart Study</title>
         <link rel="shortcut icon" href="../public/assets/favicon.png" />
-      </Head> */}
+      </Head>
       {isLoggedIn ? <HomeScreen /> : <AuthStack />}
     </>
   );

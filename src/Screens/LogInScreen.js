@@ -138,7 +138,7 @@ export default function LogInScreen() {
             }}
           >
             {state.isLoading ? (
-              <ActivityIndicator size="large" color={background} />
+              <ActivityIndicator size="small" color={background} />
             ) : (
               <Text
                 style={{

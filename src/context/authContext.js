@@ -41,10 +41,11 @@ const authReducer = (state, action) => {
 };
 
 const tryLocalAuth = (dispatch) => async () => {
-  dispatch({ type: "set_loading", payload: true });
+  // dispatch({ type: "set_loading", payload: true });
   const token = await AsyncStorage.getItem("token");
   if (token) {
     try {
+      dispatch({ type: "authenticate", payload: token });
       const response = await apiInstance.get("/api/users/current"); // Fetch user data
       dispatch({
         type: "localAuth",
@@ -55,10 +56,8 @@ const tryLocalAuth = (dispatch) => async () => {
       dispatch({ type: "signout" });
     }
   } else {
-    dispatch({ type: "set_loading", payload: false });
     dispatch({ type: "signout" });
   }
-  dispatch({ type: "set_loading", payload: false });
 };
 const clearErrorMessage = (dispatch) => () => {
   dispatch({ type: "clear_error_message" });
@@ -97,7 +96,6 @@ const signin =
       });
       if (response) {
         setAuthToken(response.data.accessToken);
-
         await AsyncStorage.setItem("token", response.data.accessToken);
         console.log(response.data.accessToken);
         dispatch({ type: "authenticate", payload: response.data.accessToken });
