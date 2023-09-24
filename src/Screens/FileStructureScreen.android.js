@@ -42,7 +42,9 @@ const FileStructureScreen = () => {
               return (
                 <TouchableOpacity
                   onPress={() => {
-                    navigation.navigate("DirectoryDetail", { name: item.name });
+                    navigation.navigate("Directory Detail", {
+                      name: item.name,
+                    });
                   }}
                 >
                   <View style={styles.rowContainer}>

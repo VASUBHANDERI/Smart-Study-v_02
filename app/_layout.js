@@ -28,6 +28,7 @@ import {
   Provider as AuthProvider,
   Context as AuthContext,
 } from "../src/context/authContext";
+import { Provider as CommandProvider } from "../src/context/commandsContext";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const isWeb = Platform.OS === "web";
@@ -36,6 +37,8 @@ const Flow = () => {
   const [loaded] = useFonts({
     Popins: require("../public/assets/fonts/Poppins-Light.ttf"),
   });
+
+  const [terminal, setTerminal] = useState(true);
 
   const {
     state: { isLoggedIn, username },
@@ -52,159 +55,94 @@ const Flow = () => {
 
   if (isLoggedIn) {
     return (
-      <PageProvider>
-        <DiskManagementProvider>
-          <SchedulingAlgoProvider>
-            <BankersAlgoProvider>
-              <Drawer
-                drawerContent={(props) => (
-                  <View style={styles.drawerContainer}>
-                    <View
-                      style={
-                        isWeb ? styles.drawerHeaderWeb : styles.drawerHeader
-                      }
-                    >
-                      <View style={styles.headerIconContainer}>
-                        <Entypo
-                          name="network"
-                          size={isWeb ? scale(30) : scale(60)}
-                          color={background}
-                        />
-                      </View>
-                      <Text style={styles.drawerHeaderText}>Smart Study</Text>
-                    </View>
-                    <DrawerContent {...props} />
-                    <View
-                      style={{
-                        backgroundColor: main,
-                        paddingVertical: verticalScale(5),
-                      }}
-                    >
-                      <Text style={styles.drawerFooterText}>
-                        Copyright @ 2023 SmartStudy
-                      </Text>
-                      <Text style={styles.drawerFooterText}>
-                        All Rights Reserved
-                      </Text>
-                    </View>
-                  </View>
-                )}
-                screenOptions={{
-                  drawerActiveBackgroundColor: "#E07A5F50",
-                  drawerActiveTintColor: main,
-                  drawerItemStyle: isWeb
-                    ? styles.drawerItemWeb
-                    : styles.drawerItem,
-                  drawerLabelStyle: styles.drawerLable,
-                  drawerActiveLabelStyle: styles.drawerItemSelected,
-                  drawerItemContainerStyle: styles.drawerItemContainer,
-                  drawerStyle: {
-                    width: isWeb ? scale(210) : scale(330),
-                  },
-                }}
-              >
-                <Drawer.Screen
-                  name="index"
-                  options={{
-                    title: "Smart Study",
-                    drawerIcon: () => (
-                      <Entypo
-                        name="home"
-                        size={isWeb ? scale(18) : scale(24)}
-                        color={main}
-                        style={{ marginLeft: isWeb ? scale(10) : scale(15) }}
-                      />
-                    ),
-                    headerTintColor: background,
-                    headerTitleStyle: styles.headerTitleStyle,
-                    headerStyle: styles.headerStyle,
-                    headerLeft: () => {
-                      const navigation = useNavigation();
-                      return (
-                        <TouchableOpacity
-                          onPress={() => {
-                            navigation.openDrawer();
-                          }}
-                        >
+      <CommandProvider>
+        <PageProvider>
+          <DiskManagementProvider>
+            <SchedulingAlgoProvider>
+              <BankersAlgoProvider>
+                <Drawer
+                  drawerContent={(props) => (
+                    <View style={styles.drawerContainer}>
+                      <View
+                        style={
+                          isWeb ? styles.drawerHeaderWeb : styles.drawerHeader
+                        }
+                      >
+                        <View style={styles.headerIconContainer}>
                           <Entypo
                             name="network"
-                            size={isWeb ? scale(30) : scale(50)}
+                            size={isWeb ? scale(30) : scale(60)}
                             color={background}
-                            style={{
-                              marginRight: scale(5),
-                              marginLeft: isWeb ? scale(10) : scale(20),
-                            }}
                           />
-                        </TouchableOpacity>
-                      );
+                        </View>
+                        <Text style={styles.drawerHeaderText}>Smart Study</Text>
+                      </View>
+                      <DrawerContent {...props} />
+                      <View
+                        style={{
+                          backgroundColor: main,
+                          paddingVertical: verticalScale(5),
+                        }}
+                      >
+                        <Text style={styles.drawerFooterText}>
+                          Copyright @ 2023 SmartStudy
+                        </Text>
+                        <Text style={styles.drawerFooterText}>
+                          All Rights Reserved
+                        </Text>
+                      </View>
+                    </View>
+                  )}
+                  screenOptions={{
+                    drawerActiveBackgroundColor: "#E07A5F50",
+                    drawerActiveTintColor: main,
+                    drawerItemStyle: isWeb
+                      ? styles.drawerItemWeb
+                      : styles.drawerItem,
+                    drawerLabelStyle: styles.drawerLable,
+                    drawerActiveLabelStyle: styles.drawerItemSelected,
+                    drawerItemContainerStyle: styles.drawerItemContainer,
+                    drawerStyle: {
+                      width: isWeb ? scale(210) : scale(330),
                     },
-                    headerRight: () => {
-                      return (
-                        <View
-                          style={{ flexDirection: "row", alignItems: "center" }}
-                        >
-                          <Text
-                            style={{
-                              color: background,
-                              fontSize: scale(10),
-                              fontWeight: "bold",
+                  }}
+                >
+                  <Drawer.Screen
+                    name="index"
+                    options={{
+                      title: "Smart Study",
+                      drawerIcon: () => (
+                        <Entypo
+                          name="home"
+                          size={isWeb ? scale(18) : scale(24)}
+                          color={main}
+                          style={{ marginLeft: isWeb ? scale(10) : scale(20) }}
+                        />
+                      ),
+                      headerTintColor: background,
+                      headerTitleStyle: styles.headerTitleStyle,
+                      headerStyle: styles.headerStyle,
+                      headerLeft: () => {
+                        const navigation = useNavigation();
+                        return (
+                          <TouchableOpacity
+                            onPress={() => {
+                              navigation.openDrawer();
                             }}
                           >
-                            {username}
-                          </Text>
-                          <TouchableOpacity onPress={signout}>
                             <Entypo
-                              name="log-out"
-                              size={isWeb ? scale(15) : scale(20)}
+                              name="network"
+                              size={isWeb ? scale(30) : scale(50)}
                               color={background}
                               style={{
-                                marginRight: scale(10),
+                                marginRight: scale(5),
                                 marginLeft: isWeb ? scale(10) : scale(5),
                               }}
                             />
                           </TouchableOpacity>
-                        </View>
-                      );
-                    },
-                  }}
-                />
-                <Drawer.Screen
-                  name="Learn_Commands_Screen"
-                  options={{
-                    title: "Learn Commands",
-                    drawerIcon: () => (
-                      <FontAwesome5
-                        name="book-reader"
-                        size={isWeb ? scale(18) : scale(24)}
-                        color={main}
-                        style={{ marginLeft: isWeb ? scale(10) : scale(15) }}
-                      />
-                    ),
-                    headerTintColor: background,
-                    headerTitleStyle: styles.headerTitleStyle,
-                    headerStyle: styles.headerStyle,
-                    headerLeft: () => {
-                      const navigation = useNavigation();
-                      return (
-                        <TouchableOpacity
-                          onPress={() => {
-                            navigation.openDrawer();
-                          }}
-                        >
-                          <Entypo
-                            name="network"
-                            size={isWeb ? scale(30) : scale(50)}
-                            color={background}
-                            style={{
-                              marginRight: scale(5),
-                              marginLeft: isWeb ? scale(10) : scale(20),
-                            }}
-                          />
-                        </TouchableOpacity>
-                      );
-                    },
-                    headerRight: () => {
-                      if (isWeb) {
+                        );
+                      },
+                      headerRight: () => {
                         return (
                           <View
                             style={{
@@ -221,7 +159,6 @@ const Flow = () => {
                             >
                               {username}
                             </Text>
-
                             <TouchableOpacity onPress={signout}>
                               <Entypo
                                 name="log-out"
@@ -235,309 +172,494 @@ const Flow = () => {
                             </TouchableOpacity>
                           </View>
                         );
-                      } else {
-                        return null;
-                      }
-                    },
-                  }}
-                />
-                <Drawer.Screen
-                  name="CPU_Scheduling_Screen"
-                  options={{
-                    title: "CPU Scheduling",
-                    drawerIcon: () => (
-                      <AntDesign
-                        name="clockcircle"
-                        size={isWeb ? scale(18) : scale(24)}
-                        color={main}
-                        style={{ marginLeft: isWeb ? scale(10) : scale(15) }}
-                      />
-                    ),
-                    headerTintColor: background,
-                    headerTitleStyle: styles.headerTitleStyle,
-                    headerStyle: styles.headerStyle,
-                    headerLeft: () => {
-                      const navigation = useNavigation();
-                      return (
-                        <TouchableOpacity
-                          onPress={() => {
-                            navigation.openDrawer();
-                          }}
-                        >
-                          <Entypo
-                            name="network"
-                            size={isWeb ? scale(30) : scale(50)}
-                            color={background}
-                            style={{
-                              marginRight: scale(5),
-                              marginLeft: isWeb ? scale(10) : scale(20),
-                            }}
-                          />
-                        </TouchableOpacity>
-                      );
-                    },
-                    headerRight: () => {
-                      if (isWeb) {
+                      },
+                    }}
+                  />
+                  <Drawer.Screen
+                    name="Learn_Commands_Screen"
+                    options={{
+                      title: "Learn Commands",
+                      drawerIcon: () => (
+                        <FontAwesome5
+                          name="book-reader"
+                          size={isWeb ? scale(18) : scale(24)}
+                          color={main}
+                          style={{ marginLeft: isWeb ? scale(10) : scale(15) }}
+                        />
+                      ),
+                      headerTintColor: background,
+                      headerTitleStyle: styles.headerTitleStyle,
+                      headerStyle: styles.headerStyle,
+                      headerLeft: () => {
+                        const navigation = useNavigation();
                         return (
-                          <View
-                            style={{
-                              flexDirection: "row",
-                              alignItems: "center",
+                          <TouchableOpacity
+                            onPress={() => {
+                              navigation.openDrawer();
                             }}
                           >
-                            <Text
+                            <Entypo
+                              name="network"
+                              size={isWeb ? scale(30) : scale(50)}
+                              color={background}
                               style={{
-                                color: background,
-                                fontSize: scale(10),
-                                fontWeight: "bold",
+                                marginRight: scale(5),
+                                marginLeft: isWeb ? scale(10) : scale(5),
+                              }}
+                            />
+                          </TouchableOpacity>
+                        );
+                      },
+                      headerRight: () => {
+                        if (isWeb) {
+                          return (
+                            <View
+                              style={{
+                                flexDirection: "row",
+                                alignItems: "center",
                               }}
                             >
-                              {username}
-                            </Text>
-
-                            <TouchableOpacity onPress={signout}>
-                              <Entypo
-                                name="log-out"
-                                size={isWeb ? scale(15) : scale(20)}
-                                color={background}
+                              <Text
                                 style={{
-                                  marginRight: scale(10),
-                                  marginLeft: isWeb ? scale(10) : scale(5),
+                                  color: background,
+                                  fontSize: scale(10),
+                                  fontWeight: "bold",
                                 }}
-                              />
-                            </TouchableOpacity>
-                          </View>
-                        );
-                      } else {
-                        return null;
-                      }
-                    },
-                  }}
-                />
-                <Drawer.Screen
-                  name="Page_Replacement_Screen"
-                  options={{
-                    title: "Page Replacement",
-                    drawerIcon: () => (
-                      <Entypo
-                        name="database"
-                        size={isWeb ? scale(18) : scale(24)}
-                        color={main}
-                        style={{ marginLeft: isWeb ? scale(10) : scale(15) }}
-                      />
-                    ),
-                    headerTintColor: background,
-                    headerTitleStyle: styles.headerTitleStyle,
-                    headerStyle: styles.headerStyle,
-                    headerLeft: () => {
-                      const navigation = useNavigation();
-                      return (
-                        <TouchableOpacity
-                          onPress={() => {
-                            navigation.openDrawer();
-                          }}
-                        >
-                          <Entypo
-                            name="network"
-                            size={isWeb ? scale(30) : scale(50)}
-                            color={background}
-                            style={{
-                              marginRight: scale(5),
-                              marginLeft: isWeb ? scale(10) : scale(20),
-                            }}
-                          />
-                        </TouchableOpacity>
-                      );
-                    },
-                    headerRight: () => {
-                      if (isWeb) {
+                              >
+                                {username}
+                              </Text>
+
+                              <TouchableOpacity onPress={signout}>
+                                <Entypo
+                                  name="log-out"
+                                  size={isWeb ? scale(15) : scale(20)}
+                                  color={background}
+                                  style={{
+                                    marginRight: scale(10),
+                                    marginLeft: isWeb ? scale(10) : scale(5),
+                                  }}
+                                />
+                              </TouchableOpacity>
+                            </View>
+                          );
+                        } else {
+                          return null;
+                        }
+                      },
+                    }}
+                  />
+                  <Drawer.Screen
+                    name="Play_Ground_Screen"
+                    options={{
+                      title: "Play Ground",
+                      drawerIcon: () => (
+                        <Ionicons
+                          name="terminal"
+                          size={isWeb ? scale(18) : scale(24)}
+                          color={main}
+                          style={{ marginLeft: isWeb ? scale(10) : scale(15) }}
+                        />
+                      ),
+                      headerTintColor: background,
+                      headerTitleStyle: styles.headerTitleStyle,
+                      headerStyle: styles.headerStyle,
+                      headerLeft: () => {
+                        const navigation = useNavigation();
                         return (
-                          <View
-                            style={{
-                              flexDirection: "row",
-                              alignItems: "center",
+                          <TouchableOpacity
+                            onPress={() => {
+                              navigation.openDrawer();
                             }}
                           >
-                            <Text
+                            <Entypo
+                              name="network"
+                              size={isWeb ? scale(30) : scale(50)}
+                              color={background}
                               style={{
-                                color: background,
-                                fontSize: scale(10),
-                                fontWeight: "bold",
+                                marginRight: scale(5),
+                                marginLeft: isWeb ? scale(10) : scale(5),
+                              }}
+                            />
+                          </TouchableOpacity>
+                        );
+                      },
+                      headerRight: () => {
+                        const navigation = useNavigation();
+                        if (false) {
+                          return (
+                            <View
+                              style={{
+                                flexDirection: "row",
+                                alignItems: "center",
                               }}
                             >
-                              {username}
-                            </Text>
-
-                            <TouchableOpacity onPress={signout}>
-                              <Entypo
-                                name="log-out"
-                                size={isWeb ? scale(15) : scale(20)}
-                                color={background}
+                              <Text
                                 style={{
-                                  marginRight: scale(10),
-                                  marginLeft: isWeb ? scale(10) : scale(5),
+                                  color: background,
+                                  fontSize: scale(10),
+                                  fontWeight: "bold",
                                 }}
-                              />
-                            </TouchableOpacity>
-                          </View>
-                        );
-                      } else {
-                        return null;
-                      }
-                    },
-                  }}
-                />
-                <Drawer.Screen
-                  name="Disk_Scheduling_Screen"
-                  options={{
-                    title: "Disk Scheduling",
-                    drawerIcon: () => (
-                      <FontAwesome5
-                        name="record-vinyl"
-                        size={isWeb ? scale(18) : scale(24)}
-                        color={main}
-                        style={{ marginLeft: isWeb ? scale(10) : scale(15) }}
-                      />
-                    ),
-                    headerTintColor: background,
-                    headerTitleStyle: styles.headerTitleStyle,
-                    headerStyle: styles.headerStyle,
-                    headerLeft: () => {
-                      const navigation = useNavigation();
-                      return (
-                        <TouchableOpacity
-                          onPress={() => {
-                            navigation.openDrawer();
-                          }}
-                        >
-                          <Entypo
-                            name="network"
-                            size={isWeb ? scale(30) : scale(50)}
-                            color={background}
-                            style={{
-                              marginRight: scale(5),
-                              marginLeft: isWeb ? scale(10) : scale(20),
-                            }}
-                          />
-                        </TouchableOpacity>
-                      );
-                    },
-                    headerRight: () => {
-                      if (isWeb) {
+                              >
+                                {username}
+                              </Text>
+
+                              <TouchableOpacity onPress={signout}>
+                                <Entypo
+                                  name="log-out"
+                                  size={isWeb ? scale(15) : scale(20)}
+                                  color={background}
+                                  style={{
+                                    marginRight: scale(10),
+                                    marginLeft: isWeb ? scale(10) : scale(5),
+                                  }}
+                                />
+                              </TouchableOpacity>
+                            </View>
+                          );
+                        } else {
+                          if (terminal) {
+                            return (
+                              <TouchableOpacity
+                                onPress={() => {
+                                  navigation.navigate("File Structure");
+                                  setTerminal(!terminal);
+                                }}
+                              >
+                                <Entypo
+                                  name="folder"
+                                  size={isWeb ? scale(15) : scale(20)}
+                                  color={background}
+                                  style={{
+                                    marginRight: scale(10),
+                                    marginLeft: isWeb ? scale(10) : scale(5),
+                                  }}
+                                />
+                              </TouchableOpacity>
+                            );
+                          } else {
+                            return (
+                              <TouchableOpacity
+                                onPress={() => {
+                                  navigation.navigate("Play Ground");
+                                  setTerminal(!terminal);
+                                }}
+                              >
+                                <Ionicons
+                                  name="terminal"
+                                  size={isWeb ? scale(15) : scale(20)}
+                                  color={background}
+                                  style={{
+                                    marginRight: scale(10),
+                                    marginLeft: isWeb ? scale(10) : scale(5),
+                                  }}
+                                />
+                              </TouchableOpacity>
+                            );
+                          }
+                        }
+                      },
+                      drawerItemStyle: isWeb ? { height: 0 } : null,
+                    }}
+                  />
+                  <Drawer.Screen
+                    name="CPU_Scheduling_Screen"
+                    options={{
+                      title: "CPU Scheduling",
+                      drawerIcon: () => (
+                        <AntDesign
+                          name="clockcircle"
+                          size={isWeb ? scale(18) : scale(24)}
+                          color={main}
+                          style={{ marginLeft: isWeb ? scale(10) : scale(15) }}
+                        />
+                      ),
+                      headerTintColor: background,
+                      headerTitleStyle: styles.headerTitleStyle,
+                      headerStyle: styles.headerStyle,
+                      headerLeft: () => {
+                        const navigation = useNavigation();
                         return (
-                          <View
-                            style={{
-                              flexDirection: "row",
-                              alignItems: "center",
+                          <TouchableOpacity
+                            onPress={() => {
+                              navigation.openDrawer();
                             }}
                           >
-                            <Text
+                            <Entypo
+                              name="network"
+                              size={isWeb ? scale(30) : scale(50)}
+                              color={background}
                               style={{
-                                color: background,
-                                fontSize: scale(10),
-                                fontWeight: "bold",
+                                marginRight: scale(5),
+                                marginLeft: isWeb ? scale(10) : scale(5),
+                              }}
+                            />
+                          </TouchableOpacity>
+                        );
+                      },
+                      headerRight: () => {
+                        if (isWeb) {
+                          return (
+                            <View
+                              style={{
+                                flexDirection: "row",
+                                alignItems: "center",
                               }}
                             >
-                              {username}
-                            </Text>
-
-                            <TouchableOpacity onPress={signout}>
-                              <Entypo
-                                name="log-out"
-                                size={isWeb ? scale(15) : scale(20)}
-                                color={background}
+                              <Text
                                 style={{
-                                  marginRight: scale(10),
-                                  marginLeft: isWeb ? scale(10) : scale(5),
+                                  color: background,
+                                  fontSize: scale(10),
+                                  fontWeight: "bold",
                                 }}
-                              />
-                            </TouchableOpacity>
-                          </View>
-                        );
-                      } else {
-                        return null;
-                      }
-                    },
-                  }}
-                />
-                <Drawer.Screen
-                  name="Bankers_Algorithm_Screen"
-                  options={{
-                    title: "Banker's Algorithm",
-                    drawerIcon: () => (
-                      <MaterialCommunityIcons
-                        name="bank-transfer"
-                        size={isWeb ? scale(18) : scale(24)}
-                        color={main}
-                        style={{ marginLeft: isWeb ? scale(10) : scale(15) }}
-                      />
-                    ),
-                    headerTintColor: background,
-                    headerTitleStyle: styles.headerTitleStyle,
-                    headerStyle: styles.headerStyle,
-                    headerLeft: () => {
-                      const navigation = useNavigation();
-                      return (
-                        <TouchableOpacity
-                          onPress={() => {
-                            navigation.openDrawer();
-                          }}
-                        >
-                          <Entypo
-                            name="network"
-                            size={isWeb ? scale(30) : scale(50)}
-                            color={background}
-                            style={{
-                              marginRight: scale(5),
-                              marginLeft: isWeb ? scale(10) : scale(20),
-                            }}
-                          />
-                        </TouchableOpacity>
-                      );
-                    },
-                    headerRight: () => {
-                      if (isWeb) {
+                              >
+                                {username}
+                              </Text>
+
+                              <TouchableOpacity onPress={signout}>
+                                <Entypo
+                                  name="log-out"
+                                  size={isWeb ? scale(15) : scale(20)}
+                                  color={background}
+                                  style={{
+                                    marginRight: scale(10),
+                                    marginLeft: isWeb ? scale(10) : scale(5),
+                                  }}
+                                />
+                              </TouchableOpacity>
+                            </View>
+                          );
+                        } else {
+                          return null;
+                        }
+                      },
+                    }}
+                  />
+                  <Drawer.Screen
+                    name="Page_Replacement_Screen"
+                    options={{
+                      title: "Page Replacement",
+                      drawerIcon: () => (
+                        <Entypo
+                          name="database"
+                          size={isWeb ? scale(18) : scale(24)}
+                          color={main}
+                          style={{ marginLeft: isWeb ? scale(10) : scale(15) }}
+                        />
+                      ),
+                      headerTintColor: background,
+                      headerTitleStyle: styles.headerTitleStyle,
+                      headerStyle: styles.headerStyle,
+                      headerLeft: () => {
+                        const navigation = useNavigation();
                         return (
-                          <View
-                            style={{
-                              flexDirection: "row",
-                              alignItems: "center",
+                          <TouchableOpacity
+                            onPress={() => {
+                              navigation.openDrawer();
                             }}
                           >
-                            <Text
+                            <Entypo
+                              name="network"
+                              size={isWeb ? scale(30) : scale(50)}
+                              color={background}
                               style={{
-                                color: background,
-                                fontSize: scale(10),
-                                fontWeight: "bold",
+                                marginRight: scale(5),
+                                marginLeft: isWeb ? scale(10) : scale(20),
+                              }}
+                            />
+                          </TouchableOpacity>
+                        );
+                      },
+                      headerRight: () => {
+                        if (isWeb) {
+                          return (
+                            <View
+                              style={{
+                                flexDirection: "row",
+                                alignItems: "center",
                               }}
                             >
-                              {username}
-                            </Text>
-
-                            <TouchableOpacity onPress={signout}>
-                              <Entypo
-                                name="log-out"
-                                size={isWeb ? scale(15) : scale(20)}
-                                color={background}
+                              <Text
                                 style={{
-                                  marginRight: scale(10),
-                                  marginLeft: isWeb ? scale(10) : scale(5),
+                                  color: background,
+                                  fontSize: scale(10),
+                                  fontWeight: "bold",
                                 }}
-                              />
-                            </TouchableOpacity>
-                          </View>
+                              >
+                                {username}
+                              </Text>
+
+                              <TouchableOpacity onPress={signout}>
+                                <Entypo
+                                  name="log-out"
+                                  size={isWeb ? scale(15) : scale(20)}
+                                  color={background}
+                                  style={{
+                                    marginRight: scale(10),
+                                    marginLeft: isWeb ? scale(10) : scale(5),
+                                  }}
+                                />
+                              </TouchableOpacity>
+                            </View>
+                          );
+                        } else {
+                          return null;
+                        }
+                      },
+                    }}
+                  />
+                  <Drawer.Screen
+                    name="Disk_Scheduling_Screen"
+                    options={{
+                      title: "Disk Scheduling",
+                      drawerIcon: () => (
+                        <FontAwesome5
+                          name="record-vinyl"
+                          size={isWeb ? scale(18) : scale(24)}
+                          color={main}
+                          style={{ marginLeft: isWeb ? scale(10) : scale(15) }}
+                        />
+                      ),
+                      headerTintColor: background,
+                      headerTitleStyle: styles.headerTitleStyle,
+                      headerStyle: styles.headerStyle,
+                      headerLeft: () => {
+                        const navigation = useNavigation();
+                        return (
+                          <TouchableOpacity
+                            onPress={() => {
+                              navigation.openDrawer();
+                            }}
+                          >
+                            <Entypo
+                              name="network"
+                              size={isWeb ? scale(30) : scale(50)}
+                              color={background}
+                              style={{
+                                marginRight: scale(5),
+                                marginLeft: isWeb ? scale(10) : scale(5),
+                              }}
+                            />
+                          </TouchableOpacity>
                         );
-                      } else {
-                        return null;
-                      }
-                    },
-                  }}
-                />
-              </Drawer>
-            </BankersAlgoProvider>
-          </SchedulingAlgoProvider>
-        </DiskManagementProvider>
-      </PageProvider>
+                      },
+                      headerRight: () => {
+                        if (isWeb) {
+                          return (
+                            <View
+                              style={{
+                                flexDirection: "row",
+                                alignItems: "center",
+                              }}
+                            >
+                              <Text
+                                style={{
+                                  color: background,
+                                  fontSize: scale(10),
+                                  fontWeight: "bold",
+                                }}
+                              >
+                                {username}
+                              </Text>
+
+                              <TouchableOpacity onPress={signout}>
+                                <Entypo
+                                  name="log-out"
+                                  size={isWeb ? scale(15) : scale(20)}
+                                  color={background}
+                                  style={{
+                                    marginRight: scale(10),
+                                    marginLeft: isWeb ? scale(10) : scale(5),
+                                  }}
+                                />
+                              </TouchableOpacity>
+                            </View>
+                          );
+                        } else {
+                          return null;
+                        }
+                      },
+                    }}
+                  />
+                  <Drawer.Screen
+                    name="Bankers_Algorithm_Screen"
+                    options={{
+                      title: "Banker's Algorithm",
+                      drawerIcon: () => (
+                        <MaterialCommunityIcons
+                          name="bank-transfer"
+                          size={isWeb ? scale(18) : scale(24)}
+                          color={main}
+                          style={{ marginLeft: isWeb ? scale(10) : scale(15) }}
+                        />
+                      ),
+                      headerTintColor: background,
+                      headerTitleStyle: styles.headerTitleStyle,
+                      headerStyle: styles.headerStyle,
+                      headerLeft: () => {
+                        const navigation = useNavigation();
+                        return (
+                          <TouchableOpacity
+                            onPress={() => {
+                              navigation.openDrawer();
+                            }}
+                          >
+                            <Entypo
+                              name="network"
+                              size={isWeb ? scale(30) : scale(50)}
+                              color={background}
+                              style={{
+                                marginRight: scale(5),
+                                marginLeft: isWeb ? scale(10) : scale(5),
+                              }}
+                            />
+                          </TouchableOpacity>
+                        );
+                      },
+                      headerRight: () => {
+                        if (isWeb) {
+                          return (
+                            <View
+                              style={{
+                                flexDirection: "row",
+                                alignItems: "center",
+                              }}
+                            >
+                              <Text
+                                style={{
+                                  color: background,
+                                  fontSize: scale(10),
+                                  fontWeight: "bold",
+                                }}
+                              >
+                                {username}
+                              </Text>
+
+                              <TouchableOpacity onPress={signout}>
+                                <Entypo
+                                  name="log-out"
+                                  size={isWeb ? scale(15) : scale(20)}
+                                  color={background}
+                                  style={{
+                                    marginRight: scale(10),
+                                    marginLeft: isWeb ? scale(10) : scale(5),
+                                  }}
+                                />
+                              </TouchableOpacity>
+                            </View>
+                          );
+                        } else {
+                          return null;
+                        }
+                      },
+                      // drawerItemStyle: { height: 0 },
+                    }}
+                  />
+                </Drawer>
+              </BankersAlgoProvider>
+            </SchedulingAlgoProvider>
+          </DiskManagementProvider>
+        </PageProvider>
+      </CommandProvider>
     );
   } else {
     return (
@@ -546,14 +668,6 @@ const Flow = () => {
           name="index"
           options={{
             title: "Smart Study",
-            drawerIcon: () => (
-              <Entypo
-                name="home"
-                size={isWeb ? scale(18) : scale(24)}
-                color={main}
-                style={{ marginLeft: isWeb ? scale(10) : scale(15) }}
-              />
-            ),
             headerTintColor: background,
             headerTitleStyle: styles.headerTitleStyle,
             headerStyle: styles.headerStyle,
@@ -565,7 +679,7 @@ const Flow = () => {
                   color={background}
                   style={{
                     marginRight: scale(5),
-                    marginLeft: isWeb ? scale(10) : scale(20),
+                    marginLeft: isWeb ? scale(10) : scale(1),
                   }}
                 />
               );

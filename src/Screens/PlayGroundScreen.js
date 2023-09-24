@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import React from "react";
-import Terminal from "../components/Terminal.android";
+import Terminal from "../components/Terminal";
 Text.defaultProps = {
   ...(Text.defaultProps || {}),
   allowFontScaling: false,
