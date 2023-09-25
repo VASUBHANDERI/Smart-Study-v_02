@@ -24,6 +24,7 @@ import {
   main50,
 } from "../components/Colors"; // Import colors from app/colors.js
 import useWindowSize from "../Hooks/useWindowSize";
+import { set } from "react-native-reanimated";
 // import  {readFileSync} from "fs";
 
 const Interview = () => {
@@ -33,12 +34,14 @@ const Interview = () => {
   const [isRecording, setIsRecording] = useState(false);
   const [isRecordingStopped, setIsRecordingStopped] = useState(true);
   const [transcription, setTranscription] = useState("");
+  const [error, setError] = useState("");
   const [recording, setRecording] = useState(null);
   const [recordings, setRecordings] = useState([]); // Store recorded audio URIs here
   const [playback, setPlayback] = useState(null);
   const [transcriptionInProgress, setTranscriptionInProgress] = useState(false);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [width, height] = useWindowSize();
+  const [showResult, setShowResult] = useState(false);
 
   const styles = StyleSheet.create({
     container: {
@@ -68,6 +71,10 @@ const Interview = () => {
     },
     answerText: {
       textAlign: "left",
+    },
+    errorText: {
+      textAlign: "left",
+      color: "red",
     },
     answerTextBox: {
       borderWidth: 1,
@@ -111,6 +118,7 @@ const Interview = () => {
     similarityText: {
       fontSize: 18,
       marginVertical: 10,
+      color: score.length > 0 && score[0].toFixed(2) > 0.5  ? "#30910a" : "#f2705c",
     },
   });
 
@@ -143,6 +151,7 @@ const Interview = () => {
       });
 
       setScore(response.data);
+      setShowResult(true);
       console.log(response.data);
       console.log("Source", sourceSentence);
       console.log("targetSentence", targetSentences);
@@ -155,8 +164,11 @@ const Interview = () => {
     if (currentQuestionIndex > 0) {
       setCurrentQuestionIndex(currentQuestionIndex - 1);
       setSourceSentence(questionsData[currentQuestionIndex].modelAnswer);
-      setScore([]);
       setTranscription(""); // Clear the previous transcription
+      setTargetSentences([]); // Clear the previous target sentences
+      setScore([]); // Clear the previous score
+      setError(""); // Clear the previous error
+      setShowResult(false);
     }
   };
 
@@ -164,14 +176,19 @@ const Interview = () => {
     if (currentQuestionIndex < questionsData.length - 1) {
       setCurrentQuestionIndex(currentQuestionIndex + 1);
       setSourceSentence(questionsData[currentQuestionIndex].modelAnswer);
-      setScore([]);
       setTranscription(""); // Clear the previous transcription
+      setTargetSentences([]); // Clear the previous target sentences
+      setScore([]); // Clear the previous score
+      setError(""); // Clear the previous error
+      setShowResult(false);
     }
   };
   const startRecording = async () => {
     setTranscription(""); // Clear the previous transcription
     setTargetSentences([]); // Clear the previous target sentences
     setScore([]); // Clear the previous score
+    setError(""); // Clear the previous error
+    setShowResult(false);
     try {
       if (isRecordingStopped) {
         const { status } = await Audio.requestPermissionsAsync();
@@ -252,6 +269,7 @@ const Interview = () => {
           audioURI.trim() === ""
         ) {
           console.error("Invalid audioURI. It should be a non-empty string.");
+          setError("Invalid audioURI. It should be a non-empty string.");
           return;
         }
 
@@ -261,6 +279,7 @@ const Interview = () => {
 
         if (!audioBlob) {
           console.error("Failed to fetch the audio blob from the URI.");
+          setError("Failed to fetch the audio blob from the URI.");
           return;
         }
 
@@ -304,6 +323,9 @@ const Interview = () => {
     }
 
     console.error("Failed to transcribe audio after multiple retries.");
+    setError(
+      "Hang tight! Our server is napping, but it'll wake up in no time."
+    );
     setTranscriptionInProgress(false);
   };
   return (
@@ -328,6 +350,8 @@ const Interview = () => {
               <View style={styles.answerTextBox}>
                 <Text style={styles.answerText}> {transcription}</Text>
               </View>
+            ) : error ? (
+              <Text style={styles.errorText}> {error}</Text>
             ) : transcriptionInProgress ? (
               <ActivityIndicator
                 size="large"
@@ -347,8 +371,24 @@ const Interview = () => {
             </TouchableOpacity>
           ) : null}
 
-          {score && (
-            <View style={{ alignItems: "center", justifyContent: "center" }}>
+
+          {showResult&& score && (
+            
+            <View
+              style={{
+                alignItems: "center",
+                justifyContent: "center",
+                flexWrap: "wrap",
+                marginHorizontal: 20,
+                marginVertical: 20,
+                borderWidth: 2,
+                borderRadius: 10,
+                borderColor:
+                score.length > 0 && score[0].toFixed(2) > 0.5 ? "#81f51b90" : "#f2705c",
+                backgroundColor:
+                score.length > 0 && score[0].toFixed(2) > 0.5  ? "#81f51b30" : "#f2705c30",
+              }}
+            >
               {score.map((similarity, index) => (
                 <Text key={index} style={styles.similarityText}>
                   {similarity.toFixed(2) > 0.5 ? "Correct" : "Incorrect"}
