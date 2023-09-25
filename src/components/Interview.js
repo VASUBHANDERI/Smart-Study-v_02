@@ -118,7 +118,8 @@ const Interview = () => {
     similarityText: {
       fontSize: 18,
       marginVertical: 10,
-      color: score.length > 0 && score[0].toFixed(2) > 0.5  ? "#30910a" : "#f2705c",
+      color:
+        score.length > 0 && score[0].toFixed(2) > 0.5 ? "#30910a" : "#f2705c",
     },
   });
 
@@ -195,6 +196,7 @@ const Interview = () => {
 
         if (status !== "granted") {
           console.error("Audio recording permission not granted.");
+          setError("Audio recording permission not granted.");
           return;
         }
 
@@ -339,6 +341,7 @@ const Interview = () => {
             <TouchableOpacity
               style={styles.recordButton}
               onPress={isRecording ? stopRecording : startRecording}
+              disabled={transcriptionInProgress}
             >
               {isRecording ? (
                 <Entypo name="controller-stop" size={25} color={main} />
@@ -364,6 +367,7 @@ const Interview = () => {
             <TouchableOpacity
               style={styles.similarityButton}
               onPress={handleCalculateSimilarity}
+              disabled={transcriptionInProgress}
             >
               <Text style={{ fontSize: 20, fontWeight: 600, color: main }}>
                 Evaluate
@@ -371,9 +375,7 @@ const Interview = () => {
             </TouchableOpacity>
           ) : null}
 
-
-          {showResult&& score && (
-            
+          {showResult && score && (
             <View
               style={{
                 alignItems: "center",
@@ -384,9 +386,13 @@ const Interview = () => {
                 borderWidth: 2,
                 borderRadius: 10,
                 borderColor:
-                score.length > 0 && score[0].toFixed(2) > 0.5 ? "#81f51b90" : "#f2705c",
+                  score.length > 0 && score[0].toFixed(2) > 0.5
+                    ? "#81f51b90"
+                    : "#f2705c",
                 backgroundColor:
-                score.length > 0 && score[0].toFixed(2) > 0.5  ? "#81f51b30" : "#f2705c30",
+                  score.length > 0 && score[0].toFixed(2) > 0.5
+                    ? "#81f51b30"
+                    : "#f2705c30",
               }}
             >
               {score.map((similarity, index) => (
@@ -402,10 +408,18 @@ const Interview = () => {
         <TouchableOpacity
           style={styles.navButton}
           onPress={goToPreviousQuestion}
+          disabled={currentQuestionIndex === 0 || transcriptionInProgress}
         >
           <AntDesign name="left" size={32} color={main} />
         </TouchableOpacity>
-        <TouchableOpacity style={styles.navButton} onPress={goToNextQuestion}>
+        <TouchableOpacity
+          style={styles.navButton}
+          onPress={goToNextQuestion}
+          disabled={
+            currentQuestionIndex === questionsData.length - 1 ||
+            transcriptionInProgress
+          }
+        >
           <AntDesign name="right" size={32} color={main} />
         </TouchableOpacity>
       </View>

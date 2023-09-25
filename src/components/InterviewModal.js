@@ -24,7 +24,7 @@ const InterviewModal = ({ isVisible, closeModal }) => {
       <TouchableOpacity
         style={styles.overlay}
         activeOpacity={1}
-        onPress={closeModalHandler}
+        // onPress={closeModalHandler}
       >
         <View style={styles.modalContainer}>
           <Interview />
