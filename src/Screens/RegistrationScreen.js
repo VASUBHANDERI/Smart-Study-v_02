@@ -8,6 +8,7 @@ import {
   TextInput,
   TouchableOpacity,
   View,
+  ScrollView
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { Context } from "../context/authContext";
@@ -174,7 +175,7 @@ export default function RegistrationScreen() {
     },
   });
 
-  if (isDesktopWidth) {
+  if (!isDesktopWidth) {
     return (
       <View style={styles.container}>
         <View style={styles.main}>

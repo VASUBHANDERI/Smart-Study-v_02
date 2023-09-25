@@ -9,6 +9,7 @@ import {
   TextInput,
   TouchableOpacity,
   View,
+  ScrollView
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { Context } from "../context/authContext";
@@ -23,7 +24,7 @@ export default function LogInScreen() {
   const { state, signin, clearErrorMessage } = useContext(Context);
   const navigation = useNavigation();
   const [width, height] = useWindowSize();
-  const [isDesktopWidth] = getMediaQuery;
+  const [isDesktopWidth] = getMediaQuery();
 
   useEffect(() => {
     // Reset the form fields when the component mounts
@@ -174,7 +175,7 @@ export default function LogInScreen() {
     },
   });
 
-  if (isDesktopWidth) {
+  if (!isDesktopWidth) {
     return (
       <View style={styles.container}>
         <View style={styles.main}>
