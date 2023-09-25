@@ -61,7 +61,7 @@ const Terminal = () => {
                         <View style={styles.line}>
                           <MaterialIcons
                             name="error-outline"
-                            size={"20@s"}
+                            size={scale(20)}
                             color="red"
                           />
                           <Text style={styles.error}> {item.outputError}</Text>
@@ -83,7 +83,7 @@ const Terminal = () => {
                                   <View style={styles.line}>
                                     <Feather
                                       name="folder"
-                                      size={"20@s"}
+                                      size={scale(20)}
                                       color="cyan"
                                     />
                                     <Text> </Text>
@@ -91,7 +91,7 @@ const Terminal = () => {
                                       style={{
                                         color: "cyan",
                                         fontFamily: "Linux",
-                                        fontSize: "20@s",
+                                        fontSize: scale(20),
                                       }}
                                     >
                                       {item.name}
@@ -101,7 +101,7 @@ const Terminal = () => {
                                   <View style={styles.line}>
                                     <Feather
                                       name="file"
-                                      size={"20@s"}
+                                      size={scale(20)}
                                       color="yellow"
                                     />
                                     <Text> </Text>
@@ -110,7 +110,7 @@ const Terminal = () => {
                                       style={{
                                         color: "yellow",
                                         fontFamily: "Linux",
-                                        fontSize: "20@s",
+                                        fontSize: scale(20),
                                       }}
                                     >
                                       {item.name}
@@ -160,18 +160,18 @@ const styles = ScaledSheet.create({
     // borderWidth: 2,
     // borderColor: "black",
     margin: 0,
-    paddingHorizontal: "5@s",
+    paddingHorizontal: scale(5),
   },
   input: {
     color: "white",
     fontFamily: "Linux",
-   
+
     // borderColor: "red",
     // borderWidth: 1,
     flex: 1,
     backgroundColor: "#000",
-    fontSize: "20@s",
-    paddingHorizontal: "5@s",
+    fontSize: scale(20),
+    paddingHorizontal: scale(5),
   },
   line: {
     flexDirection: "row",
@@ -180,17 +180,17 @@ const styles = ScaledSheet.create({
   text: {
     color: "white",
     fontFamily: "Linux",
-    fontSize: "20@s",
+    fontSize: scale(20),
   },
   dir: {
     color: "green",
     fontFamily: "Linux",
-    fontSize: "20@s",
+    fontSize: scale(20),
   },
   error: {
     color: "red",
     fontFamily: "Linux",
-    fontSize: "20@s",
+    fontSize: scale(20),
   },
   listItem: {
     color: "white",
