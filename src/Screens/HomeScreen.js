@@ -7,10 +7,10 @@ import {
   TouchableOpacity,
 } from "react-native";
 import React, { useContext, useState } from "react";
-import { background, main, main50, primary } from "../components/Colors";
+import { background, main, main50, primary, text } from "../components/Colors";
 import { useFonts } from "expo-font";
 import { Entypo, FontAwesome5 } from "@expo/vector-icons";
-import { scale } from "react-native-size-matters";
+import { scale, verticalScale } from "react-native-size-matters";
 import getMediaQuery from "../Hooks/getMediaQuery";
 import { Context as AuthContext } from "../context/authContext";
 import InterviewModal from "../components/InterviewModal";
@@ -80,13 +80,13 @@ const HomeScreen = () => {
     name: {
       fontFamily: "Popins",
       fontSize: isMobileWidth
-        ? 30
+        ? 20
         : isTabletWidth
-        ? 30
+        ? 20
         : isDesktopWidth
-        ? 35
+        ? 25
         : null,
-      color: primary,
+      color: text,
     },
     rights: {
       fontFamily: "Popins",
@@ -145,8 +145,8 @@ const HomeScreen = () => {
           style={{
             justifyContent: "center",
             alignItems: "center",
-            paddingVertical: 10,
-            flexDirection: "row",
+            paddingTop: 30,
+            // flexDirection: "row",
           }}
         >
           <Entypo
@@ -157,7 +157,7 @@ const HomeScreen = () => {
                 : isTabletWidth
                 ? 60
                 : isDesktopWidth
-                ? 75
+                ? 95
                 : null
             }
             color={main}
@@ -166,32 +166,34 @@ const HomeScreen = () => {
 
           <Text style={styles.heading}>Smart Study</Text>
         </View>
-
+        <View style={{ justifyContent: "center", alignItems: "center" ,  marginLeft:scale(0), marginTop:verticalScale(-5)}}>
+          <Text style={[styles.name]}>Your Path to Smart Learning</Text>
+        </View>
         <View
           style={{
             flex: 1,
             justifyContent: "center",
           }}
         >
-          <View
+          {/* <View
             style={{
               alignItems: "center",
               justifyContent: "center",
             }}
           >
             <View style={styles.nameRow}>
-              <Text style={[styles.name]}>Vasu Bhanderi</Text>
-              <Text style={[styles.head1]}>(Developer)</Text>
+              <Text style={[styles.name]}></Text>
+              <Text style={[styles.head1]}></Text>
             </View>
             <View style={styles.nameRow}>
-              <Text style={[styles.name]}>Vishnu Bhanderi</Text>
-              <Text style={[styles.head1]}>(Developer)</Text>
+              <Text style={[styles.name]}></Text>
+              <Text style={[styles.head1]}></Text>
             </View>
             <View style={styles.nameRow}>
-              <Text style={[styles.name]}>Dr. Nileshchandra Pikle</Text>
-              <Text style={[styles.head1]}>(Mentor)</Text>
+              <Text style={[styles.name]}></Text>
+              <Text style={[styles.head1]}></Text>
             </View>
-          </View>
+          </View> */}
           <View
             style={{
               alignItems: "center",
@@ -224,11 +226,15 @@ const HomeScreen = () => {
           <Text style={styles.rights}>Copyright © 2023 SmartStudy</Text>
           <Text style={styles.rights1}>All rights reserved</Text>
           <TouchableOpacity onPress={toggleModal} style={styles.modalButton}>
-          <FontAwesome5 name="chalkboard-teacher" size={24} color={background} />
+            <FontAwesome5
+              name="chalkboard-teacher"
+              size={24}
+              color={background}
+            />
           </TouchableOpacity>
 
           {/* Interview Modal */}
-          
+
           <InterviewModal isVisible={isModalVisible} closeModal={toggleModal} />
         </View>
       </View>
