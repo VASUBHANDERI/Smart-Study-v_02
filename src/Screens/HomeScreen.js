@@ -166,8 +166,17 @@ const HomeScreen = () => {
 
           <Text style={styles.heading}>Smart Study</Text>
         </View>
-        <View style={{ justifyContent: "center", alignItems: "center" ,  marginLeft:scale(0), marginTop:verticalScale(-5)}}>
-          <Text style={[styles.name]}>Your Path to Smart Learning</Text>
+        <View
+          style={{
+            justifyContent: "center",
+            alignItems: "center",
+            marginLeft: scale(0),
+            marginTop: verticalScale(-5),
+          }}
+        >
+          <Text style={[styles.name, { color: primary }]}>
+            Your Path to Smart Learning
+          </Text>
         </View>
         <View
           style={{

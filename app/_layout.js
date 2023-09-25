@@ -359,7 +359,9 @@ const Flow = () => {
                           }
                         }
                       },
-                      drawerItemStyle: isWeb ? { height: 0 } : null,
+                      drawerItemStyle: isWeb
+                        ? { height: 0 }
+                        : styles.drawerItem,
                     }}
                   />
                   <Drawer.Screen
@@ -464,7 +466,7 @@ const Flow = () => {
                               color={background}
                               style={{
                                 marginRight: scale(5),
-                                marginLeft: isWeb ? scale(10) : scale(20),
+                                marginLeft: isWeb ? scale(10) : scale(5),
                               }}
                             />
                           </TouchableOpacity>

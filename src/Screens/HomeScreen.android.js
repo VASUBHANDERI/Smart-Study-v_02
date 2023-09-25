@@ -35,11 +35,13 @@ const HomeScreen = () => {
           paddingVertical: verticalScale(20),
         }}
       >
-        <View style={{alignItems:'center'}}>
+        <View style={{ alignItems: "center" }}>
           <Entypo name="network" size={scale(90)} color={main} />
 
           <Text style={styles.heading}>SmartStudy</Text>
-          <Text style={[styles.name]}>Your Path to Smart Learning</Text>
+          <Text style={[styles.name, { color: primary }]}>
+            Your Path to Smart Learning
+          </Text>
         </View>
         {/* <View
           style={{ alignItems: "center", flex: 1, justifyContent: "center" }}
@@ -61,9 +63,9 @@ const HomeScreen = () => {
           </Text>
           <Text style={styles.head2}>Nagpur</Text>
         </View>
-        <View style={{alignItems:'center'}}>
-        <Text style={styles.rights}>Copyright © 2025 SmartStudy</Text>
-        <Text style={styles.rights1}>All rights reserved</Text>
+        <View style={{ alignItems: "center" }}>
+          <Text style={styles.rights}>Copyright © 2025 SmartStudy</Text>
+          <Text style={styles.rights1}>All rights reserved</Text>
         </View>
       </View>
     </View>
