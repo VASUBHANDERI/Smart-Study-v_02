@@ -5,6 +5,7 @@
     "name": "SmartStudy",
     "slug": "SmartStudy",
     "icon": "./public/assets/icon.png",
+    "orientation": "portrait",
     "userInterfaceStyle": "light",
     "splash": {
       "image": "./public/assets/splash.png",
