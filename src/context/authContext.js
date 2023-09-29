@@ -32,6 +32,11 @@ const authReducer = (state, action) => {
         ...state,
         isLoading: action.payload,
       };
+    case "set_guest_loading":
+      return {
+        ...state,
+        isGuestLoading: action.payload,
+      };
     case "signout":
       return { token: null, errorMessage: "", isLoggedIn: false };
 
@@ -117,8 +122,41 @@ const signin =
     dispatch({ type: "set_loading", payload: false });
   };
 
+const guestsignin = (dispatch) => async () => {
+  dispatch({ type: "set_guest_loading", payload: true });
+  try {
+    const response = await apiInstance.post("/api/users/login", {
+      email: "guest@gmail.com",
+      password: "123guest",
+    });
+    if (response) {
+      setAuthToken(response.data.accessToken);
+      await AsyncStorage.setItem("token", response.data.accessToken);
+      try {
+        const response1 = await apiInstance.get("/api/users/current"); // Fetch user data
+        await AsyncStorage.setItem("username", response1.data.username);
+      } catch (error) {
+        console.log(error);
+      }
+      console.log(response.data.accessToken);
+      dispatch({
+        type: "authenticate",
+        payload: response.data.accessToken,
+      });
+    }
+  } catch (e) {
+    console.log(e);
+    dispatch({
+      type: "add_error",
+      payload: getError(e.message),
+    });
+  }
+  dispatch({ type: "set_guest_loading", payload: false });
+};
+
 const signout = (dispatch) => async () => {
   dispatch({ type: "set_loading", payload: false });
+  dispatch({ type: "set_guest_loading", payload: false });
   await AsyncStorage.removeItem("token");
   await AsyncStorage.removeItem("username");
   resetAuthToken();
@@ -127,12 +165,13 @@ const signout = (dispatch) => async () => {
 
 export const { Context, Provider } = createDataContext(
   authReducer,
-  { signin, signout, signup, clearErrorMessage, tryLocalAuth },
+  { signin, signout, signup, clearErrorMessage, tryLocalAuth, guestsignin },
   {
     token: null,
     errorMessage: "",
     isLoggedIn: false,
     username: "Guest",
     isLoading: false,
+    isGuestLoading: false,
   }
 );

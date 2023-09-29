@@ -17,7 +17,7 @@ import { ScrollView } from "react-native";
 export default function LogInScreen() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { state, signin, clearErrorMessage } = useContext(Context);
+  const { state, signin, clearErrorMessage, guestsignin } = useContext(Context);
   const navigation = useNavigation();
   const [width, height] = useWindowSize();
 
@@ -91,6 +91,7 @@ export default function LogInScreen() {
       color: primary,
       fontSize: width * 0.03, // Increase the font size for readability
       alignSelf: "center",
+      marginBottom: width * 0.02,
     },
   });
 
@@ -141,6 +142,20 @@ export default function LogInScreen() {
             <Text style={styles.registerText}>
               Don't have an account? Register instead!
             </Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => {
+              guestsignin();
+              setEmail("");
+              setPassword("");
+            }}
+          >
+            {state.isGuestLoading ? (
+              <ActivityIndicator size="small" color={background} />
+            ) : (
+              <Text style={styles.buttonText}>Log In as Guest</Text>
+            )}
           </TouchableOpacity>
         </View>
       </View>

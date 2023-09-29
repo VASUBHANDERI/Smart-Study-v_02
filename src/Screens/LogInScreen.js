@@ -9,7 +9,7 @@ import {
   TextInput,
   TouchableOpacity,
   View,
-  ScrollView
+  ScrollView,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { Context } from "../context/authContext";
@@ -21,7 +21,7 @@ import getMediaQuery from "../Hooks/getMediaQuery";
 export default function LogInScreen() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { state, signin, clearErrorMessage } = useContext(Context);
+  const { state, signin, clearErrorMessage, guestsignin } = useContext(Context);
   const navigation = useNavigation();
   const [width, height] = useWindowSize();
   const [isDesktopWidth] = getMediaQuery();
@@ -172,6 +172,7 @@ export default function LogInScreen() {
       color: primary,
       fontSize: width * 0.03, // Increase the font size for readability
       alignSelf: "center",
+      marginBottom: width * 0.02,
     },
   });
 
@@ -234,10 +235,34 @@ export default function LogInScreen() {
                 style={{
                   color: primary,
                   fontSize: width / 90,
+                  marginBottom: width * 0.01,
                 }}
               >
                 Don't have an account? Register instead!
               </Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              style={styles.Button}
+              onPress={() => {
+                guestsignin();
+                setEmail("");
+                setPassword("");
+              }}
+            >
+              {state.isGuestLoading ? (
+                <ActivityIndicator size="small" color={background} />
+              ) : (
+                <Text
+                  style={{
+                    color: background,
+                    fontWeight: "bold",
+                    fontSize: width / 90,
+                  }}
+                >
+                  Log In as Guest
+                </Text>
+              )}
             </TouchableOpacity>
           </View>
         </View>
@@ -291,6 +316,20 @@ export default function LogInScreen() {
               <Text style={styles1.registerText}>
                 Don't have an account? Register instead!
               </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles1.button}
+              onPress={() => {
+                guestsignin();
+                setEmail("");
+                setPassword("");
+              }}
+            >
+              {state.isGuestLoading ? (
+                <ActivityIndicator size="small" color={background} />
+              ) : (
+                <Text style={styles1.buttonText}>Log In as Guest</Text>
+              )}
             </TouchableOpacity>
           </View>
         </View>
