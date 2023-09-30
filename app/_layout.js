@@ -31,6 +31,7 @@ import {
 import { Provider as CommandProvider } from "../src/context/commandsContext";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { StatusBar } from "expo-status-bar";
+import { DrawerActions } from "@react-navigation/native";
 
 const isWeb = Platform.OS === "web";
 
@@ -47,6 +48,8 @@ const Flow = () => {
     signout,
   } = useContext(AuthContext);
 
+  const navigation = useNavigation();
+
   useEffect(() => {
     tryLocalAuth();
   }, []);
@@ -55,6 +58,9 @@ const Flow = () => {
   }
 
   if (isLoggedIn) {
+    if (isWeb) {
+      navigation.dispatch(DrawerActions.openDrawer());
+    }
     return (
       <CommandProvider>
         <PageProvider>
@@ -106,6 +112,7 @@ const Flow = () => {
                     drawerStyle: {
                       width: isWeb ? scale(210) : scale(330),
                     },
+                    // drawerOpenRoute: isWeb ? "DrawerOpen" : null,
                   }}
                 >
                   <Drawer.Screen
