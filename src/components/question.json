@@ -1,23 +1,23 @@
 [
     {
       "id": 1,
-      "question": "What is the capital of France?",
-      "modelAnswer": "The capital of France is Paris."
+      "question": "What is an Operating System?",
+      "modelAnswer": "An operating system is system software that manages hardware and provides services to user applications, facilitating tasks like process management, memory allocation, and file handling."
     },
     {
       "id": 2,
-      "question": "Who wrote Romeo and Juliet?",
-      "modelAnswer": "Romeo and Juliet was written by William Shakespeare."
+      "question": "Explain the difference between multitasking and multithreading.",
+      "modelAnswer": "Multitasking involves running multiple processes on a single CPU, while multithreading enables multiple threads within a single process to run concurrently, sharing the same resources."
     },
     {
       "id": 3,
-      "question": "What is the largest planet in our solar system?",
-      "modelAnswer": "The largest planet in our solar system is Jupiter."
+      "question": "What is a file system, and what are its components?",
+      "modelAnswer": "A file system is a method used by the operating system to store, organize, and manage files and data on storage devices; its components include the file control block, directory structure, and free space management."
     },
     {
         "id": 4,
-        "question": "What is Zombie Process in Operating system?",
-        "modelAnswer": "A process which has finished the execution but still has entry in the process table to report to its parent process is known as a zombie process. A child process always first becomes a zombie before being removed from the process table. The parent process reads the exit status of the child process which reaps off the child process entry from the process table."
+        "question": "What is the purpose of virtual memory, and how does it work?",
+        "modelAnswer": "Virtual memory extends a computer's physical RAM by using a combination of RAM and disk space, allowing larger programs to run by swapping data between RAM and disk when necessary, thus providing an illusion of having more memory than physically available."
       }
   ]
   
