@@ -39,9 +39,9 @@ const HomeScreen = () => {
         ? 55
         : null,
       fontWeight: "400",
-      marginVertical: 10,
+      // marginVertical: 10,
       color: primary,
-      marginLeft: scale(5),
+      // marginLeft: scale(5),
     },
     modalButton: {
       position: "absolute",
@@ -146,7 +146,7 @@ const HomeScreen = () => {
             justifyContent: "center",
             alignItems: "center",
             paddingTop: 30,
-            // flexDirection: "row",
+            flexDirection: "row",
           }}
         >
           <Entypo
@@ -163,46 +163,46 @@ const HomeScreen = () => {
             color={main}
             style={{ marginRight: scale(5) }}
           />
+          <View
+            style={{
+              // justifyContent: "center",
+              alignItems: "flex-start",
+              marginLeft: scale(0),
+              marginTop: verticalScale(-1),
+            }}
+          >
+            <Text style={styles.heading}>Smart Study</Text>
+            <Text style={[styles.name, { color: primary,marginTop: verticalScale(-5) }]}>
+              Your Path to Smart Learning
+            </Text>
+          </View>
+        </View>
 
-          <Text style={styles.heading}>Smart Study</Text>
-        </View>
-        <View
-          style={{
-            justifyContent: "center",
-            alignItems: "center",
-            marginLeft: scale(0),
-            marginTop: verticalScale(-5),
-          }}
-        >
-          <Text style={[styles.name, { color: primary }]}>
-            Your Path to Smart Learning
-          </Text>
-        </View>
         <View
           style={{
             flex: 1,
             justifyContent: "center",
           }}
         >
-          {/* <View
+          <View
             style={{
               alignItems: "center",
               justifyContent: "center",
             }}
           >
             <View style={styles.nameRow}>
-              <Text style={[styles.name]}></Text>
-              <Text style={[styles.head1]}></Text>
+              <Text style={[styles.name]}>Vasu Bhanderi</Text>
+              <Text style={[styles.head1]}> (Developer)</Text>
             </View>
             <View style={styles.nameRow}>
-              <Text style={[styles.name]}></Text>
-              <Text style={[styles.head1]}></Text>
+              <Text style={[styles.name]}>Vishnu Bhanderi</Text>
+              <Text style={[styles.head1]}> (Developer)</Text>
             </View>
             <View style={styles.nameRow}>
-              <Text style={[styles.name]}></Text>
-              <Text style={[styles.head1]}></Text>
+              <Text style={[styles.name]}>Dr. Nileshchandra Pikle</Text>
+              <Text style={[styles.head1]}> (Mentor)</Text>
             </View>
-          </View> */}
+          </View>
           <View
             style={{
               alignItems: "center",
